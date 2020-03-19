@@ -1,7 +1,7 @@
 <div class="page-container">
     <h1>Login</h1>
     {% if register %}
-    <form action="{% url 'registerview' %}" method="post">
+    <form action="{% url 'register' %}" method="post">
         {% csrf_token %}
         <input type="text" name="username" class="username" placeholder="Username">
         <input type="password" name="password" class="password" placeholder="Password">
@@ -16,8 +16,8 @@
         <button type="submit">管理员注册</button>
         <div class="error"><span>+</span></div>
     </form>
-    {% else %}
-    <form action="{% url 'loginview' %}" method="post">
+    {% elif login %}
+    <form action="{% url 'login' %}" method="post">
         {% csrf_token %}
         <input type="text" name="username" class="username" placeholder="Username">
         <input type="password" name="password" class="password" placeholder="Password">
@@ -28,11 +28,10 @@
         <div class="error"><span>+</span></div>
     </form>
     {% endif %}
+
     <div class="connect">
-        <p>Or connect with:</p>
         <p>
-            <a class="facebook" href="www.facebook.com">facebook</a>
-            <a class="twitter" href="www.twitter.com">twitter</a>
+            <a class="facebook" href="{% url 'status' %}">check your status</a>
         </p>
     </div>
 </div>

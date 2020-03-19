@@ -31,6 +31,7 @@ ALLOWED_HOSTS = []
 # Application definition
 
 INSTALLED_APPS = [
+    'mytest',
     'polls',
     'django.contrib.admin',
     'django.contrib.auth',
@@ -55,7 +56,9 @@ ROOT_URLCONF = 'AppraisalSystem.urls'
 TEMPLATES = [
     {
         'BACKEND': 'django.template.backends.django.DjangoTemplates',
-        'DIRS': ['./templates','polls/templates'],
+        'DIRS': ['./templates',
+                 # 'polls/templates',
+                 os.path.join(BASE_DIR, 'mytest/templates')],
         'APP_DIRS': True,
         'OPTIONS': {
             'context_processors': [
@@ -127,3 +130,4 @@ USE_TZ = True
 STATIC_URL = '/static/'
 
 LOGIN_REDIRECT_URL = '/'
+LOGOUT_REDIRECT_URL = '/'
