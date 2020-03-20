@@ -13,13 +13,18 @@ urlpatterns = [
     path('', views.home,name='home'),
     path('login/', views.login_v, name='login'),
     path('register/',views.register,name='register'),
-    path('status/',views.status,name='status'),
+    path('create/',views.create_user,name='create'),
 
-    # path('registerview/',views.registerview,name='registerview'),# 注册
-    # path('alter/',views.alter,name = 'alter'), # 用户登录修改
-    # path('register_admin/',views.register_admin,name='register_admin'),# 管理员注册页
-    # path('admin_view/',views.admin_view,name = 'admin_view'),# 管理员注册
-    # path('alter_admin/',views.alter_admin,name='alter_admin'),# 管理员授权修改
+    path('register_admin/',views.register_admin,name='register_admin'),
+    path('create_admin/',views.create_admin,name='create_admin'),
+
+    path('status/',views.status,name='status'), ## 查看用户当前状态
+
+    path('login_view/', views.login_view, name='login_view'),   ## 需要登录才能访问
+    path('permission_view/',views.permission_view, name='permission_view'),## 需要权限才能访问
+
+
+    path('change/',views.change_pwd,name='change'), # 用户退出
     path('logout/',views.logout_view,name='logout'), # 用户退出
 ]
 

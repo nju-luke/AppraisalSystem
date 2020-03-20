@@ -1,7 +1,7 @@
 <div class="page-container">
     <h1>Login</h1>
     {% if register %}
-    <form action="{% url 'register' %}" method="post">
+    <form action="{% url 'create' %}" method="post">
         {% csrf_token %}
         <input type="text" name="username" class="username" placeholder="Username">
         <input type="password" name="password" class="password" placeholder="Password">
@@ -9,7 +9,7 @@
         <div class="error"><span>+</span></div>
     </form>
     {% elif admin%}
-    <form action="{% url 'admin_view' %}" method="post">
+    <form action="{% url 'create_admin' %}" method="post">
         {% csrf_token %}
         <input type="text" name="username" class="username" placeholder="Username">
         <input type="password" name="password" class="password" placeholder="Password">
@@ -25,6 +25,16 @@
         <p style="color: #000;">{{ error }}</p>
         {% endif %}
         <button type="submit">登录</button>
+        <div class="error"><span>+</span></div>
+    </form>
+    {% elif change %}
+    <form action="{% url 'change' %}" method="post">
+        {% csrf_token %}
+        <input type="password" name="password" class="password" placeholder="Password">
+        {% if error %}
+        <p style="color: #000;">{{ error }}</p>
+        {% endif %}
+        <button type="submit">提交</button>
         <div class="error"><span>+</span></div>
     </form>
     {% endif %}

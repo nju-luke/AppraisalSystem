@@ -16,15 +16,8 @@ Including another URLconf
 from django.contrib import admin
 from django.urls import path, include
 
-from polls import views
 
 urlpatterns = [
     path('mytest/', include('mytest.urls')),
-    # path('polls/', include('polls.urls')),
     path('admin/', admin.site.urls),
-    # path('accounts/', include('django.contrib.auth.urls')),
-
-    # path('index', views.index, name='index'),
-    # path('accounts/login/', views.accounts_login),
-    # path('accounts/logout/', views.accounts_logout),
 ]
