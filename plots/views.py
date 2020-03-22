@@ -16,8 +16,8 @@ charts_gallery = plots.ChartsGallery()
 def index_view(request):
     if not request.session.session_key:
         return render(request, 'index.html')
-    # return HttpResponseRedirect('/stuff')
-    return HttpResponse('''您已登录，<a href=http://127.0.0.1:8000/logout>退出</a>''')
+    return HttpResponseRedirect('/charts')     # todo 修改跳转页
+    # return HttpResponse('''您已登录，<a href=http://127.0.0.1:8000/logout>退出</a>''')
 
 def login_view(request):
     try:
@@ -36,24 +36,25 @@ def login_view(request):
         return HttpResponse(e)
 
 @login_required(login_url='login')
-def chgwd(request):
-    return None
+def chgpwd(request):
+    if request.method == "GET":
+        return render(request, 'chgpwd.html')
+    username = request.user.username
+    password = request.POST['password']
+    user = authenticate(request, username=username, password=password)
+    if not user:
+        return render(request, 'chgpwd.html', {'error':'请输入正确的原始密码！'})
+    new_pwd = request.POST['newpwd']
+    user.set_password(new_pwd)
+    user.save()
+
+    return  render(request, 'chgpwd.html', {'error':'密码修改成功！'})
 
 @login_required(login_url='login')
-def stuff_vew(request):
-    # if request.method == 'GET':
-    #     return render(request, 'stuff.html')
-    # username = request.user.username
-    # graphJason = plots.stuff_plot(username)
-
-    # mon = request.user.username
-    try:
-        name = request.POST['name']
-    except:
-        name = None
+def charts(request):
+    name = request.user.username
     graphJason = charts_gallery.get_chart(name = name, month='2020-01')
-
-    return render(request, 'stuff.html', {'plot':graphJason})
+    return render(request, 'charts.html', {'plot':graphJason})
 
 @login_required(login_url='login')
 def logout_view(request):

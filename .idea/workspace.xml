@@ -2,14 +2,12 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="40b176f2-ad87-490d-8319-8ba786427039" name="Default Changelist" comment="">
-      <change afterPath="$PROJECT_DIR$/plots/templates/index.html" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/plots/templates/nav.html" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/plots/templates/charts.html" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/plots/templates/chgpwd.html" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/AppraisalSystem/settings.py" beforeDir="false" afterPath="$PROJECT_DIR$/AppraisalSystem/settings.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/AppraisalSystem/urls.py" beforeDir="false" afterPath="$PROJECT_DIR$/AppraisalSystem/urls.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/plots/plots.py" beforeDir="false" afterPath="$PROJECT_DIR$/plots/plots.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/plots/templates/base.html" beforeDir="false" afterPath="$PROJECT_DIR$/plots/templates/base.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/plots/templates/stuff.html" beforeDir="false" afterPath="$PROJECT_DIR$/plots/templates/stuff.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/plots/templates/index.html" beforeDir="false" afterPath="$PROJECT_DIR$/plots/templates/index.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/plots/templates/plot_index.html" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/plots/templates/stuff.html" beforeDir="false" />
       <change beforePath="$PROJECT_DIR$/plots/urls.py" beforeDir="false" afterPath="$PROJECT_DIR$/plots/urls.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/plots/views.py" beforeDir="false" afterPath="$PROJECT_DIR$/plots/views.py" afterDir="false" />
     </list>
@@ -78,22 +76,22 @@
     <property name="RunOnceActivity.ShowReadmeOnStart" value="true" />
     <property name="SHARE_PROJECT_CONFIGURATION_FILES" value="true" />
     <property name="WebServerToolWindowFactoryState" value="false" />
-    <property name="last_opened_file_path" value="$PROJECT_DIR$/../test" />
+    <property name="last_opened_file_path" value="$PROJECT_DIR$/plots/templates" />
     <property name="settings.editor.selected.configurable" value="preferences.pluginManager" />
   </component>
   <component name="RecentsManager">
+    <key name="CopyFile.RECENT_KEYS">
+      <recent name="E:\Projects\AppraisalSystem\plots\templates" />
+      <recent name="D:\Projects\AppraisalSystem" />
+      <recent name="D:\Projects\AppraisalSystem\plots" />
+      <recent name="D:\Projects\AppraisalSystem\plots\templates" />
+      <recent name="D:\Projects\AppraisalSystem\mytest\templates" />
+    </key>
     <key name="MoveFile.RECENT_KEYS">
       <recent name="E:\Projects\AppraisalSystem\plots\templates" />
       <recent name="D:\Projects\AppraisalSystem" />
       <recent name="D:\Projects\AppraisalSystem\plots" />
       <recent name="E:\Projects\AppraisalSystem\mytest\templates" />
-    </key>
-    <key name="CopyFile.RECENT_KEYS">
-      <recent name="D:\Projects\AppraisalSystem" />
-      <recent name="D:\Projects\AppraisalSystem\plots" />
-      <recent name="D:\Projects\AppraisalSystem\plots\templates" />
-      <recent name="D:\Projects\AppraisalSystem\mytest\templates" />
-      <recent name="E:\Projects\AppraisalSystem\mytest" />
     </key>
   </component>
   <component name="RunManager">
@@ -152,7 +150,14 @@
       <option name="project" value="LOCAL" />
       <updated>1584682894883</updated>
     </task>
-    <option name="localTasksCounter" value="2" />
+    <task id="LOCAL-00002" summary="finish the login page">
+      <created>1584892898607</created>
+      <option name="number" value="00002" />
+      <option name="presentableId" value="LOCAL-00002" />
+      <option name="project" value="LOCAL" />
+      <updated>1584892898608</updated>
+    </task>
+    <option name="localTasksCounter" value="3" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -173,7 +178,8 @@
   </component>
   <component name="VcsManagerConfiguration">
     <MESSAGE value="mytest" />
-    <option name="LAST_COMMIT_MESSAGE" value="mytest" />
+    <MESSAGE value="finish the login page" />
+    <option name="LAST_COMMIT_MESSAGE" value="finish the login page" />
   </component>
   <component name="WindowStateProjectService">
     <state x="552" y="179" key="#Notifications" timestamp="1584713765946">
@@ -192,10 +198,10 @@
       <screen x="0" y="0" width="1920" height="1040" />
     </state>
     <state x="835" y="159" key="#xdebugger.evaluate/0.0.1920.1040@0.0.1920.1040" timestamp="1584889292396" />
-    <state x="598" y="114" key="CommitChangelistDialog2" timestamp="1584640255185">
+    <state x="598" y="114" key="CommitChangelistDialog2" timestamp="1584892895949">
       <screen x="0" y="0" width="1920" height="1040" />
     </state>
-    <state x="598" y="114" key="CommitChangelistDialog2/0.0.1920.1040@0.0.1920.1040" timestamp="1584640255185" />
+    <state x="598" y="114" key="CommitChangelistDialog2/0.0.1920.1040@0.0.1920.1040" timestamp="1584892895949" />
     <state x="809" y="398" width="302" height="247" key="DBNavigator.ConnectionAuthenticationDialog" timestamp="1584714371249">
       <screen x="0" y="0" width="1920" height="1040" />
     </state>
@@ -208,38 +214,38 @@
       <screen x="0" y="0" width="1920" height="1040" />
     </state>
     <state x="1061" y="224" key="FileChooserDialogImpl/0.0.1920.1040@0.0.1920.1040" timestamp="1584714349178" />
-    <state width="1899" height="383" key="GridCell.Tab.0.bottom" timestamp="1584892119261">
+    <state width="1899" height="383" key="GridCell.Tab.0.bottom" timestamp="1584894501217">
       <screen x="0" y="0" width="1920" height="1040" />
     </state>
-    <state width="1899" height="383" key="GridCell.Tab.0.bottom/0.0.1920.1040@0.0.1920.1040" timestamp="1584892119261" />
-    <state width="1899" height="383" key="GridCell.Tab.0.center" timestamp="1584892119260">
+    <state width="1899" height="383" key="GridCell.Tab.0.bottom/0.0.1920.1040@0.0.1920.1040" timestamp="1584894501217" />
+    <state width="1899" height="383" key="GridCell.Tab.0.center" timestamp="1584894501216">
       <screen x="0" y="0" width="1920" height="1040" />
     </state>
-    <state width="1899" height="383" key="GridCell.Tab.0.center/0.0.1920.1040@0.0.1920.1040" timestamp="1584892119260" />
-    <state width="1899" height="383" key="GridCell.Tab.0.left" timestamp="1584892119260">
+    <state width="1899" height="383" key="GridCell.Tab.0.center/0.0.1920.1040@0.0.1920.1040" timestamp="1584894501216" />
+    <state width="1899" height="383" key="GridCell.Tab.0.left" timestamp="1584894501216">
       <screen x="0" y="0" width="1920" height="1040" />
     </state>
-    <state width="1899" height="383" key="GridCell.Tab.0.left/0.0.1920.1040@0.0.1920.1040" timestamp="1584892119260" />
-    <state width="1899" height="383" key="GridCell.Tab.0.right" timestamp="1584892119261">
+    <state width="1899" height="383" key="GridCell.Tab.0.left/0.0.1920.1040@0.0.1920.1040" timestamp="1584894501216" />
+    <state width="1899" height="383" key="GridCell.Tab.0.right" timestamp="1584894501217">
       <screen x="0" y="0" width="1920" height="1040" />
     </state>
-    <state width="1899" height="383" key="GridCell.Tab.0.right/0.0.1920.1040@0.0.1920.1040" timestamp="1584892119261" />
-    <state width="1899" height="383" key="GridCell.Tab.1.bottom" timestamp="1584892098044">
+    <state width="1899" height="383" key="GridCell.Tab.0.right/0.0.1920.1040@0.0.1920.1040" timestamp="1584894501217" />
+    <state width="1899" height="383" key="GridCell.Tab.1.bottom" timestamp="1584894501217">
       <screen x="0" y="0" width="1920" height="1040" />
     </state>
-    <state width="1899" height="383" key="GridCell.Tab.1.bottom/0.0.1920.1040@0.0.1920.1040" timestamp="1584892098044" />
-    <state width="1899" height="383" key="GridCell.Tab.1.center" timestamp="1584892098044">
+    <state width="1899" height="383" key="GridCell.Tab.1.bottom/0.0.1920.1040@0.0.1920.1040" timestamp="1584894501217" />
+    <state width="1899" height="383" key="GridCell.Tab.1.center" timestamp="1584894501217">
       <screen x="0" y="0" width="1920" height="1040" />
     </state>
-    <state width="1899" height="383" key="GridCell.Tab.1.center/0.0.1920.1040@0.0.1920.1040" timestamp="1584892098044" />
-    <state width="1899" height="383" key="GridCell.Tab.1.left" timestamp="1584892098044">
+    <state width="1899" height="383" key="GridCell.Tab.1.center/0.0.1920.1040@0.0.1920.1040" timestamp="1584894501217" />
+    <state width="1899" height="383" key="GridCell.Tab.1.left" timestamp="1584894501217">
       <screen x="0" y="0" width="1920" height="1040" />
     </state>
-    <state width="1899" height="383" key="GridCell.Tab.1.left/0.0.1920.1040@0.0.1920.1040" timestamp="1584892098044" />
-    <state width="1899" height="383" key="GridCell.Tab.1.right" timestamp="1584892098044">
+    <state width="1899" height="383" key="GridCell.Tab.1.left/0.0.1920.1040@0.0.1920.1040" timestamp="1584894501217" />
+    <state width="1899" height="383" key="GridCell.Tab.1.right" timestamp="1584894501217">
       <screen x="0" y="0" width="1920" height="1040" />
     </state>
-    <state width="1899" height="383" key="GridCell.Tab.1.right/0.0.1920.1040@0.0.1920.1040" timestamp="1584892098044" />
+    <state width="1899" height="383" key="GridCell.Tab.1.right/0.0.1920.1040@0.0.1920.1040" timestamp="1584894501217" />
     <state x="461" y="162" key="SettingsEditor" timestamp="1584718695942">
       <screen x="0" y="0" width="1920" height="1040" />
     </state>
@@ -256,10 +262,10 @@
       <screen x="0" y="0" width="1920" height="1040" />
     </state>
     <state x="92" y="92" width="1736" height="856" key="com.intellij.history.integration.ui.views.FileHistoryDialog/0.0.1920.1040@0.0.1920.1040" timestamp="1584892300857" />
-    <state x="623" y="225" width="672" height="678" key="search.everywhere.popup" timestamp="1584745605556">
+    <state x="623" y="225" width="672" height="678" key="search.everywhere.popup" timestamp="1584894557669">
       <screen x="0" y="0" width="1920" height="1040" />
     </state>
-    <state x="623" y="225" width="672" height="678" key="search.everywhere.popup/0.0.1920.1040@0.0.1920.1040" timestamp="1584745605556" />
+    <state x="623" y="225" width="672" height="678" key="search.everywhere.popup/0.0.1920.1040@0.0.1920.1040" timestamp="1584894557669" />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>
@@ -273,11 +279,6 @@
           <url>file://D:/Miniconda3/Lib/site-packages/django/contrib/auth/decorators.py</url>
           <line>59</line>
           <option name="timeStamp" value="2" />
-        </line-breakpoint>
-        <line-breakpoint enabled="true" suspend="THREAD" type="python-line">
-          <url>file://$PROJECT_DIR$/plots/views.py</url>
-          <line>59</line>
-          <option name="timeStamp" value="8" />
         </line-breakpoint>
       </breakpoints>
     </breakpoint-manager>
