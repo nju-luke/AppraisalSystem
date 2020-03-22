@@ -32,7 +32,7 @@ ALLOWED_HOSTS = []
 
 INSTALLED_APPS = [
     'plots',
-    'mytest',
+    # 'mytest',
     'django.contrib.admin',
     'django.contrib.auth',
     'django.contrib.contenttypes',
@@ -57,7 +57,7 @@ TEMPLATES = [
     {
         'BACKEND': 'django.template.backends.django.DjangoTemplates',
         'DIRS': ['./templates',
-                 os.path.join(BASE_DIR, 'mytest/templates'),
+                 # os.path.join(BASE_DIR, 'mytest/templates'),
                  os.path.join(BASE_DIR, 'plots/templates')],
         'APP_DIRS': True,
         'OPTIONS': {
@@ -129,8 +129,8 @@ USE_TZ = True
 
 STATIC_URL = '/static/'
 
-LOGIN_REDIRECT_URL = '/'
-LOGOUT_REDIRECT_URL = '/'
+LOGIN_REDIRECT_URL = '/plots'
+LOGOUT_REDIRECT_URL = ''
 
 
 STATICFILES_DIRS = (

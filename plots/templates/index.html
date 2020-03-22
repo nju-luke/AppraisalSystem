@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <title>龙净科杰积分测评展示系统</title>
+    <link rel="stylesheet"
+          href="https://cdn.staticfile.org/twitter-bootstrap/3.3.7/css/bootstrap.min.css">
+    <script src="https://cdn.staticfile.org/jquery/2.1.1/jquery.min.js"></script>
+    <script src="https://cdn.staticfile.org/twitter-bootstrap/3.3.7/js/bootstrap.min.js"></script>
+</head>
+<body>
+
+<nav class="navbar navbar-default navbar-static-top" role="navigation">
+    <div class="container-fluid">
+        <div class="navbar-header">
+            <a class="navbar-brand" href="#">龙净科杰积分测评展示系统</a>
+        </div>
+
+    </div>
+</nav>
+
+<br>
+<br>
+<br>
+<br>
+<br>
+
+<form class="form-horizontal" action="{% url 'login' %}"
+      method="POST">
+
+    {% csrf_token %}
+    <div class="form-group">
+        <label for="username" class="col-sm-2 control-label">用户名</label>
+        <div class="col-sm-2">
+            <input type="text" class="form-control" id="username"
+                   name="username"
+                   placeholder="请输入用户名">
+        </div>
+    </div>
+    <div class="form-group">
+        <label for="password" class="col-sm-2 control-label">密码</label>
+        <div class="col-sm-2">
+            <input type="password" class="form-control" id="password"
+                   name="password"
+                   placeholder="请输入密码">
+        </div>
+    </div>
+    {% if error %}
+    <div class="form-group">
+        <div class="col-sm-2">
+        </div>
+        <div class="col-sm-2">
+            <p style="color: #000;">{{ error }}</p>
+        </div>
+    </div>
+
+    {% endif %}
+    <div class="form-group">
+        <div class="col-sm-offset-2 col-sm-10">
+            <button type="submit" class="btn btn-default">登录</button>
+        </div>
+    </div>
+
+    <!--  {% csrf_token %}-->
+    <!--  <input type="text" name="username" class="username" placeholder="Username">-->
+    <!--  <input type="password" name="password" class="password" placeholder="Password">-->
+
+    <!--  <button type="submit">登录</button>-->
+
+
+</form>
+
+</body>
+</html>
