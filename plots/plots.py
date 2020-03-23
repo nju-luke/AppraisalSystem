@@ -149,3 +149,10 @@ class ChartsGallery():
 
         graphJason = json.dumps(chart, cls=PlotlyJSONEncoder)
         return graphJason
+
+
+def get_date_list():
+    df = pd.read_sql('''
+    select distinct `timestamp` as dt from data
+    ''', engine)
+    return list(df.dt.values)

@@ -19,6 +19,9 @@ urlpatterns = [
     path('logout/', views.logout_view, name='logout'),
     path('chgpwd/', views.chgpwd, name='chgpwd'),
 
+    path('test/', views.TestView.as_view(), name='test'),
+    # path('test/', views.test, name='test'),
+
 
 ]
 

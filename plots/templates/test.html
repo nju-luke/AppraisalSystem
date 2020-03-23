@@ -1,0 +1,24 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+
+<form method="post" action="{% url 'test' %}">
+
+    <label>选择日期<select name="select_month">
+        {% for dt in date_list %}
+            <option id="dt" value="{{ dt }}">{{ dt }}</option>
+        {% endfor %}
+    </select></label>
+    <input type="submit" value="测试"/>
+
+    {% csrf_token %}
+</form>
+
+{{ select_month }}
+
+</body>
+</html>
