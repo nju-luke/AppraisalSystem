@@ -100,6 +100,10 @@ def prepare_auth():
             auths[id] = auths[managerid] + '%02d' %_dic[managerid]
         if len(_dic) == 0:
             break
+    df_new = pd.DataFrame().from_dict(auths,orient='index', columns=[
+        'permission'])
+    # df_new['id'] = df_new.index.astype(int)
+    df_new.to_sql('permission', engine, if_exists='replace', index_label='id')
     print(auths)
 
 

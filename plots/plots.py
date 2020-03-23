@@ -101,12 +101,12 @@ def get_area(df):
 def get_data(month):
     sql = f'''
             SELECT 
-                name,substr(date,1,7) mon, 
+                    username,substr(date,1,7) mon, 
                 avg(score) score, 
                 avg(point) point
             FROM appraisal.data
             where substr(date,1,7) = '{month}'
-            group by substr(date,1,7),name
+            group by substr(date,1,7),username
             '''
     df = pd.read_sql(sql, engine)
     area1_x, area1_y, area2_x, area2_y = get_area(df)
@@ -116,7 +116,7 @@ def get_data(month):
 def get_base_chart(month):
     df, area1_x, area1_y, area2_x, area2_y = get_data(month)
     point = go.Scatter(x=df.score, y=df.point, mode='markers + text',
-                       text=df.name, textposition='top center')
+                       text=df.username, textposition='top center')
     area1 = go.Scatter(x=area1_x, y=area1_y, line_color='LightSalmon',
                        mode='lines', fill='toself', name='warn')
     area2 = go.Scatter(x=area2_x, y=area2_y, line_color='lightskyblue',

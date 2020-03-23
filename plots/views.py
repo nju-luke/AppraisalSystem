@@ -56,7 +56,7 @@ def chgpwd(request):
 @login_required(login_url='login')
 def charts(request):
     name = request.user.username
-    graphJason = charts_gallery.get_chart(name = name, month='2020-01')
+    graphJason = charts_gallery.get_chart(name = name, month='2019-11') # 修改日期
     return render(request, 'charts.html', {'plot':graphJason})
 
 @login_required(login_url='login')
