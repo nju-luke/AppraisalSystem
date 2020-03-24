@@ -11,12 +11,13 @@ from sqlalchemy import create_engine
 
 from settings import *
 
-engine = create_engine(f'mysql+pymysql://{user}:{pwd}@{host}:{port}/{database_name}')
+# engine = create_engine(f'mysql+pymysql://{user}:{pwd}@{host}:{port}/{database_name}')
+engine = create_engine(f'mysql+mysqlconnector://{user}:{pwd}@{host}:{port}/{database_name}')
 
 
 def prepare_points(start_date, end_date):
     start_date = start_date[:7]
-    engine.execute(f"delete from {target_points_table} where rec_month = '{start_date}'")
+    engine.execute(f'delete from {target_points_table} where rec_month = "{start_date}"')
     sql = f'''insert into {target_points_table}
         select p.userAccount username,
                gp.scores     score,
@@ -36,8 +37,8 @@ def prepare_points(start_date, end_date):
 
 
 def prepare_appraise(start_date, end_date):
-    start_date = start_date[:7]         ## 将开始日期的月份作为当前数据的日期存储
-    engine.execute(f"delete from {target_appraise_dtl_table} where txrq = '{start_date}'")
+    start_date = start_date[:7]  ## 将开始日期的月份作为当前数据的日期存储
+    engine.execute(f'delete from {target_appraise_dtl_table} where substr(txrq,1,7) = "{start_date}"')
     dtl_sql = f'''
         insert into {target_appraise_dtl_table}
         select '{start_date}' txrq, txr, t5.loginid txr_loginid,t5.lastname txr_name,
@@ -64,9 +65,11 @@ def prepare_appraise(start_date, end_date):
         )
         and txrq >= '{start_date}' and txrq <= '{end_date}'
     '''
+    print(dtl_sql)
     engine.execute(dtl_sql)
+    print('generate dtl table success.')
 
-    engine.execute(f"delete from {target_appraise_table} where txrq = '{start_date}'")
+    engine.execute(f'delete from {target_appraise_table} where txrq = "{start_date}"')
     sql = f'''
         insert into {target_appraise_table} 
         select txrq, dtl.txr_loginid, txr_name,
@@ -84,8 +87,7 @@ def prepare_appraise(start_date, end_date):
         where txrq = '{start_date}'
     '''
     engine.execute(sql)
-
-    print('prepare appraise for {start_date} success.')
+    print(f'prepare appraise for {start_date} success.')
 
 
 def prepare_auth():
@@ -97,25 +99,26 @@ def prepare_auth():
         for id, loginid, managerid in df.values:
             if id in auths or managerid not in auths: continue
             _dic[managerid] = _dic.setdefault(managerid, 0) + 1
-            auths[id] = auths[managerid] + '%02d' %_dic[managerid]
+            auths[id] = auths[managerid] + '%02d' % _dic[managerid]
         if len(_dic) == 0:
             break
-    df_new = pd.DataFrame().from_dict(auths,orient='index', columns=[
+    df_new = pd.DataFrame().from_dict(auths, orient='index', columns=[
         'permission'])
     # df_new['id'] = df_new.index.astype(int)
     df_new.to_sql('permission', engine, if_exists='replace', index_label='id')
     print(auths)
 
 
-
+def prepare_all(start_date, end_date):
+    pass
 
 
 def main(start_date, end_date):
     # prepare_points(start_date, end_date)
-    # prepare_appraise(start_date, end_date)
-    # prepare_all(start_date, end_date)
-
+    prepare_appraise(start_date, end_date)
     prepare_auth()
+
+    prepare_all(start_date, end_date)
 
 
 if __name__ == '__main__':
