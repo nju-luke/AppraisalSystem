@@ -114,7 +114,7 @@ def prepare_all(start_date, end_date):
 
 
 def main(start_date, end_date):
-    # prepare_points(start_date, end_date)
+    prepare_points(start_date, end_date)
     prepare_appraise(start_date, end_date)
     prepare_auth()
 

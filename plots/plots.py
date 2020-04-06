@@ -100,13 +100,15 @@ def get_area(df):
 
 def get_data(month):
     sql = f'''
-            SELECT 
-                    username,substr(date,1,7) mon, 
-                avg(score) score, 
-                avg(point) point
-            FROM appraisal.data
-            where substr(date,1,7) = '{month}'
-            group by substr(date,1,7),username
+            select bs_name,
+                f1,f2,f3,f4,f5,f6,f7,f8,f9,f10,f11,
+                point,
+                score,
+                username
+            from ecology.report_appraise_dtl rad
+            left join ecology.report_points rp
+            on rad.bs_loginid = rp.username
+            where rad.txrq='{month}' and rp.rec_month='{month}'
             '''
     df = pd.read_sql(sql, engine)
     area1_x, area1_y, area2_x, area2_y = get_area(df)
@@ -115,8 +117,9 @@ def get_data(month):
 
 def get_base_chart(month):
     df, area1_x, area1_y, area2_x, area2_y = get_data(month)
+    df['url'] = "<a href='/dtl/?name=" + df.username + f"&month={month}" + "'>" + df.bs_name + "</a>"
     point = go.Scatter(x=df.score, y=df.point, mode='markers + text',
-                       text=df.username, textposition='top center')
+                       text=df.url, textposition='top center')
     area1 = go.Scatter(x=area1_x, y=area1_y, line_color='LightSalmon',
                        mode='lines', fill='toself', name='warn')
     area2 = go.Scatter(x=area2_x, y=area2_y, line_color='lightskyblue',
@@ -124,17 +127,20 @@ def get_base_chart(month):
 
     fig = go.Figure([area1, area2, point])
     fig.update_layout(showlegend=False)
-    return fig
+    return df, fig
 
 
 class ChartsGallery():
     charts = {}
+    dataframes = {}
 
     def _initialize_chart(self, month):
-        chart = get_base_chart(month)
+        df, chart = get_base_chart(month)
         self.charts[month] = chart
+        self.dataframes[month] = df
 
     def _get_auth(self, username):
+        # todo 权限
         pass
 
     def get_chart(self, name, month):
@@ -144,11 +150,20 @@ class ChartsGallery():
 
         # todo 修改用户显示数据
         if name:
-            text = [n if n == name else None for n in chart.data[2].text]
+            indices = list(self.dataframes[month].username == name)
+            # text = [n if n == name else None for n in chart.data[2].text]
+            text = [self.dataframes[month].url[i] if v else None for i, v in enumerate(indices)]
+            # text = [f"<a href='https://google.com'>{n}</a>" if n == name else None for n in chart.data[2].text]
             chart.data[2].update({'text': text})
 
         graphJason = json.dumps(chart, cls=PlotlyJSONEncoder)
         return graphJason
+
+    def get_chart_and_dtl(self, name, month):
+        graph = self.get_chart(name ,month)
+        table = self.dataframes[month][self.dataframes[month].username == name]. \
+            to_html(index=False).replace('dataframe', 'table')
+        return graph, table
 
 
 def get_date_list():

@@ -2,10 +2,15 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="40b176f2-ad87-490d-8319-8ba786427039" name="Default Changelist" comment="">
+      <change afterPath="$PROJECT_DIR$/data_prepare/prepare.sql" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/data_prepare/prepare.py" beforeDir="false" afterPath="$PROJECT_DIR$/data_prepare/prepare.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/plots/plots.py" beforeDir="false" afterPath="$PROJECT_DIR$/plots/plots.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/plots/templates/charts.html" beforeDir="false" afterPath="$PROJECT_DIR$/plots/templates/charts.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/plots/urls.py" beforeDir="false" afterPath="$PROJECT_DIR$/plots/urls.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/plots/views.py" beforeDir="false" afterPath="$PROJECT_DIR$/plots/views.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/static/js/plots.js" beforeDir="false" afterPath="$PROJECT_DIR$/static/js/plots.js" afterDir="false" />
     </list>
-    <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
@@ -72,7 +77,7 @@
     <property name="SHARE_PROJECT_CONFIGURATION_FILES" value="true" />
     <property name="WebServerToolWindowFactoryState" value="false" />
     <property name="last_opened_file_path" value="$USER_HOME$/Desktop/新建文件夹/data/workflow_currentoperator.tsv" />
-    <property name="settings.editor.selected.configurable" value="preferences.sourceCode.MySQL" />
+    <property name="settings.editor.selected.configurable" value="preferences.pluginManager" />
   </component>
   <component name="RecentsManager">
     <key name="MoveFile.RECENT_KEYS">
@@ -90,19 +95,7 @@
       <recent name="D:\Projects\AppraisalSystem\mytest\templates" />
     </key>
   </component>
-  <component name="RunDashboard">
-    <option name="ruleStates">
-      <list>
-        <RuleState>
-          <option name="name" value="ConfigurationTypeDashboardGroupingRule" />
-        </RuleState>
-        <RuleState>
-          <option name="name" value="StatusDashboardGroupingRule" />
-        </RuleState>
-      </list>
-    </option>
-  </component>
-  <component name="RunManager" selected="Python.prepare">
+  <component name="RunManager" selected="Python.manage">
     <configuration name="manage" type="PythonConfigurationType" factoryName="Python" nameIsGenerated="true">
       <module name="AppraisalSystem" />
       <option name="INTERPRETER_OPTIONS" value="" />
@@ -182,44 +175,16 @@
     </recent_temporary>
   </component>
   <component name="ServiceViewManager">
-    <option name="allServicesViewState">
-      <serviceView>
-        <treeState>
-          <expand />
-          <select />
-        </treeState>
-      </serviceView>
-    </option>
     <option name="viewStates">
       <list>
         <serviceView>
-          <option name="contentProportion" value="0.29707894" />
           <treeState>
-            <expand>
-              <path>
-                <item name="services root" type="e789fda9:ObjectUtils$Sentinel" />
-                <item name="com.intellij.execution.services.ServiceModel$ServiceGroupNode@1978d7c3" type="7427dc5b:ServiceModel$ServiceGroupNode" />
-              </path>
-              <path>
-                <item name="services root" type="e789fda9:ObjectUtils$Sentinel" />
-                <item name="com.intellij.execution.services.ServiceModel$ServiceGroupNode@1978d7c3" type="7427dc5b:ServiceModel$ServiceGroupNode" />
-                <item name="com.intellij.execution.services.ServiceModel$ServiceNode@1f490d3f" type="9fbbdea:ServiceModel$ServiceNode" />
-              </path>
-            </expand>
+            <expand />
             <select />
           </treeState>
-          <option name="viewType" value="contributor" />
-          <option name="roots">
-            <list>
-              <ServiceState>
-                <option name="contributor" value="com.intellij.database.console.DatabaseServiceViewContributor" />
-              </ServiceState>
-            </list>
-          </option>
         </serviceView>
       </list>
     </option>
-    <option name="selectedView" value="0" />
   </component>
   <component name="SvnConfiguration">
     <configuration />
@@ -286,18 +251,18 @@
       <screen x="0" y="0" width="1920" height="1040" />
     </state>
     <state x="552" y="179" key="#Notifications/0.0.1920.1040@0.0.1920.1040" timestamp="1584713765946" />
-    <state x="414" y="175" key="#com.intellij.execution.impl.EditConfigurationsDialog" timestamp="1584976694442">
+    <state x="414" y="175" key="#com.intellij.execution.impl.EditConfigurationsDialog" timestamp="1586142130496">
       <screen x="0" y="0" width="1920" height="1040" />
     </state>
-    <state x="414" y="175" key="#com.intellij.execution.impl.EditConfigurationsDialog/0.0.1920.1040@0.0.1920.1040" timestamp="1584976694442" />
+    <state x="414" y="175" key="#com.intellij.execution.impl.EditConfigurationsDialog/0.0.1920.1040@0.0.1920.1040" timestamp="1586142130496" />
     <state x="668" y="145" key="#manage" timestamp="1584619408121">
       <screen x="0" y="0" width="1920" height="1040" />
     </state>
     <state x="668" y="145" key="#manage/0.0.1920.1040@0.0.1920.1040" timestamp="1584619408121" />
-    <state x="776" y="105" width="537" height="586" key="#xdebugger.evaluate" timestamp="1584966004769">
+    <state x="706" y="307" width="1197" height="586" key="#xdebugger.evaluate" timestamp="1586192191528">
       <screen x="0" y="0" width="1920" height="1040" />
     </state>
-    <state x="776" y="105" width="537" height="586" key="#xdebugger.evaluate/0.0.1920.1040@0.0.1920.1040" timestamp="1584966004769" />
+    <state x="706" y="307" width="1197" height="586" key="#xdebugger.evaluate/0.0.1920.1040@0.0.1920.1040" timestamp="1586192191528" />
     <state x="598" y="114" key="CommitChangelistDialog2" timestamp="1584894726529">
       <screen x="0" y="0" width="1920" height="1040" />
     </state>
@@ -306,58 +271,82 @@
       <screen x="0" y="0" width="1920" height="1040" />
     </state>
     <state x="809" y="398" width="302" height="247" key="DBNavigator.ConnectionAuthenticationDialog/0.0.1920.1040@0.0.1920.1040" timestamp="1584714371249" />
-    <state x="490" y="175" key="DBNavigator.ProjectSettingsDialog" timestamp="1584714528734">
+    <state x="699" y="249" key="DBNavigator.ExportDataDialog" timestamp="1586190248650">
       <screen x="0" y="0" width="1920" height="1040" />
     </state>
-    <state x="490" y="175" key="DBNavigator.ProjectSettingsDialog/0.0.1920.1040@0.0.1920.1040" timestamp="1584714528734" />
+    <state x="699" y="249" key="DBNavigator.ExportDataDialog/0.0.1920.1040@0.0.1920.1040" timestamp="1586190248650" />
+    <state x="0" y="0" width="560" height="275" key="DBNavigator.IdleConnectionDialog" timestamp="1585052061398">
+      <screen x="0" y="0" width="1920" height="1040" />
+    </state>
+    <state x="0" y="0" width="560" height="275" key="DBNavigator.IdleConnectionDialog/0.0.1920.1040@0.0.1920.1040" timestamp="1585052061398" />
+    <state x="490" y="175" key="DBNavigator.ProjectSettingsDialog" timestamp="1586190242750">
+      <screen x="0" y="0" width="1920" height="1040" />
+    </state>
+    <state x="490" y="175" key="DBNavigator.ProjectSettingsDialog/0.0.1920.1040@0.0.1920.1040" timestamp="1586190242750" />
+    <state x="742" y="346" key="DBNavigator.ResultSetRecordViewerDialog" timestamp="1586190237797">
+      <screen x="0" y="0" width="1920" height="1040" />
+    </state>
+    <state x="742" y="346" key="DBNavigator.ResultSetRecordViewerDialog/0.0.1920.1040@0.0.1920.1040" timestamp="1586190237797" />
     <state x="1061" y="224" key="FileChooserDialogImpl" timestamp="1584714349178">
       <screen x="0" y="0" width="1920" height="1040" />
     </state>
     <state x="1061" y="224" key="FileChooserDialogImpl/0.0.1920.1040@0.0.1920.1040" timestamp="1584714349178" />
-    <state width="1899" height="282" key="GridCell.Tab.0.bottom" timestamp="1584977328657">
+    <state width="1899" height="346" key="GridCell.Tab.0.bottom" timestamp="1586192492437">
       <screen x="0" y="0" width="1920" height="1040" />
     </state>
-    <state width="1899" height="282" key="GridCell.Tab.0.bottom/0.0.1920.1040@0.0.1920.1040" timestamp="1584977328657" />
-    <state width="1899" height="282" key="GridCell.Tab.0.center" timestamp="1584977328656">
+    <state width="1899" height="346" key="GridCell.Tab.0.bottom/0.0.1920.1040@0.0.1920.1040" timestamp="1586192492437" />
+    <state width="1899" height="346" key="GridCell.Tab.0.center" timestamp="1586192492436">
       <screen x="0" y="0" width="1920" height="1040" />
     </state>
-    <state width="1899" height="282" key="GridCell.Tab.0.center/0.0.1920.1040@0.0.1920.1040" timestamp="1584977328656" />
-    <state width="1899" height="282" key="GridCell.Tab.0.left" timestamp="1584977328656">
+    <state width="1899" height="346" key="GridCell.Tab.0.center/0.0.1920.1040@0.0.1920.1040" timestamp="1586192492436" />
+    <state width="1899" height="346" key="GridCell.Tab.0.left" timestamp="1586192492436">
       <screen x="0" y="0" width="1920" height="1040" />
     </state>
-    <state width="1899" height="282" key="GridCell.Tab.0.left/0.0.1920.1040@0.0.1920.1040" timestamp="1584977328656" />
-    <state width="1899" height="282" key="GridCell.Tab.0.right" timestamp="1584977328656">
+    <state width="1899" height="346" key="GridCell.Tab.0.left/0.0.1920.1040@0.0.1920.1040" timestamp="1586192492436" />
+    <state width="1899" height="346" key="GridCell.Tab.0.right" timestamp="1586192492436">
       <screen x="0" y="0" width="1920" height="1040" />
     </state>
-    <state width="1899" height="282" key="GridCell.Tab.0.right/0.0.1920.1040@0.0.1920.1040" timestamp="1584977328656" />
-    <state width="1899" height="329" key="GridCell.Tab.1.bottom" timestamp="1584977258248">
+    <state width="1899" height="346" key="GridCell.Tab.0.right/0.0.1920.1040@0.0.1920.1040" timestamp="1586192492436" />
+    <state width="1899" height="346" key="GridCell.Tab.1.bottom" timestamp="1586192492437">
       <screen x="0" y="0" width="1920" height="1040" />
     </state>
-    <state width="1899" height="329" key="GridCell.Tab.1.bottom/0.0.1920.1040@0.0.1920.1040" timestamp="1584977258248" />
-    <state width="1899" height="329" key="GridCell.Tab.1.center" timestamp="1584977258248">
+    <state width="1899" height="346" key="GridCell.Tab.1.bottom/0.0.1920.1040@0.0.1920.1040" timestamp="1586192492437" />
+    <state width="1899" height="346" key="GridCell.Tab.1.center" timestamp="1586192492437">
       <screen x="0" y="0" width="1920" height="1040" />
     </state>
-    <state width="1899" height="329" key="GridCell.Tab.1.center/0.0.1920.1040@0.0.1920.1040" timestamp="1584977258248" />
-    <state width="1899" height="329" key="GridCell.Tab.1.left" timestamp="1584977258248">
+    <state width="1899" height="346" key="GridCell.Tab.1.center/0.0.1920.1040@0.0.1920.1040" timestamp="1586192492437" />
+    <state width="1899" height="346" key="GridCell.Tab.1.left" timestamp="1586192492437">
       <screen x="0" y="0" width="1920" height="1040" />
     </state>
-    <state width="1899" height="329" key="GridCell.Tab.1.left/0.0.1920.1040@0.0.1920.1040" timestamp="1584977258248" />
-    <state width="1899" height="329" key="GridCell.Tab.1.right" timestamp="1584977258248">
+    <state width="1899" height="346" key="GridCell.Tab.1.left/0.0.1920.1040@0.0.1920.1040" timestamp="1586192492437" />
+    <state width="1899" height="346" key="GridCell.Tab.1.right" timestamp="1586192492437">
       <screen x="0" y="0" width="1920" height="1040" />
     </state>
-    <state width="1899" height="329" key="GridCell.Tab.1.right/0.0.1920.1040@0.0.1920.1040" timestamp="1584977258248" />
-    <state x="461" y="162" key="SettingsEditor" timestamp="1584718695942">
+    <state width="1899" height="346" key="GridCell.Tab.1.right/0.0.1920.1040@0.0.1920.1040" timestamp="1586192492437" />
+    <state width="129" height="60" key="LargeValuePreview.bs_name" timestamp="1586190229808">
       <screen x="0" y="0" width="1920" height="1040" />
     </state>
-    <state x="461" y="162" key="SettingsEditor/0.0.1920.1040@0.0.1920.1040" timestamp="1584718695942" />
+    <state width="129" height="60" key="LargeValuePreview.bs_name/0.0.1920.1040@0.0.1920.1040" timestamp="1586190229808" />
+    <state width="138" height="60" key="LargeValuePreview.txr_loginid" timestamp="1585049874057">
+      <screen x="0" y="0" width="1920" height="1040" />
+    </state>
+    <state width="138" height="60" key="LargeValuePreview.txr_loginid/0.0.1920.1040@0.0.1920.1040" timestamp="1585049874057" />
+    <state width="135" height="60" key="LargeValuePreview.username" timestamp="1586190232100">
+      <screen x="0" y="0" width="1920" height="1040" />
+    </state>
+    <state width="135" height="60" key="LargeValuePreview.username/0.0.1920.1040@0.0.1920.1040" timestamp="1586190232100" />
+    <state x="461" y="162" key="SettingsEditor" timestamp="1586190444384">
+      <screen x="0" y="0" width="1920" height="1040" />
+    </state>
+    <state x="461" y="162" key="SettingsEditor/0.0.1920.1040@0.0.1920.1040" timestamp="1586190444384" />
     <state x="904" y="382" key="Vcs.Push.Dialog.v2" timestamp="1584894734726">
       <screen x="0" y="0" width="1920" height="1040" />
     </state>
     <state x="904" y="382" key="Vcs.Push.Dialog.v2/0.0.1920.1040@0.0.1920.1040" timestamp="1584894734726" />
-    <state width="968" height="528" key="XDebugger.FullValuePopup" timestamp="1584977071093">
+    <state width="968" height="528" key="XDebugger.FullValuePopup" timestamp="1586159786534">
       <screen x="0" y="0" width="1920" height="1040" />
     </state>
-    <state width="968" height="528" key="XDebugger.FullValuePopup/0.0.1920.1040@0.0.1920.1040" timestamp="1584977071093" />
+    <state width="968" height="528" key="XDebugger.FullValuePopup/0.0.1920.1040@0.0.1920.1040" timestamp="1586159786534" />
     <state x="92" y="92" width="1736" height="856" key="com.intellij.history.integration.ui.views.FileHistoryDialog" timestamp="1584892300857">
       <screen x="0" y="0" width="1920" height="1040" />
     </state>
@@ -405,6 +394,11 @@
           <line>69</line>
           <option name="timeStamp" value="13" />
         </line-breakpoint>
+        <line-breakpoint enabled="true" suspend="THREAD" type="python-line">
+          <url>file://$PROJECT_DIR$/plots/views.py</url>
+          <line>72</line>
+          <option name="timeStamp" value="30" />
+        </line-breakpoint>
       </breakpoints>
     </breakpoint-manager>
     <watches-manager>
@@ -412,8 +406,5 @@
         <watch expression="request.session" />
       </configuration>
     </watches-manager>
-  </component>
-  <component name="com.intellij.coverage.CoverageDataManagerImpl">
-    <SUITE FILE_PATH="coverage/AppraisalSystem$prepare.coverage" NAME="prepare Coverage Results" MODIFIED="1585015467516" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/data_prepare" />
   </component>
 </project>

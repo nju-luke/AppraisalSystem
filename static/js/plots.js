@@ -1,11 +1,10 @@
-$('#first_cat').on('change',function(){
-
+$('#chg_type').on('change',function(){
     $.ajax({
-        url: "/bar",
+        url: "{% url 'chgtp' %}",
         type: "GET",
         contentType: 'application/json;charset=UTF-8',
         data: {
-            'selected': document.getElementById('first_cat').value
+            'selected': document.getElementById('chg_type').value
 
         },
         dataType:"json",

@@ -14,6 +14,9 @@ urlpatterns = [
     path('', views.index_view,name='index'),
     # path('stuff/', views.StuffView.as_view(), name='stuff'),
     path('charts/', views.charts, name='charts'),
+    path('dtl/', views.dtl, name='dtl'),
+    path('employee/', views.employee, name='employee'),
+    path('manager/', views.manager, name='manager'),
 
     path('login/', views.login_view, name='login'),
     path('logout/', views.logout_view, name='logout'),

@@ -1,3 +1,4 @@
+from django.contrib import messages
 from django.contrib.auth import authenticate, login, logout
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth.models import User
@@ -8,6 +9,8 @@ from django.views.generic import TemplateView
 
 from plots.plots import get_date_list
 from . import plots
+
+import datetime
 
 # Create your views here.
 
@@ -54,12 +57,6 @@ def chgpwd(request):
     return  render(request, 'chgpwd.html', {'error':'密码修改成功！'})
 
 @login_required(login_url='login')
-def charts(request):
-    name = request.user.username
-    graphJason = charts_gallery.get_chart(name = name, month='2019-11') # 修改日期
-    return render(request, 'charts.html', {'plot':graphJason})
-
-@login_required(login_url='login')
 def logout_view(request):
     try:
         # 清空所有权限:
@@ -69,6 +66,55 @@ def logout_view(request):
         return HttpResponseRedirect("/")
     except Exception as e:
         return HttpResponse('您未登录！')
+
+
+@login_required(login_url='login')
+def charts(request):
+    name = request.user.username
+    month = datetime.date.today().strftime('%Y-%m')
+    # todo, 修改日期，获取权限,  #此处根据员工是否领导，直接跳转到可选页面，以及dtl
+    is_manager = False
+    if not is_manager:
+        return HttpResponseRedirect(f"/dtl?name={name}&month={month}")
+    # graphJason = charts_gallery.get_chart(name = name, month=month) # todo 修改日期, 根据用户名，找到对应的chart
+    # return render(request, 'charts.html', {'plot':graphJason, 'manager': is_manager})
+    return HttpResponseRedirect("/manager")
+
+@login_required(login_url='login')
+def employee(request):
+    # selected = request.GET['selected']
+    name = 'songchen'
+    is_manager = True
+    graphJason = charts_gallery.get_chart(name = name, month='2020-03') # 修改日期
+    ## todo 修改颜色
+    # return graphJason
+    return render(request, 'charts.html', {'plot':graphJason, 'manager': is_manager})
+
+@login_required(login_url='login')
+def manager(request):
+    # selected = request.GET['selected']
+    name = 'huangyouhua'
+    is_manager = True
+    graphJason = charts_gallery.get_chart(name = name, month='2020-03') # 修改日期
+    # return graphJason
+    return render(request, 'charts.html', {'plot':graphJason, 'manager': is_manager})
+
+
+# 权限控制
+def has_auth(user, name):
+
+    return True
+
+def dtl(request):
+    name = request.GET['name']
+    month = request.GET['month']
+    if not has_auth(request.user, name):
+        return HttpResponse('没有权限！')
+
+    graphJason, table = charts_gallery.get_chart_and_dtl(name = name, month = month)
+    # obj = charts_gallery.get_chart_and_dtl(name = name)
+    # return HttpResponse(obj)
+    return render(request, 'charts.html', {'plot':graphJason, 'table': table})
 
 
 
