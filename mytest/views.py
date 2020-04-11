@@ -13,16 +13,16 @@ def home(request):
     return render(request,'home.html')
 
 def register(request):
-    return render(request, 'index.html', context={'register':'ok'})
+    return render(request, 'uindex.html', context={'register':'ok'})
 
 def register_admin(request):
-    return render(request, 'index.html', context={'admin':'ok'})
+    return render(request, 'uindex.html', context={'admin':'ok'})
 
 
 def login_v(request):
     try:
         if request.method == 'GET':
-            return render(request, 'index.html', {'login': 'OK'})
+            return render(request, 'uindex.html', {'login': 'OK'})
         username = request.POST['username']
         password = request.POST['password']
         user = User.objects.get(username=username)
@@ -80,7 +80,7 @@ def logout_view(request):
 @login_required(login_url='login')
 def change_pwd(request):
     if request.method == 'GET':
-        return render(request, 'index.html', {'change': 'ok'})
+        return render(request, 'uindex.html', {'change': 'ok'})
     new_pwd = request.POST['password']
     request.user.set_password(new_pwd)
     return HttpResponse('密码修改成功!')

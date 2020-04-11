@@ -45,12 +45,66 @@
 <!--    <button type="button" class="btn btn-link">链接</button>-->
 <!--</div>-->
 
+
+<!--<form method="post" action="{% url 'test' %}">-->
+
+
+<!--    <label>选择日期<select name="select_month">-->
+<!--        {% for dt in date_list %}-->
+<!--        <option id="dt" value="{{ dt }}" {%if select_month%}selected{%endif%}>{{ dt }}</option>-->
+<!--        {% endfor %}-->
+<!--    </select></label>-->
+<!--    {%if manager%}-->
+<!--    <label>选择部门<select name="select_department">-->
+<!--        {% for id,dp in departments %}-->
+<!--        <option id="dp" value="{{ id }}" {%if select_department%}selected{%endif%}>{{ dp }}</option>-->
+<!--        {% endfor %}-->
+<!--    </select></label>-->
+
+<!--    <label>选择评分组<select name="select_group">-->
+<!--        <option value="干部评分" {%if select_group%}selected{%endif%}>干部评分</option>-->
+<!--        <option value="员工评分" {%if select_group%}selected{%endif%}>员工评分</option>-->
+<!--    </select></label>-->
+
+<!--    {%endif%}-->
+<!--    <input type="submit" value="提交"/>-->
+
+<!--    {% csrf_token %}-->
+<!--</form>-->
+
 <div class="container">
     <div class="row">
-        {%if manager %}
-        <a class="btn btn-default" href="{% url 'manager' %}" role="button">干部评分</a>
-        <a class="btn btn-default" href="{% url 'employee' %}" role="button">员工评分</a>
-        {% endif %}
+        <div class="form-group">
+            <form method="post" action="{% url 'charts' %}">
+
+                <label>选择日期<select class="form-control"  name="select_month">
+                    {% for dt in date_list %}
+                    <option id="dt" value="{{ dt }}" {%if select_month == dt%} selected {%endif%}>{{ dt }}</option>
+                    {% endfor %}
+                </select></label>
+
+                {%if is_manager%}
+                <label>选择部门<select class="form-control" name="select_department">
+                    {% for id,dp in department_list %}
+                    <option value="{{ id }}" {%if select_department == id%} selected {%endif%}>{{ dp }}</option>
+                    {% endfor %}
+                </select></label>
+
+                <label>选择评分组<select class="form-control" name="select_group">
+                    <option value=7 {%if select_group == "干部评分" %}selected{%endif%}>干部评分</option>
+                    <option value=7 {%if select_group == "员工评分" %}selected{%endif%}>员工评分</option>
+                </select></label>
+
+                {%endif%}
+                <input type="submit" value="提交"/>
+
+                {% csrf_token %}
+            </form>
+        </div>
+        <!--        {%if manager %}-->
+        <!--        <a class="btn btn-default" href="{% url 'manager' %}" role="button">干部评分</a>-->
+        <!--        <a class="btn btn-default" href="{% url 'employee' %}" role="button">员工评分</a>-->
+        <!--        {% endif %}-->
         <!--    {# <div id="plot_container" class="col-md-8 col-md-offset-2">{{plot|safe}}</div>#}-->
         <!--{#    <div class="col-md-12">{{plot|safe}}</div>#}-->
         <div class="col-md-12">
@@ -58,6 +112,8 @@
                 <script>
                 var graphs = {{plot | safe}};
                 Plotly.plot('bargraph',graphs,{});
+
+
 
                 </script>
             </div>

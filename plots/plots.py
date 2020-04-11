@@ -98,25 +98,25 @@ def get_area(df):
     return area1_x, area1_y, area2_x, area2_y
 
 
-def get_data(month):
+def get_data(month, categoty):
+    year = int(month[:4])
+    month = int(month[4:])
     sql = f'''
-            select bs_name,
-                f1,f2,f3,f4,f5,f6,f7,f8,f9,f10,f11,
-                point,
-                score,
-                username
-            from ecology.report_appraise_dtl rad
-            left join ecology.report_points rp
-            on rad.bs_loginid = rp.username
-            where rad.txrq='{month}' and rp.rec_month='{month}'
+        select loginid,
+               lastname,
+                total,score
+               v1 ,v2 ,v3 ,v4 ,v5 ,v6 ,v7 ,v8 ,v9 ,v10,v11
+               departmentid
+        from cp_result where years={year} and months={month}
+        and category={categoty}
             '''
     df = pd.read_sql(sql, engine)
     area1_x, area1_y, area2_x, area2_y = get_area(df)
     return df, area1_x, area1_y, area2_x, area2_y
 
 
-def get_base_chart(month):
-    df, area1_x, area1_y, area2_x, area2_y = get_data(month)
+def get_base_chart(month, group):
+    df, area1_x, area1_y, area2_x, area2_y = get_data(month, group)
     df['url'] = "<a href='/dtl/?name=" + df.username + f"&month={month}" + "'>" + df.bs_name + "</a>"
     point = go.Scatter(x=df.score, y=df.point, mode='markers + text',
                        text=df.url, textposition='top center')
@@ -134,8 +134,8 @@ class ChartsGallery():
     charts = {}
     dataframes = {}
 
-    def _initialize_chart(self, month):
-        df, chart = get_base_chart(month)
+    def _initialize_chart(self, month, group):
+        df, chart = get_base_chart(month, group)
         self.charts[month] = chart
         self.dataframes[month] = df
 
@@ -143,13 +143,15 @@ class ChartsGallery():
         # todo 权限
         pass
 
-    def get_chart(self, name, month):
-        if not month in self.charts:
-            self._initialize_chart(month)
-        chart = deepcopy(self.charts[month])  # todo 是否需要copy
+    def get_chart(self, name, month, department=None, group=None):
+
+        if not (month, group) in self.charts:
+            self._initialize_chart(month, group)
+        chart = deepcopy(self.charts[(month, group)])  # todo 是否需要copy
 
         # todo 修改用户显示数据
         if name:
+            # 用户权限
             indices = list(self.dataframes[month].username == name)
             # text = [n if n == name else None for n in chart.data[2].text]
             text = [self.dataframes[month].url[i] if v else None for i, v in enumerate(indices)]
@@ -160,7 +162,7 @@ class ChartsGallery():
         return graphJason
 
     def get_chart_and_dtl(self, name, month):
-        graph = self.get_chart(name ,month)
+        graph = self.get_chart(name, month)
         table = self.dataframes[month][self.dataframes[month].username == name]. \
             to_html(index=False).replace('dataframe', 'table')
         return graph, table
@@ -168,6 +170,15 @@ class ChartsGallery():
 
 def get_date_list():
     df = pd.read_sql('''
-    select distinct `timestamp` as dt from data
+    select distinct concat(years, lpad(months,2,'0')) dt from ecology.cp_result
     ''', engine)
     return list(df.dt.values)
+
+def get_department_list(user = None):
+    # todo 权限
+    df = pd.read_sql(    '''
+    SELECT id,departmentname FROM ecology.hrmdepartment
+    where canceled is null
+    ''', engine)
+
+    return [(id,dp) for id,dp in df.values]

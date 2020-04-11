@@ -32,7 +32,7 @@ ALLOWED_HOSTS = []
 
 INSTALLED_APPS = [
     'plots',
-    # 'mytest',
+    'mytest',
     'django.contrib.admin',
     'django.contrib.auth',
     'django.contrib.contenttypes',
@@ -129,7 +129,8 @@ USE_TZ = True
 
 STATIC_URL = '/static/'
 
-LOGIN_REDIRECT_URL = '/plots'
+LOGIN_URL = 'login'
+# LOGIN_REDIRECT_URL = '/plots'
 LOGOUT_REDIRECT_URL = ''
 
 

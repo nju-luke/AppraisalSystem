@@ -9,16 +9,24 @@
 <form method="post" action="{% url 'test' %}">
 
     <label>选择日期<select name="select_month">
-        {% for dt in date_list %}
-            <option id="dt" value="{{ dt }}">{{ dt }}</option>
+    {% for dt in date_list %}
+        <option id="dt" value="{{ dt }}" {%if select_month%}selected{%endif%}>{{ dt }}</option>
+    {% endfor %}
+    </select></label>
+
+    <label>选择部门<select name="select_department">
+        {% for id,dp in departments %}
+        <option id="dp" value="{{ id }}" {%if select_department%}selected{%endif%}>{{ dp }}</option>
         {% endfor %}
     </select></label>
+
     <input type="submit" value="测试"/>
 
     {% csrf_token %}
 </form>
 
 {{ select_month }}
+{{ select_department }}
 
 </body>
 </html>
