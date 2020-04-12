@@ -77,16 +77,27 @@ WSGI_APPLICATION = 'AppraisalSystem.wsgi.application'
 # Database
 # https://docs.djangoproject.com/en/3.0/ref/settings/#databases
 
+# DATABASES = {
+#     'default': {
+#         # 'ENGINE': 'django.db.backends.sqlite3',
+#         # 'NAME': os.path.join(BASE_DIR, 'db.sqlite3'),
+#         'ENGINE': 'django.db.backends.mysql',  # 数据库引擎
+#         'NAME': 'appraisal',  # 数据库名，先前创建的
+#         'USER': 'root',  # 用户名，可以自己创建用户
+#         'PASSWORD': '00000',  # 密码
+#         'HOST': 'localhost',  # mysql服务所在的主机ip
+#         'PORT': '3306',  # mysql服务端口
+#     }
+# }
 DATABASES = {
     'default': {
-        # 'ENGINE': 'django.db.backends.sqlite3',
-        # 'NAME': os.path.join(BASE_DIR, 'db.sqlite3'),
-        'ENGINE': 'django.db.backends.mysql',  # 数据库引擎
-        'NAME': 'appraisal',  # 数据库名，先前创建的
-        'USER': 'root',  # 用户名，可以自己创建用户
-        'PASSWORD': '00000',  # 密码
-        'HOST': 'localhost',  # mysql服务所在的主机ip
-        'PORT': '3306',  # mysql服务端口
+
+        'ENGINE' : 'sql_server.pyodbc',
+        'NAME' : 'ecology',
+        'HOST' : 'localhost',
+        'PORT' : 1433,
+        'USER' : 'root',
+        'PASSWORD' : 'Do8gjas07gaS1',
     }
 }
 

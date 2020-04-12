@@ -15,17 +15,7 @@ from _plotly_utils.utils import PlotlyJSONEncoder
 from plotly.offline import plot
 from sqlalchemy import create_engine
 
-USER = "root"
-PASSWORD = "Do8gjas07gaS1"
-HOST = "localhost"
-DATABASE = "ecology"
-
-def sql_engine():
-    engine_str = "mssql+pyodbc://" + USER + ":" + PASSWORD + "@" + HOST + "/" + DATABASE + "?driver=SQL+Server"
-    engine = create_engine(engine_str)
-    return engine
-
-engine = sql_engine()
+engine = create_engine('mysql+pymysql://root:00000@localhost:3306/appraisal')
 
 TABLE_COLS = ['lastname', 'score', 'point', 'v1', 'v2', 'v3', 'v4', 'v5', 'v6', 'v7', 'v8', 'v9', 'v10', 'v11', 'num']
 
@@ -121,7 +111,7 @@ def get_data(month, categoty):
                v1 ,v2 ,v3 ,v4 ,v5 ,v6 ,v7 ,v8 ,v9 ,v10,v11,
                departmentid,
                row_number() over (order by total desc) num
-        from cp_result where years={year} and months={month}
+        from ecology.cp_result where years={year} and months={month}
         and category={categoty}
             '''
     df = pd.read_sql(sql, engine)
@@ -187,8 +177,9 @@ class ChartsGallery():
 
 
 def get_date_list():
-    df = pd.read_sql("select distinct years, months from cp_result", engine)
-    df['dt'] = df.years.astype(str) + df.months.astype(str).str.pad(2, 'left', '0')
+    df = pd.read_sql('''
+    select distinct concat(years, lpad(months,2,'0')) dt from ecology.cp_result
+    ''', engine)
     return list(df.dt.values)
 
 
@@ -247,7 +238,7 @@ class Tree:
 
 def get_department_framework():
     df = pd.read_sql('''
-    SELECT id,departmentname,supdepid FROM hrmdepartment
+    SELECT id,departmentname,supdepid FROM ecology.hrmdepartment
     where canceled is null
     ''', engine)
     DEP_FRAM = {0: Tree(0, 'ALL')}
@@ -262,7 +253,7 @@ def get_department_framework():
 
 def get_auth_department():
     df = pd.read_sql(f'''
-    select loginid,departmentid from permission
+    select loginid,departmentid from ecology.permission
     ''', engine)
     auth_list = df.groupby('loginid').agg(list).to_dict()['departmentid']
     # df = df.set_index('loginid')

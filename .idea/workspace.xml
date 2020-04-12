@@ -2,15 +2,10 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="40b176f2-ad87-490d-8319-8ba786427039" name="Default Changelist" comment="">
+      <change afterPath="$PROJECT_DIR$/plots/plots_mysql.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/AppraisalSystem/settings.py" beforeDir="false" afterPath="$PROJECT_DIR$/AppraisalSystem/settings.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/AppraisalSystem/urls.py" beforeDir="false" afterPath="$PROJECT_DIR$/AppraisalSystem/urls.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/mytest/templates/home.html" beforeDir="false" afterPath="$PROJECT_DIR$/mytest/templates/home.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/mytest/templates/status.html" beforeDir="false" afterPath="$PROJECT_DIR$/mytest/templates/status.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/mytest/templates/uindex.html" beforeDir="false" afterPath="$PROJECT_DIR$/mytest/templates/uindex.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/mytest/urls.py" beforeDir="false" afterPath="$PROJECT_DIR$/mytest/urls.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/plots/plots.py" beforeDir="false" afterPath="$PROJECT_DIR$/plots/plots.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/plots/views.py" beforeDir="false" afterPath="$PROJECT_DIR$/plots/views.py" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -77,23 +72,23 @@
     <property name="RunOnceActivity.ShowReadmeOnStart" value="true" />
     <property name="SHARE_PROJECT_CONFIGURATION_FILES" value="true" />
     <property name="WebServerToolWindowFactoryState" value="false" />
-    <property name="last_opened_file_path" value="$PROJECT_DIR$" />
+    <property name="last_opened_file_path" value="$PROJECT_DIR$/plots" />
     <property name="settings.editor.selected.configurable" value="preferences.pluginManager" />
   </component>
   <component name="RecentsManager">
-    <key name="CopyFile.RECENT_KEYS">
-      <recent name="E:\Projects\AppraisalSystem" />
-      <recent name="E:\Projects\AppraisalSystem\plots\templates" />
-      <recent name="D:\Projects\AppraisalSystem" />
-      <recent name="D:\Projects\AppraisalSystem\plots" />
-      <recent name="D:\Projects\AppraisalSystem\plots\templates" />
-    </key>
     <key name="MoveFile.RECENT_KEYS">
       <recent name="E:\Projects\AppraisalSystem\plots" />
       <recent name="E:\Projects\AppraisalSystem\plots\templates" />
       <recent name="D:\Projects\AppraisalSystem" />
       <recent name="D:\Projects\AppraisalSystem\plots" />
       <recent name="E:\Projects\AppraisalSystem\mytest\templates" />
+    </key>
+    <key name="CopyFile.RECENT_KEYS">
+      <recent name="E:\Projects\AppraisalSystem\plots" />
+      <recent name="E:\Projects\AppraisalSystem" />
+      <recent name="E:\Projects\AppraisalSystem\plots\templates" />
+      <recent name="D:\Projects\AppraisalSystem" />
+      <recent name="D:\Projects\AppraisalSystem\plots" />
     </key>
   </component>
   <component name="RunManager" selected="Python.manage">
@@ -288,10 +283,10 @@
       <screen x="0" y="0" width="1920" height="1040" />
     </state>
     <state x="530" y="479" width="1197" height="561" key="#xdebugger.evaluate/0.0.1920.1040@0.0.1920.1040" timestamp="1586658423186" />
-    <state x="598" y="114" key="CommitChangelistDialog2" timestamp="1586659838413">
+    <state x="598" y="114" key="CommitChangelistDialog2" timestamp="1586664459119">
       <screen x="0" y="0" width="1920" height="1040" />
     </state>
-    <state x="598" y="114" key="CommitChangelistDialog2/0.0.1920.1040@0.0.1920.1040" timestamp="1586659838413" />
+    <state x="598" y="114" key="CommitChangelistDialog2/0.0.1920.1040@0.0.1920.1040" timestamp="1586664459119" />
     <state x="809" y="398" width="302" height="247" key="DBNavigator.ConnectionAuthenticationDialog" timestamp="1584714371249">
       <screen x="0" y="0" width="1920" height="1040" />
     </state>
@@ -312,10 +307,10 @@
       <screen x="0" y="0" width="1920" height="1040" />
     </state>
     <state x="742" y="346" key="DBNavigator.ResultSetRecordViewerDialog/0.0.1920.1040@0.0.1920.1040" timestamp="1586190237797" />
-    <state x="1061" y="224" key="FileChooserDialogImpl" timestamp="1584714349178">
+    <state x="1061" y="224" key="FileChooserDialogImpl" timestamp="1586687931511">
       <screen x="0" y="0" width="1920" height="1040" />
     </state>
-    <state x="1061" y="224" key="FileChooserDialogImpl/0.0.1920.1040@0.0.1920.1040" timestamp="1584714349178" />
+    <state x="1061" y="224" key="FileChooserDialogImpl/0.0.1920.1040@0.0.1920.1040" timestamp="1586687931511" />
     <state width="1899" height="288" key="GridCell.Tab.0.bottom" timestamp="1586661248748">
       <screen x="0" y="0" width="1920" height="1040" />
     </state>
@@ -364,10 +359,10 @@
       <screen x="0" y="0" width="1920" height="1040" />
     </state>
     <state x="461" y="162" key="SettingsEditor/0.0.1920.1040@0.0.1920.1040" timestamp="1586565477011" />
-    <state x="904" y="382" key="Vcs.Push.Dialog.v2" timestamp="1586607001966">
+    <state x="904" y="382" key="Vcs.Push.Dialog.v2" timestamp="1586664474522">
       <screen x="0" y="0" width="1920" height="1040" />
     </state>
-    <state x="904" y="382" key="Vcs.Push.Dialog.v2/0.0.1920.1040@0.0.1920.1040" timestamp="1586607001966" />
+    <state x="904" y="382" key="Vcs.Push.Dialog.v2/0.0.1920.1040@0.0.1920.1040" timestamp="1586664474522" />
     <state width="968" height="528" key="XDebugger.FullValuePopup" timestamp="1586614840297">
       <screen x="0" y="0" width="1920" height="1040" />
     </state>
