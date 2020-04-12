@@ -2,10 +2,9 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="40b176f2-ad87-490d-8319-8ba786427039" name="Default Changelist" comment="">
-      <change afterPath="$PROJECT_DIR$/plots/plots_mysql.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/AppraisalSystem/settings.py" beforeDir="false" afterPath="$PROJECT_DIR$/AppraisalSystem/settings.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/plots/plots.py" beforeDir="false" afterPath="$PROJECT_DIR$/plots/plots.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/AppraisalSystem/urls.py" beforeDir="false" afterPath="$PROJECT_DIR$/AppraisalSystem/urls.py" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -238,7 +237,14 @@
       <option name="project" value="LOCAL" />
       <updated>1586659840445</updated>
     </task>
-    <option name="localTasksCounter" value="7" />
+    <task id="LOCAL-00007" summary="modify to sqlserver">
+      <created>1586700591627</created>
+      <option name="number" value="00007" />
+      <option name="presentableId" value="LOCAL-00007" />
+      <option name="project" value="LOCAL" />
+      <updated>1586700591627</updated>
+    </task>
+    <option name="localTasksCounter" value="8" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -264,7 +270,8 @@
     <MESSAGE value="func to class&#10;add session" />
     <MESSAGE value="准备使用session传递target user" />
     <MESSAGE value="准备修改return_dict为args" />
-    <option name="LAST_COMMIT_MESSAGE" value="准备修改return_dict为args" />
+    <MESSAGE value="modify to sqlserver" />
+    <option name="LAST_COMMIT_MESSAGE" value="modify to sqlserver" />
   </component>
   <component name="WindowStateProjectService">
     <state x="552" y="179" key="#Notifications" timestamp="1584713765946">
@@ -283,10 +290,10 @@
       <screen x="0" y="0" width="1920" height="1040" />
     </state>
     <state x="530" y="479" width="1197" height="561" key="#xdebugger.evaluate/0.0.1920.1040@0.0.1920.1040" timestamp="1586658423186" />
-    <state x="598" y="114" key="CommitChangelistDialog2" timestamp="1586664459119">
+    <state x="598" y="114" key="CommitChangelistDialog2" timestamp="1586700589653">
       <screen x="0" y="0" width="1920" height="1040" />
     </state>
-    <state x="598" y="114" key="CommitChangelistDialog2/0.0.1920.1040@0.0.1920.1040" timestamp="1586664459119" />
+    <state x="598" y="114" key="CommitChangelistDialog2/0.0.1920.1040@0.0.1920.1040" timestamp="1586700589652" />
     <state x="809" y="398" width="302" height="247" key="DBNavigator.ConnectionAuthenticationDialog" timestamp="1584714371249">
       <screen x="0" y="0" width="1920" height="1040" />
     </state>
@@ -311,22 +318,22 @@
       <screen x="0" y="0" width="1920" height="1040" />
     </state>
     <state x="1061" y="224" key="FileChooserDialogImpl/0.0.1920.1040@0.0.1920.1040" timestamp="1586687931511" />
-    <state width="1899" height="288" key="GridCell.Tab.0.bottom" timestamp="1586661248748">
+    <state width="1899" height="220" key="GridCell.Tab.0.bottom" timestamp="1586700781004">
       <screen x="0" y="0" width="1920" height="1040" />
     </state>
-    <state width="1899" height="288" key="GridCell.Tab.0.bottom/0.0.1920.1040@0.0.1920.1040" timestamp="1586661248748" />
-    <state width="1899" height="288" key="GridCell.Tab.0.center" timestamp="1586661248748">
+    <state width="1899" height="220" key="GridCell.Tab.0.bottom/0.0.1920.1040@0.0.1920.1040" timestamp="1586700781004" />
+    <state width="1899" height="220" key="GridCell.Tab.0.center" timestamp="1586700781004">
       <screen x="0" y="0" width="1920" height="1040" />
     </state>
-    <state width="1899" height="288" key="GridCell.Tab.0.center/0.0.1920.1040@0.0.1920.1040" timestamp="1586661248748" />
-    <state width="1899" height="288" key="GridCell.Tab.0.left" timestamp="1586661248747">
+    <state width="1899" height="220" key="GridCell.Tab.0.center/0.0.1920.1040@0.0.1920.1040" timestamp="1586700781004" />
+    <state width="1899" height="220" key="GridCell.Tab.0.left" timestamp="1586700781003">
       <screen x="0" y="0" width="1920" height="1040" />
     </state>
-    <state width="1899" height="288" key="GridCell.Tab.0.left/0.0.1920.1040@0.0.1920.1040" timestamp="1586661248747" />
-    <state width="1899" height="288" key="GridCell.Tab.0.right" timestamp="1586661248748">
+    <state width="1899" height="220" key="GridCell.Tab.0.left/0.0.1920.1040@0.0.1920.1040" timestamp="1586700781003" />
+    <state width="1899" height="220" key="GridCell.Tab.0.right" timestamp="1586700781004">
       <screen x="0" y="0" width="1920" height="1040" />
     </state>
-    <state width="1899" height="288" key="GridCell.Tab.0.right/0.0.1920.1040@0.0.1920.1040" timestamp="1586661248748" />
+    <state width="1899" height="220" key="GridCell.Tab.0.right/0.0.1920.1040@0.0.1920.1040" timestamp="1586700781004" />
     <state width="1899" height="288" key="GridCell.Tab.1.bottom" timestamp="1586661248749">
       <screen x="0" y="0" width="1920" height="1040" />
     </state>
