@@ -6,6 +6,7 @@ datettime: 2020/3/20 14:00
 import json
 import string
 from copy import deepcopy
+import datetime
 
 import numpy as np
 import pandas as pd
@@ -138,7 +139,7 @@ class ChartsGallery():
     charts = {}
     dataframes = {}
 
-    def _initialize_chart(self, month, group):
+    def initialize_chart(self, month, group):
         df, chart = get_base_chart(month, group)
         self.charts[(month, group)] = chart
         self.dataframes[(month, group)] = df
@@ -150,7 +151,7 @@ class ChartsGallery():
     def get_chart(self, name, month, department=None, group=None):
 
         if not (month, group) in self.charts:
-            self._initialize_chart(month, group)
+            self.initialize_chart(month, group)
         chart = deepcopy(self.charts[(month, group)])  # todo 是否需要copy
 
         # todo 处理部门数据

@@ -1,7 +1,7 @@
 <div class="page-container">
     <h1>Login</h1>
     {% if register %}
-    <form action="{% url 'create' %}" method="post">
+    <form action="{% url 'test_create' %}" method="post">
         {% csrf_token %}
         <input type="text" name="username" class="username" placeholder="Username">
         <input type="password" name="password" class="password" placeholder="Password">
@@ -9,7 +9,7 @@
         <div class="error"><span>+</span></div>
     </form>
     {% elif admin%}
-    <form action="{% url 'create_admin' %}" method="post">
+    <form action="{% url 'test_create_admin' %}" method="post">
         {% csrf_token %}
         <input type="text" name="username" class="username" placeholder="Username">
         <input type="password" name="password" class="password" placeholder="Password">
@@ -17,7 +17,7 @@
         <div class="error"><span>+</span></div>
     </form>
     {% elif login %}
-    <form action="{% url 'login' %}" method="post">
+    <form action="{% url 'test_login' %}" method="post">
         {% csrf_token %}
         <input type="text" name="username" class="username" placeholder="Username">
         <input type="password" name="password" class="password" placeholder="Password">
@@ -28,7 +28,7 @@
         <div class="error"><span>+</span></div>
     </form>
     {% elif change %}
-    <form action="{% url 'change' %}" method="post">
+    <form action="{% url 'test_change' %}" method="post">
         {% csrf_token %}
         <input type="password" name="password" class="password" placeholder="Password">
         {% if error %}
@@ -41,7 +41,7 @@
 
     <div class="connect">
         <p>
-            <a class="facebook" href="{% url 'status' %}">check your status</a>
+            <a class="facebook" href="{% url 'test_status' %}">check your status</a>
         </p>
     </div>
 </div>

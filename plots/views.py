@@ -21,6 +21,13 @@ import datetime
 
 charts_gallery = plots.ChartsGallery()
 
+date_list = get_date_list()
+department_framework = get_department_framework()
+auth_department = get_auth_department()
+
+charts_gallery.initialize_chart(max(date_list), 6)
+charts_gallery.initialize_chart(max(date_list), 7)
+
 
 # class IndexView(TemplateView):
 #     template_name = "index.html"
@@ -78,31 +85,29 @@ def logout_view(request):
 
 
 class Charts(LoginRequiredMixin, View):
-    date_list = get_date_list()
-    department_framework = get_department_framework()
-    auth_department = get_auth_department()
 
     def get(self, request):
         user = request.user.username
-        return_dict = {'date_list': self.date_list}
+        request.session['args'] = {'date_list': date_list}
         month = datetime.date.today().strftime('%Y%m')
 
-        if not user in self.auth_department:
+
+        if not user in auth_department:
             group = 7
             return HttpResponseRedirect(f"/dtl?name={user}&month={month}&group={group}")
 
 
-        return_dict['is_manager'] = True
+        request.session['args']['is_manager'] = True
 
         # 显示授权的部门
-        auth_dep_ids = self.auth_department[user]
-        return_dict['department_list'] = []
+        auth_dep_ids = auth_department[user]
+        request.session['args']['department_list'] = []
         for auth_dep_id in auth_dep_ids:
-            return_dict['department_list'] += self.department_framework[auth_dep_id].get_offsprings()
-        return_dict['select_department'] = auth_dep_ids[0]
+            request.session['args']['department_list'] += department_framework[auth_dep_id].get_offsprings()
+        request.session['args']['select_department'] = auth_dep_ids[0]
 
-        return_dict['select_month'] = month
-        request.session['args'] = return_dict
+        request.session['args']['select_month'] = month
+        # request.session['args'] = return_dict
 
         # graphJason = charts_gallery.get_chart(name = name, month=month) # todo 修改日期, 根据用户名，找到对应的chart
         # return render(request, 'charts.html', {'plot':graphJason, 'is_manager': is_manager})
