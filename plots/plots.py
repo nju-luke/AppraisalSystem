@@ -254,8 +254,11 @@ def get_auth_department():
     df = pd.read_sql(f'''
     select loginid,departmentid from ecology.permission
     ''', engine)
-    df = df.set_index('loginid')
-    return df.to_dict()['departmentid']
+    auth_list = df.groupby('loginid').agg(list).to_dict()['departmentid']
+    # df = df.set_index('loginid')
+    # return df.to_dict()['departmentid']
+    return auth_list
+
 
 # 权限控制
 def has_auth(user, name):

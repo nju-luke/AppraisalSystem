@@ -4,7 +4,6 @@
     <list default="true" id="40b176f2-ad87-490d-8319-8ba786427039" name="Default Changelist" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/plots/plots.py" beforeDir="false" afterPath="$PROJECT_DIR$/plots/plots.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/plots/templates/charts.html" beforeDir="false" afterPath="$PROJECT_DIR$/plots/templates/charts.html" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/plots/views.py" beforeDir="false" afterPath="$PROJECT_DIR$/plots/views.py" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
@@ -224,7 +223,14 @@
       <option name="project" value="LOCAL" />
       <updated>1586606992143</updated>
     </task>
-    <option name="localTasksCounter" value="5" />
+    <task id="LOCAL-00005" summary="准备使用session传递target user">
+      <created>1586657483271</created>
+      <option name="number" value="00005" />
+      <option name="presentableId" value="LOCAL-00005" />
+      <option name="project" value="LOCAL" />
+      <updated>1586657483271</updated>
+    </task>
+    <option name="localTasksCounter" value="6" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -248,7 +254,8 @@
     <MESSAGE value="finish the login page" />
     <MESSAGE value="finish chgpwd, nav" />
     <MESSAGE value="func to class&#10;add session" />
-    <option name="LAST_COMMIT_MESSAGE" value="func to class&#10;add session" />
+    <MESSAGE value="准备使用session传递target user" />
+    <option name="LAST_COMMIT_MESSAGE" value="准备使用session传递target user" />
   </component>
   <component name="WindowStateProjectService">
     <state x="552" y="179" key="#Notifications" timestamp="1584713765946">
@@ -263,14 +270,14 @@
       <screen x="0" y="0" width="1920" height="1040" />
     </state>
     <state x="668" y="145" key="#manage/0.0.1920.1040@0.0.1920.1040" timestamp="1584619408121" />
-    <state x="530" y="250" width="1197" height="790" key="#xdebugger.evaluate" timestamp="1586626468047">
+    <state x="530" y="479" width="1197" height="561" key="#xdebugger.evaluate" timestamp="1586658423186">
       <screen x="0" y="0" width="1920" height="1040" />
     </state>
-    <state x="530" y="250" width="1197" height="790" key="#xdebugger.evaluate/0.0.1920.1040@0.0.1920.1040" timestamp="1586626468047" />
-    <state x="598" y="114" key="CommitChangelistDialog2" timestamp="1586606989259">
+    <state x="530" y="479" width="1197" height="561" key="#xdebugger.evaluate/0.0.1920.1040@0.0.1920.1040" timestamp="1586658423186" />
+    <state x="598" y="114" key="CommitChangelistDialog2" timestamp="1586657479738">
       <screen x="0" y="0" width="1920" height="1040" />
     </state>
-    <state x="598" y="114" key="CommitChangelistDialog2/0.0.1920.1040@0.0.1920.1040" timestamp="1586606989259" />
+    <state x="598" y="114" key="CommitChangelistDialog2/0.0.1920.1040@0.0.1920.1040" timestamp="1586657479738" />
     <state x="809" y="398" width="302" height="247" key="DBNavigator.ConnectionAuthenticationDialog" timestamp="1584714371249">
       <screen x="0" y="0" width="1920" height="1040" />
     </state>
@@ -295,38 +302,38 @@
       <screen x="0" y="0" width="1920" height="1040" />
     </state>
     <state x="1061" y="224" key="FileChooserDialogImpl/0.0.1920.1040@0.0.1920.1040" timestamp="1584714349178" />
-    <state width="1899" height="441" key="GridCell.Tab.0.bottom" timestamp="1586657132999">
+    <state width="1899" height="261" key="GridCell.Tab.0.bottom" timestamp="1586659405065">
       <screen x="0" y="0" width="1920" height="1040" />
     </state>
-    <state width="1899" height="441" key="GridCell.Tab.0.bottom/0.0.1920.1040@0.0.1920.1040" timestamp="1586657132999" />
-    <state width="1899" height="441" key="GridCell.Tab.0.center" timestamp="1586657132999">
+    <state width="1899" height="261" key="GridCell.Tab.0.bottom/0.0.1920.1040@0.0.1920.1040" timestamp="1586659405065" />
+    <state width="1899" height="261" key="GridCell.Tab.0.center" timestamp="1586659405065">
       <screen x="0" y="0" width="1920" height="1040" />
     </state>
-    <state width="1899" height="441" key="GridCell.Tab.0.center/0.0.1920.1040@0.0.1920.1040" timestamp="1586657132999" />
-    <state width="1899" height="441" key="GridCell.Tab.0.left" timestamp="1586657132998">
+    <state width="1899" height="261" key="GridCell.Tab.0.center/0.0.1920.1040@0.0.1920.1040" timestamp="1586659405065" />
+    <state width="1899" height="261" key="GridCell.Tab.0.left" timestamp="1586659405064">
       <screen x="0" y="0" width="1920" height="1040" />
     </state>
-    <state width="1899" height="441" key="GridCell.Tab.0.left/0.0.1920.1040@0.0.1920.1040" timestamp="1586657132998" />
-    <state width="1899" height="441" key="GridCell.Tab.0.right" timestamp="1586657132999">
+    <state width="1899" height="261" key="GridCell.Tab.0.left/0.0.1920.1040@0.0.1920.1040" timestamp="1586659405064" />
+    <state width="1899" height="261" key="GridCell.Tab.0.right" timestamp="1586659405065">
       <screen x="0" y="0" width="1920" height="1040" />
     </state>
-    <state width="1899" height="441" key="GridCell.Tab.0.right/0.0.1920.1040@0.0.1920.1040" timestamp="1586657132999" />
-    <state width="1899" height="272" key="GridCell.Tab.1.bottom" timestamp="1586657203708">
+    <state width="1899" height="261" key="GridCell.Tab.0.right/0.0.1920.1040@0.0.1920.1040" timestamp="1586659405065" />
+    <state width="1899" height="261" key="GridCell.Tab.1.bottom" timestamp="1586659397104">
       <screen x="0" y="0" width="1920" height="1040" />
     </state>
-    <state width="1899" height="272" key="GridCell.Tab.1.bottom/0.0.1920.1040@0.0.1920.1040" timestamp="1586657203708" />
-    <state width="1899" height="272" key="GridCell.Tab.1.center" timestamp="1586657203708">
+    <state width="1899" height="261" key="GridCell.Tab.1.bottom/0.0.1920.1040@0.0.1920.1040" timestamp="1586659397104" />
+    <state width="1899" height="261" key="GridCell.Tab.1.center" timestamp="1586659397103">
       <screen x="0" y="0" width="1920" height="1040" />
     </state>
-    <state width="1899" height="272" key="GridCell.Tab.1.center/0.0.1920.1040@0.0.1920.1040" timestamp="1586657203708" />
-    <state width="1899" height="272" key="GridCell.Tab.1.left" timestamp="1586657203707">
+    <state width="1899" height="261" key="GridCell.Tab.1.center/0.0.1920.1040@0.0.1920.1040" timestamp="1586659397103" />
+    <state width="1899" height="261" key="GridCell.Tab.1.left" timestamp="1586659397103">
       <screen x="0" y="0" width="1920" height="1040" />
     </state>
-    <state width="1899" height="272" key="GridCell.Tab.1.left/0.0.1920.1040@0.0.1920.1040" timestamp="1586657203707" />
-    <state width="1899" height="272" key="GridCell.Tab.1.right" timestamp="1586657203708">
+    <state width="1899" height="261" key="GridCell.Tab.1.left/0.0.1920.1040@0.0.1920.1040" timestamp="1586659397103" />
+    <state width="1899" height="261" key="GridCell.Tab.1.right" timestamp="1586659397104">
       <screen x="0" y="0" width="1920" height="1040" />
     </state>
-    <state width="1899" height="272" key="GridCell.Tab.1.right/0.0.1920.1040@0.0.1920.1040" timestamp="1586657203708" />
+    <state width="1899" height="261" key="GridCell.Tab.1.right/0.0.1920.1040@0.0.1920.1040" timestamp="1586659397104" />
     <state width="129" height="60" key="LargeValuePreview.bs_name" timestamp="1586190229808">
       <screen x="0" y="0" width="1920" height="1040" />
     </state>
@@ -414,13 +421,8 @@
         </line-breakpoint>
         <line-breakpoint enabled="true" suspend="THREAD" type="python-line">
           <url>file://$PROJECT_DIR$/plots/views.py</url>
-          <line>182</line>
-          <option name="timeStamp" value="78" />
-        </line-breakpoint>
-        <line-breakpoint enabled="true" suspend="THREAD" type="python-line">
-          <url>file://$PROJECT_DIR$/plots/views.py</url>
-          <line>110</line>
-          <option name="timeStamp" value="79" />
+          <line>85</line>
+          <option name="timeStamp" value="83" />
         </line-breakpoint>
       </breakpoints>
     </breakpoint-manager>

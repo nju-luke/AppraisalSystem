@@ -1,3 +1,5 @@
+from urllib import parse
+
 from django.contrib import messages
 from django.contrib.auth import authenticate, login, logout
 from django.contrib.auth.decorators import login_required
@@ -86,15 +88,18 @@ class Charts(LoginRequiredMixin, View):
         month = datetime.date.today().strftime('%Y%m')
 
         if not user in self.auth_department:
-            return HttpResponseRedirect(f"/dtl?name={user}&month={month}")
+            group = 7
+            return HttpResponseRedirect(f"/dtl?name={user}&month={month}&group={group}")
 
 
         return_dict['is_manager'] = True
 
-
         # 显示授权的部门
-        auth_dep_id = self.auth_department[user]
-        return_dict['department_list'] = self.department_framework[auth_dep_id].get_offsprings()
+        auth_dep_ids = self.auth_department[user]
+        return_dict['department_list'] = []
+        for auth_dep_id in auth_dep_ids:
+            return_dict['department_list'] += self.department_framework[auth_dep_id].get_offsprings()
+        return_dict['select_department'] = auth_dep_ids[0]
 
         return_dict['select_month'] = month
         request.session['args'] = return_dict
@@ -113,8 +118,11 @@ class Charts(LoginRequiredMixin, View):
 
         if not 'select_group' in request.POST:
             # todo 在别人的详情页查看时，修改前端  request.headers['referer']
-            return HttpResponseRedirect(f"/dtl?name={request.user.username}&month={select_month}")
-
+            url = request.headers['referer']
+            referer_args = dict(parse.parse_qsl(parse.urlsplit(url).query))
+            user = referer_args['name']
+            group = referer_args['group']
+            return HttpResponseRedirect(f"/dtl?name={user}&month={select_month}&group={group}") #
         try:
             request.session['args']['select_group'] = int(request.POST['select_group'])
             request.session['args']['select_department'] = int(request.POST['select_department'])
@@ -181,14 +189,12 @@ def manager(request):
 
 def dtl(request):
     name = request.GET['name']
-
-    request.session['args']['target_name'] = name
-
     month = request.GET['month']
+    group = request.GET['group']
     if not has_auth(request.user, name):
         return HttpResponse('没有权限！')
 
-    graphJason, table = charts_gallery.get_chart_and_dtl(name=name, month=month)
+    graphJason, table = charts_gallery.get_chart_and_dtl(name=name, month=month, group=group)
     # obj = charts_gallery.get_chart_and_dtl(name = name)
     # return HttpResponse(obj)
     return render(request, 'charts.html', {'plot': graphJason, 'table': table,
