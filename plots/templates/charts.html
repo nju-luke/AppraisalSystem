@@ -85,14 +85,15 @@
 
                 {%if is_manager%}
                 <label>选择部门<select class="form-control" name="select_department">
+                    <option value="" {%if not select_department %} selected {%endif%}></option>
                     {% for id,dp in department_list %}
                     <option value="{{ id }}" {%if select_department == id%} selected {%endif%}>{{ dp }}</option>
                     {% endfor %}
                 </select></label>
 
                 <label>选择评分组<select class="form-control" name="select_group">
-                    <option value=7 {%if select_group == "干部评分" %}selected{%endif%}>干部评分</option>
-                    <option value=7 {%if select_group == "员工评分" %}selected{%endif%}>员工评分</option>
+                    <option value=6 {%if select_group == 6 %}selected{%endif%}>干部评分</option>
+                    <option value=7 {%if select_group == 7 %}selected{%endif%}>员工评分</option>
                 </select></label>
 
                 {%endif%}

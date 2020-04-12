@@ -16,6 +16,8 @@ from sqlalchemy import create_engine
 
 engine = create_engine('mysql+pymysql://root:00000@localhost:3306/appraisal')
 
+TABLE_COLS = ['lastname', 'score', 'point', 'v1', 'v2', 'v3', 'v4', 'v5', 'v6', 'v7', 'v8', 'v9', 'v10', 'v11', 'num']
+
 
 def get_areas():
     df_area = pd.DataFrame([[1, 1, 2, 2, 1], [1, 2, 2, 1, 1]]).T * 10
@@ -100,14 +102,15 @@ def get_area(df):
 
 def get_data(month, categoty):
     year = int(month[:4])
-    month = int(month[4:])
+    month = int(month[5:])
     sql = f'''
         select loginid,
                lastname,
-                total,score
-               v1 ,v2 ,v3 ,v4 ,v5 ,v6 ,v7 ,v8 ,v9 ,v10,v11
-               departmentid
-        from cp_result where years={year} and months={month}
+               total score, point, 
+               v1 ,v2 ,v3 ,v4 ,v5 ,v6 ,v7 ,v8 ,v9 ,v10,v11,
+               departmentid,
+               row_number() over (order by total desc) num
+        from ecology.cp_result where years={year} and months={month}
         and category={categoty}
             '''
     df = pd.read_sql(sql, engine)
@@ -117,7 +120,8 @@ def get_data(month, categoty):
 
 def get_base_chart(month, group):
     df, area1_x, area1_y, area2_x, area2_y = get_data(month, group)
-    df['url'] = "<a href='/dtl/?name=" + df.username + f"&month={month}" + "'>" + df.bs_name + "</a>"
+    df['url'] = "<a href='/dtl/?name=" + df.loginid + f"&month={month}" \
+                + f"&group={group}" + "'>" + df.lastname + "</a>"
     point = go.Scatter(x=df.score, y=df.point, mode='markers + text',
                        text=df.url, textposition='top center')
     area1 = go.Scatter(x=area1_x, y=area1_y, line_color='LightSalmon',
@@ -136,10 +140,10 @@ class ChartsGallery():
 
     def _initialize_chart(self, month, group):
         df, chart = get_base_chart(month, group)
-        self.charts[month] = chart
-        self.dataframes[month] = df
+        self.charts[(month, group)] = chart
+        self.dataframes[(month, group)] = df
 
-    def _get_auth(self, username):
+    def _get_department_auth(self, username):
         # todo 权限
         pass
 
@@ -149,21 +153,24 @@ class ChartsGallery():
             self._initialize_chart(month, group)
         chart = deepcopy(self.charts[(month, group)])  # todo 是否需要copy
 
-        # todo 修改用户显示数据
-        if name:
-            # 用户权限
-            indices = list(self.dataframes[month].username == name)
-            # text = [n if n == name else None for n in chart.data[2].text]
-            text = [self.dataframes[month].url[i] if v else None for i, v in enumerate(indices)]
-            # text = [f"<a href='https://google.com'>{n}</a>" if n == name else None for n in chart.data[2].text]
-            chart.data[2].update({'text': text})
+        # todo 处理部门数据
+        # todo 部门权限
 
+        if not department:
+            indices = list(self.dataframes[(month, group)].loginid == name)
+        else:
+            indices = list(self.dataframes[(month, group)].departmentid == int(department))
+        # text = [n if n == name else None for n in chart.data[2].text]
+        text = [self.dataframes[(month, group)].url[i] if v else None for i, v in enumerate(indices)]
+        # text = [f"<a href='https://google.com'>{n}</a>" if n == name else None for n in chart.data[2].text]
+        chart.data[2].update({'text': text})
         graphJason = json.dumps(chart, cls=PlotlyJSONEncoder)
         return graphJason
 
-    def get_chart_and_dtl(self, name, month):
-        graph = self.get_chart(name, month)
-        table = self.dataframes[month][self.dataframes[month].username == name]. \
+    def get_chart_and_dtl(self, name, month, group=7):
+        # todo 只显示个人信息
+        graph = self.get_chart(name, month, group=group)
+        table = self.dataframes[(month, group)][self.dataframes[(month, group)].loginid == name][TABLE_COLS]. \
             to_html(index=False).replace('dataframe', 'table')
         return graph, table
 
@@ -174,11 +181,82 @@ def get_date_list():
     ''', engine)
     return list(df.dt.values)
 
-def get_department_list(user = None):
-    # todo 权限
-    df = pd.read_sql(    '''
-    SELECT id,departmentname FROM ecology.hrmdepartment
+
+# def get_auth_department(user=None):
+#     # todo 权限
+#     df = pd.read_sql('''
+#     SELECT id,departmentname FROM ecology.hrmdepartment
+#     where canceled is null
+#     ''', engine)
+#
+#     return [(id, dp) for id, dp in df.values]
+
+
+DEP_FRAM = {}
+class Tree:
+    def __init__(self, id, departmentname):
+        self.id = id
+        self.departmentname = departmentname
+        self.parent = []
+        self.offspring = {}
+
+    def add_parent(self, supdepid):
+        self.parent.append(supdepid)
+
+    def add_offspring(self, id, departmentname):
+        if id not in DEP_FRAM:
+            DEP_FRAM.setdefault(id, Tree(id, departmentname))
+        self.offspring[id] = DEP_FRAM[id]
+
+    def print_offsprings(self, id=None, pre_fix=''):
+        if id:
+            print(pre_fix + self.offspring[id].departmentname)
+            if self.offspring[id].offspring:
+                for key in self.offspring[id].offspring:
+                    self.offspring[id].offspring[key].print_offsprings(pre_fix=pre_fix)
+        else:
+            print(pre_fix + self.departmentname)
+            pre_fix += '  '
+            for key in self.offspring:
+                self.print_offsprings(id=key, pre_fix=pre_fix)
+
+    def get_offsprings(self, id=None, pre_fix=''):
+        res = []
+        if id:
+            res.append((id, pre_fix + self.offspring[id].departmentname))
+            if self.offspring[id].offspring:
+                for key in self.offspring[id].offspring:
+                    res += self.offspring[id].offspring[key].get_offsprings(pre_fix=pre_fix)
+        else:
+            res.append((self.id, pre_fix + self.departmentname))
+            pre_fix += '  '
+            for key in self.offspring:
+                res += self.get_offsprings(id=key, pre_fix=pre_fix)
+        return res
+
+
+def get_department_framework():
+    df = pd.read_sql('''
+    SELECT id,departmentname,supdepid FROM ecology.hrmdepartment
     where canceled is null
     ''', engine)
+    DEP_FRAM = {0: Tree(0, 'ALL')}
 
-    return [(id,dp) for id,dp in df.values]
+    for i, (id, dep, sup) in df.iterrows():
+        DEP_FRAM[id] = Tree(id, dep)
+
+    for i, (id, dep, sup) in df.iterrows():
+        if sup not in DEP_FRAM: continue
+        DEP_FRAM[sup].add_offspring(id, dep)
+    return DEP_FRAM
+
+def get_auth_department():
+    df = pd.read_sql(f'''
+    select loginid,departmentid from ecology.permission
+    ''', engine)
+    df = df.set_index('loginid')
+    return df.to_dict()['departmentid']
+
+# 权限控制
+def has_auth(user, name):
+    return True

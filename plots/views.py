@@ -10,7 +10,7 @@ from django.urls import reverse
 from django.views import View
 from django.views.generic import TemplateView
 
-from plots.plots import get_date_list, get_department_list
+from plots.plots import get_date_list, get_auth_department, has_auth, get_department_framework
 from . import plots
 
 import datetime
@@ -75,28 +75,30 @@ def logout_view(request):
         return HttpResponse('您未登录！')
 
 
-# 权限控制
-def has_auth(user, name):
-    return True
-
-
 class Charts(LoginRequiredMixin, View):
     date_list = get_date_list()
+    department_framework = get_department_framework()
+    auth_department = get_auth_department()
 
     def get(self, request):
         user = request.user.username
         return_dict = {'date_list': self.date_list}
-        return_dict['department_list'] = get_department_list(user)
-        month = datetime.date.today().strftime('%Y-%m')
+        month = datetime.date.today().strftime('%Y%m')
+
+        if not user in self.auth_department:
+            return HttpResponseRedirect(f"/dtl?name={user}&month={month}")
+
+
+        return_dict['is_manager'] = True
+
+
+        # 显示授权的部门
+        auth_dep_id = self.auth_department[user]
+        return_dict['department_list'] = self.department_framework[auth_dep_id].get_offsprings()
+
         return_dict['select_month'] = month
-
-        return_dict['is_manager'] = True  # 修改干部判断
-
         request.session['args'] = return_dict
 
-        # todo, 修改日期，获取权限,  #此处根据员工是否领导，直接跳转到可选页面，以及dtl
-        if not return_dict['is_manager']:
-            return HttpResponseRedirect(f"/dtl?name={user}&month={month}")
         # graphJason = charts_gallery.get_chart(name = name, month=month) # todo 修改日期, 根据用户名，找到对应的chart
         # return render(request, 'charts.html', {'plot':graphJason, 'is_manager': is_manager})
         # request.session.trans_args = self.return_dict
@@ -109,33 +111,28 @@ class Charts(LoginRequiredMixin, View):
         select_month = request.POST['select_month']
         request.session['args']['select_month'] = select_month
 
-        try:
-            request.session['args']['select_department'] = int(request.POST['select_department'])
-            request.session['args']['select_group'] = request.POST['select_group']
-            flag = True
-        except:
-            flag = False
-
-        if flag:
-            # return HttpResponseRedirect('/manager',self.return_dict)
-            return self.manager(request)
-        else:
+        if not 'select_group' in request.POST:
+            # todo 在别人的详情页查看时，修改前端  request.headers['referer']
             return HttpResponseRedirect(f"/dtl?name={request.user.username}&month={select_month}")
 
-    def manager(self, request):
         try:
-            request.session['args']['select_group'] = request.POST['select_group']
+            request.session['args']['select_group'] = int(request.POST['select_group'])
+            request.session['args']['select_department'] = int(request.POST['select_department'])
         except:
-            request.session['args']['select_group'] = None
-            print(1)
-            # todo 默认department，group
+            pass
 
-        try:
-            request.session['args']['select_department'] = request.POST['select_department']
-        except:
+        # if flag:
+            # return HttpResponseRedirect('/manager',self.return_dict)
+        return self.manager(request)
+        # else:
+            # return HttpResponseRedirect(f"/dtl?name={request.user.username}&month={select_month}")
+
+    def manager(self, request):
+        if not 'select_group' in request.session['args']:
+            request.session['args']['select_group'] = 6
+
+        if not 'select_department' in request.session['args']:
             request.session['args']['select_department'] = None
-            print(1)
-            # todo 默认department，group
 
         return_kargs = request.session['args']
         graphJason = charts_gallery.get_chart(name=request.user.username,
@@ -181,8 +178,12 @@ def manager(request):
     return render(request, 'charts.html', {'plot': graphJason, 'is_manager': is_manager})
 
 
+
 def dtl(request):
     name = request.GET['name']
+
+    request.session['args']['target_name'] = name
+
     month = request.GET['month']
     if not has_auth(request.user, name):
         return HttpResponse('没有权限！')
@@ -190,7 +191,9 @@ def dtl(request):
     graphJason, table = charts_gallery.get_chart_and_dtl(name=name, month=month)
     # obj = charts_gallery.get_chart_and_dtl(name = name)
     # return HttpResponse(obj)
-    return render(request, 'charts.html', {'plot': graphJason, 'table': table})
+    return render(request, 'charts.html', {'plot': graphJason, 'table': table,
+                                           'select_month': month,
+                                           'date_list': request.session['args']['date_list']})
 
 
 def test(request):
@@ -207,7 +210,7 @@ def test(request):
 
 class TestView(LoginRequiredMixin, View):
     date_list = get_date_list()
-    department_list = get_department_list()
+    department_list = get_auth_department()
 
     def get(self, request):
         # date_list =
