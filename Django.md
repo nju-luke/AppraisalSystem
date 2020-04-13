@@ -130,3 +130,14 @@ user.user_permissions.add(permission)  # permission.content_type.app_label + per
         if user.has_perm('admin.add_logentry'):     # permission.content_type.app_label + permission.codename ??
             return HttpResponse('拥有权限！')
 ```
+
+
+### centos 中django使用odbc
+1. 安装pyodbc
+    ```shell script
+    yum install unixODBC unixODBC-devel
+    yum install gcc-c++
+    yum install python-devel
+    pip install pyodbc
+    ```
+2. pip install django-mssql-backend
