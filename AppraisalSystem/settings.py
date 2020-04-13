@@ -98,6 +98,9 @@ DATABASES = {
         'PORT' : 1433,
         'USER' : 'root',
         'PASSWORD' : 'Do8gjas07gaS1',
+        'OPTIONS': {
+            'DRIVER': 'ODBC Driver 13 for SQL Server',
+        },
     }
 }
 
