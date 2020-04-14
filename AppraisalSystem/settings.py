@@ -11,6 +11,9 @@ https://docs.djangoproject.com/en/3.0/ref/settings/
 """
 
 import os
+import sys
+sys.path.append("..")
+from settings import MSSQL_SETTINGS
 
 # Build paths inside the project like this: os.path.join(BASE_DIR, ...)
 BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
@@ -89,17 +92,32 @@ WSGI_APPLICATION = 'AppraisalSystem.wsgi.application'
 #         'PORT': '3306',  # mysql服务端口
 #     }
 # }
+
+# DATABASES = {
+#     'default': {
+#
+#         'ENGINE' : 'sql_server.pyodbc',
+#         'NAME' : 'ecology',
+#         'HOST' : 'localhost',
+#         'PORT' : 1433,
+#         'USER' : 'root',
+#         'PASSWORD' : 'Do8gjas07gaS1',
+#         'OPTIONS': {
+#             'DRIVER': 'ODBC Driver 13 for SQL Server',
+#         },
+#     }
+# }
 DATABASES = {
     'default': {
 
         'ENGINE' : 'sql_server.pyodbc',
-        'NAME' : 'ecology',
-        'HOST' : 'localhost',
-        'PORT' : 1433,
-        'USER' : 'root',
-        'PASSWORD' : 'Do8gjas07gaS1',
+        'NAME' : MSSQL_SETTINGS.NAME,
+        'HOST' : MSSQL_SETTINGS.HOST,
+        'PORT' : MSSQL_SETTINGS.PORT,
+        'USER' : MSSQL_SETTINGS.USER,
+        'PASSWORD' : MSSQL_SETTINGS.PASSWORD,
         'OPTIONS': {
-            'DRIVER': 'ODBC Driver 13 for SQL Server',
+            'DRIVER': MSSQL_SETTINGS.DRIVER,
         },
     }
 }

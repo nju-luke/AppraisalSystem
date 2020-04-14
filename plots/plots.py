@@ -15,13 +15,18 @@ from _plotly_utils.utils import PlotlyJSONEncoder
 from plotly.offline import plot
 from sqlalchemy import create_engine
 
-USER = "root"
-PASSWORD = "Do8gjas07gaS1"
-HOST = "localhost"
-DATABASE = "ecology"
+import sys
+sys.path.append("../..")
+from settings import  MSSQL_SETTINGS
+
+USER = MSSQL_SETTINGS.USER
+PASSWORD = MSSQL_SETTINGS.PASSWORD
+HOST = MSSQL_SETTINGS.HOST
+DATABASE = MSSQL_SETTINGS.NAME
+DRIVER = MSSQL_SETTINGS.DRIVER.replace(' ', '+')
 
 def sql_engine():
-    engine_str = "mssql+pyodbc://" + USER + ":" + PASSWORD + "@" + HOST + "/" + DATABASE + "?driver=SQL+Server"
+    engine_str = "mssql+pyodbc://" + USER + ":" + PASSWORD + "@" + HOST + "/" + DATABASE + "?driver=" + DRIVER
     engine = create_engine(engine_str)
     return engine
 
