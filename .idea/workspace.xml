@@ -2,8 +2,8 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="40b176f2-ad87-490d-8319-8ba786427039" name="Default Changelist" comment="">
-      <change afterPath="$PROJECT_DIR$/settings.yml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/requirements.txt" beforeDir="false" afterPath="$PROJECT_DIR$/requirements.txt" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -77,19 +77,19 @@
     <property name="settings.editor.selected.configurable" value="preferences.pluginManager" />
   </component>
   <component name="RecentsManager">
-    <key name="MoveFile.RECENT_KEYS">
-      <recent name="E:\Projects\AppraisalSystem\plots" />
-      <recent name="E:\Projects\AppraisalSystem\plots\templates" />
-      <recent name="D:\Projects\AppraisalSystem" />
-      <recent name="D:\Projects\AppraisalSystem\plots" />
-      <recent name="E:\Projects\AppraisalSystem\mytest\templates" />
-    </key>
     <key name="CopyFile.RECENT_KEYS">
       <recent name="E:\Projects\AppraisalSystem" />
       <recent name="D:\Projects\AppraisalSystem" />
       <recent name="E:\Projects\AppraisalSystem\plots" />
       <recent name="E:\Projects\AppraisalSystem\plots\templates" />
       <recent name="D:\Projects\AppraisalSystem\plots" />
+    </key>
+    <key name="MoveFile.RECENT_KEYS">
+      <recent name="E:\Projects\AppraisalSystem\plots" />
+      <recent name="E:\Projects\AppraisalSystem\plots\templates" />
+      <recent name="D:\Projects\AppraisalSystem" />
+      <recent name="D:\Projects\AppraisalSystem\plots" />
+      <recent name="E:\Projects\AppraisalSystem\mytest\templates" />
     </key>
   </component>
   <component name="RunManager" selected="Python.manage">
@@ -256,7 +256,14 @@
       <option name="project" value="LOCAL" />
       <updated>1586797023352</updated>
     </task>
-    <option name="localTasksCounter" value="9" />
+    <task id="LOCAL-00009" summary="need to modify with global settings">
+      <created>1586877904558</created>
+      <option name="number" value="00009" />
+      <option name="presentableId" value="LOCAL-00009" />
+      <option name="project" value="LOCAL" />
+      <updated>1586877904558</updated>
+    </task>
+    <option name="localTasksCounter" value="10" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -284,7 +291,8 @@
     <MESSAGE value="准备修改return_dict为args" />
     <MESSAGE value="modify to sqlserver" />
     <MESSAGE value="can not connect to docker sqlserver with docker app" />
-    <option name="LAST_COMMIT_MESSAGE" value="can not connect to docker sqlserver with docker app" />
+    <MESSAGE value="need to modify with global settings" />
+    <option name="LAST_COMMIT_MESSAGE" value="need to modify with global settings" />
   </component>
   <component name="WindowStateProjectService">
     <state x="552" y="179" key="#Notifications" timestamp="1584713765946">
@@ -303,10 +311,10 @@
       <screen x="0" y="0" width="1920" height="1040" />
     </state>
     <state x="530" y="479" width="1197" height="561" key="#xdebugger.evaluate/0.0.1920.1040@0.0.1920.1040" timestamp="1586658423186" />
-    <state x="598" y="114" key="CommitChangelistDialog2" timestamp="1586797021294">
+    <state x="598" y="114" key="CommitChangelistDialog2" timestamp="1586877902683">
       <screen x="0" y="0" width="1920" height="1040" />
     </state>
-    <state x="598" y="114" key="CommitChangelistDialog2/0.0.1920.1040@0.0.1920.1040" timestamp="1586797021294" />
+    <state x="598" y="114" key="CommitChangelistDialog2/0.0.1920.1040@0.0.1920.1040" timestamp="1586877902683" />
     <state x="809" y="398" width="302" height="247" key="DBNavigator.ConnectionAuthenticationDialog" timestamp="1584714371249">
       <screen x="0" y="0" width="1920" height="1040" />
     </state>
