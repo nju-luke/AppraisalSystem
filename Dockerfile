@@ -29,7 +29,8 @@ ADD . /home/AppraisalSystem
 ## setting the working directory
 WORKDIR /home/AppraisalSystem
 
-RUN pip install -r requirements.txt -i https://pypi.tuna.tsinghua.edu.cn/simple
+RUN pip install -r requirements.txt
+#-i https://pypi.tuna.tsinghua.edu.cn/simple
 
 CMD ["bash"]
 
