@@ -80,3 +80,17 @@ docker执行步骤：
       ```
 
 访问地址：localhost:1324
+
+创建superuser
+```shell script
+python manage.py createsuperuser
+```
+
+批量创建用户
+```shell script
+python create_user.py <文件路径>
+
+#文件使用\t作为分隔符
+#文件包含两列, 保持第一行为：username	password
+
+```
