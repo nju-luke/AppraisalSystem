@@ -2,19 +2,8 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="40b176f2-ad87-490d-8319-8ba786427039" name="Default Changelist" comment="">
-      <change beforePath="$PROJECT_DIR$/.idea/dataSources.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/dataSources.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/AppraisalSystem/settings.py" beforeDir="false" afterPath="$PROJECT_DIR$/AppraisalSystem/settings.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/AppraisalSystem/urls.py" beforeDir="false" afterPath="$PROJECT_DIR$/AppraisalSystem/urls.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Dockerfile" beforeDir="false" afterPath="$PROJECT_DIR$/Dockerfile" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/README.md" beforeDir="false" afterPath="$PROJECT_DIR$/README.md" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/docker命令.md" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/mssql_odbc13.sh" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/mytest/migrations/__init__.py" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/plots/migrations/__init__.py" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/requirements.txt" beforeDir="false" afterPath="$PROJECT_DIR$/requirements.txt" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/settings.py" beforeDir="false" afterPath="$PROJECT_DIR$/settings.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/sqlserver.md" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Django.md" beforeDir="false" afterPath="$PROJECT_DIR$/Django.md" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -332,7 +321,14 @@
       <option name="project" value="LOCAL" />
       <updated>1586877975161</updated>
     </task>
-    <option name="localTasksCounter" value="11" />
+    <task id="LOCAL-00011" summary="need modify the register page">
+      <created>1586929105681</created>
+      <option name="number" value="00011" />
+      <option name="presentableId" value="LOCAL-00011" />
+      <option name="project" value="LOCAL" />
+      <updated>1586929105681</updated>
+    </task>
+    <option name="localTasksCounter" value="12" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -361,7 +357,8 @@
     <MESSAGE value="modify to sqlserver" />
     <MESSAGE value="can not connect to docker sqlserver with docker app" />
     <MESSAGE value="need to modify with global settings" />
-    <option name="LAST_COMMIT_MESSAGE" value="need to modify with global settings" />
+    <MESSAGE value="need modify the register page" />
+    <option name="LAST_COMMIT_MESSAGE" value="need modify the register page" />
   </component>
   <component name="WindowStateProjectService">
     <state x="552" y="179" key="#Notifications" timestamp="1586880895846">

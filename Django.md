@@ -131,13 +131,46 @@ user.user_permissions.add(permission)  # permission.content_type.app_label + per
             return HttpResponse('拥有权限！')
 ```
 
+## django session
+> django 可通过session保存当前登录的信息
+```python
+request.session['args'] = {'key1':'value1'}
+```
 
-### centos 中django使用odbc
-1. 安装pyodbc
-    ```shell script
-    yum install unixODBC unixODBC-devel
-    yum install gcc-c++
-    yum install python-devel
-    pip install pyodbc
+## centos 中django使用mssql
+1. 安装相关驱动
+    ```sh
+    mv /etc/yum.repos.d/CentOS-Base.repo /etc/yum.repos.d/CentOS-Base.repo_bak \
+    && echo y|curl http://mirrors.163.com/.help/CentOS7-Base-163.repo > /etc/yum.repos.d/CentOS-Base.repo \
+    && yum clean all \
+    && yum makecache
+
+   curl https://packages.microsoft.com/config/rhel/7/prod.repo > /etc/yum.repos.d/mssql-release.repo \
+   && echo y|yum update \
+   && echo y|ACCEPT_EULA=Y yum install -y msodbcsql-13.0.1.0-1 mssql-tools-14.0.2.0-1 \
+   && echo y|yum install unixODBC-utf16-devel \
+   && ln -sfn /opt/mssql-tools/bin/sqlcmd-13.0.1.0 /usr/bin/sqlcmd  \
+   && ln -sfn /opt/mssql-tools/bin/bcp-13.0.1.0 /usr/bin/bcp \
+   && echo y|yum install gcc-c++ \
+   && echo y|yum install python-devel
     ```
-2. pip install django-mssql-backend
+2. 安装pip包
+    ```shell script
+    pip isntall pyodbc Django==3.0.4 django-mssql-backend
+    ```
+3. 配置
+    ```python
+    DATABASES = {
+        'default': {
+            'ENGINE' : 'sql_server.pyodbc',
+            'NAME' : 'ecology',
+            'HOST' : 'localhost',
+            'PORT' : 1433,
+            'USER' : 'sa',
+            'PASSWORD' : 'Do8gjas07gaS1',
+            'OPTIONS': {
+                'DRIVER': 'SQL Server',
+               },
+           }
+    }
+    ```
