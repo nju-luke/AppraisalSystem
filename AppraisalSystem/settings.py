@@ -100,13 +100,14 @@ WSGI_APPLICATION = 'AppraisalSystem.wsgi.application'
 #         'NAME' : 'ecology',
 #         'HOST' : 'localhost',
 #         'PORT' : 1433,
-#         'USER' : 'root',
+#         'USER' : 'sa',
 #         'PASSWORD' : 'Do8gjas07gaS1',
 #         'OPTIONS': {
-#             'DRIVER': 'ODBC Driver 13 for SQL Server',
+#             'DRIVER': 'SQL Server',
 #         },
 #     }
 # }
+
 DATABASES = {
     'default': {
 
