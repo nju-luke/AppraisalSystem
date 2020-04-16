@@ -147,11 +147,15 @@ class Charts(LoginRequiredMixin, View):
 
         if not 'select_department' in request.session['args']:
             request.session['args']['select_department'] = None
+            departments = None
+        else:
+            departments = department_framework[request.session['args']['select_department']].get_offsprings()
+            departments = [group[0] for group in departments]
 
         return_kargs = request.session['args']
         graphJason = charts_gallery.get_chart(name=request.user.username,
                                               month=return_kargs['select_month'],
-                                              department=return_kargs['select_department'],
+                                              department=departments,
                                               group=return_kargs['select_group'])  # 修改日期
         return_kargs['plot'] = graphJason
         # return graphJason

@@ -30,10 +30,10 @@ def sql_engine():
 engine = sql_engine()
 
 
-print(sys.argv)
-data_path = sys.argv[1]
-# df = pd.read_csv('Django_assets/test_usr_pwd.tsv', sep='\t')
-df = pd.read_csv(data_path, sep='\t')
+# print(sys.argv)
+# data_path = sys.argv[1]
+# df = pd.read_csv(data_path, sep='\t')
+df = pd.read_csv('Django_assets/test_usr_pwd.tsv', sep='\t')
 
 df['is_superuser'] = 0
 df['is_staff'] = 1

@@ -1,14 +1,13 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="ChangeListManager">
-    <list default="true" id="40b176f2-ad87-490d-8319-8ba786427039" name="Default Changelist" comment="need modify the register page">
+    <list default="true" id="40b176f2-ad87-490d-8319-8ba786427039" name="Default Changelist" comment="">
+      <change afterPath="$PROJECT_DIR$/Django_assets/test_usr_pwd.tsv" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/AppraisalSystem/settings.py" beforeDir="false" afterPath="$PROJECT_DIR$/AppraisalSystem/settings.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Dockerfile" beforeDir="false" afterPath="$PROJECT_DIR$/Dockerfile" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/create_user.py" beforeDir="false" afterPath="$PROJECT_DIR$/create_user.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/plots/plots.py" beforeDir="false" afterPath="$PROJECT_DIR$/plots/plots.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/plots/points.py" beforeDir="false" afterPath="$PROJECT_DIR$/plots/points.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/plots/templates/charts.html" beforeDir="false" afterPath="$PROJECT_DIR$/plots/templates/charts.html" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/plots/views.py" beforeDir="false" afterPath="$PROJECT_DIR$/plots/views.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/settings.py" beforeDir="false" afterPath="$PROJECT_DIR$/settings.py" afterDir="false" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="SHOW_DIALOG" value="false" />
@@ -36,18 +35,6 @@
         <item name="Database" type="3277223f:DatabaseStructure$DbRootGroup" />
         <item name="appraisal@localhost" type="feb32156:DbDataSourceImpl" />
         <item name="schemas" type="d4e8921:DatabaseStructure$FamilyGroup" />
-      </path>
-      <path>
-        <item name="Database" type="3277223f:DatabaseStructure$DbRootGroup" />
-        <item name="appraisal@localhost" type="feb32156:DbDataSourceImpl" />
-        <item name="schemas" type="d4e8921:DatabaseStructure$FamilyGroup" />
-        <item name="appraisal: schema" type="76f4a085:MysqlImplModel$Schema" />
-      </path>
-      <path>
-        <item name="Database" type="3277223f:DatabaseStructure$DbRootGroup" />
-        <item name="appraisal@localhost" type="feb32156:DbDataSourceImpl" />
-        <item name="schemas" type="d4e8921:DatabaseStructure$FamilyGroup" />
-        <item name="ecology: schema" type="76f4a085:MysqlImplModel$Schema" />
       </path>
       <path>
         <item name="Database" type="3277223f:DatabaseStructure$DbRootGroup" />
@@ -106,7 +93,7 @@
     <property name="RunOnceActivity.ShowReadmeOnStart" value="true" />
     <property name="SHARE_PROJECT_CONFIGURATION_FILES" value="true" />
     <property name="WebServerToolWindowFactoryState" value="false" />
-    <property name="last_opened_file_path" value="$USER_HOME$/Desktop/apprai/data/ecology_cp_result.tsv" />
+    <property name="last_opened_file_path" value="$USER_HOME$/Desktop/apprai/data/HrmResource.tsv" />
     <property name="settings.editor.selected.configurable" value="preferences.pluginManager" />
   </component>
   <component name="RecentsManager">
@@ -137,7 +124,7 @@
       </list>
     </option>
   </component>
-  <component name="RunManager" selected="Python.create_user (1)">
+  <component name="RunManager" selected="Python.manage">
     <configuration name="create_user (1)" type="PythonConfigurationType" factoryName="Python" temporary="true" nameIsGenerated="true">
       <module name="AppraisalSystem" />
       <option name="INTERPRETER_OPTIONS" value="" />
@@ -316,17 +303,12 @@
           <expand>
             <path>
               <item name="services root" type="e789fda9:ObjectUtils$Sentinel" />
-              <item name="com.intellij.execution.services.ServiceModel$ServiceGroupNode@1dc879bb" type="7427dc5b:ServiceModel$ServiceGroupNode" />
+              <item name="com.intellij.execution.services.ServiceModel$ServiceGroupNode@12fbff9f" type="7427dc5b:ServiceModel$ServiceGroupNode" />
             </path>
             <path>
               <item name="services root" type="e789fda9:ObjectUtils$Sentinel" />
-              <item name="com.intellij.execution.services.ServiceModel$ServiceGroupNode@1dc879bb" type="7427dc5b:ServiceModel$ServiceGroupNode" />
-              <item name="com.intellij.execution.services.ServiceModel$ServiceNode@2bd33953" type="9fbbdea:ServiceModel$ServiceNode" />
-            </path>
-            <path>
-              <item name="services root" type="e789fda9:ObjectUtils$Sentinel" />
-              <item name="com.intellij.execution.services.ServiceModel$ServiceGroupNode@1dc879bb" type="7427dc5b:ServiceModel$ServiceGroupNode" />
-              <item name="com.intellij.execution.services.ServiceModel$ServiceNode@1c8735bf" type="9fbbdea:ServiceModel$ServiceNode" />
+              <item name="com.intellij.execution.services.ServiceModel$ServiceGroupNode@12fbff9f" type="7427dc5b:ServiceModel$ServiceGroupNode" />
+              <item name="com.intellij.execution.services.ServiceModel$ServiceNode@3da1b27a" type="9fbbdea:ServiceModel$ServiceNode" />
             </path>
           </expand>
           <select />
@@ -350,7 +332,10 @@
       <workItem from="1584666176058" duration="19674000" />
       <workItem from="1584715830704" duration="93000" />
       <workItem from="1585012194683" duration="5156000" />
-      <workItem from="1587000284225" duration="14945000" />
+      <workItem from="1587000284225" duration="16250000" />
+      <workItem from="1587038723754" duration="6634000" />
+      <workItem from="1587046311027" duration="1481000" />
+      <workItem from="1587049039684" duration="256000" />
     </task>
     <task id="LOCAL-00001" summary="mytest">
       <created>1584682894883</created>
@@ -429,7 +414,14 @@
       <option name="project" value="LOCAL" />
       <updated>1586929105681</updated>
     </task>
-    <option name="localTasksCounter" value="12" />
+    <task id="LOCAL-00012" summary="auth?">
+      <created>1587029743876</created>
+      <option name="number" value="00012" />
+      <option name="presentableId" value="LOCAL-00012" />
+      <option name="project" value="LOCAL" />
+      <updated>1587029743876</updated>
+    </task>
+    <option name="localTasksCounter" value="13" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -462,7 +454,8 @@
     <MESSAGE value="can not connect to docker sqlserver with docker app" />
     <MESSAGE value="need to modify with global settings" />
     <MESSAGE value="need modify the register page" />
-    <option name="LAST_COMMIT_MESSAGE" value="need modify the register page" />
+    <MESSAGE value="auth?" />
+    <option name="LAST_COMMIT_MESSAGE" value="auth?" />
   </component>
   <component name="WindowStateProjectService">
     <state x="552" y="179" key="#Notifications" timestamp="1586880895846">
@@ -629,18 +622,32 @@
           <line>39</line>
           <option name="timeStamp" value="48" />
         </line-breakpoint>
+        <line-breakpoint enabled="true" suspend="THREAD" type="python-line">
+          <url>file://$PROJECT_DIR$/plots/views.py</url>
+          <line>121</line>
+          <option name="timeStamp" value="56" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" suspend="THREAD" type="python-line">
+          <url>file://$PROJECT_DIR$/plots/views.py</url>
+          <line>105</line>
+          <option name="timeStamp" value="57" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" suspend="THREAD" type="python-line">
+          <url>file://$PROJECT_DIR$/plots/plots.py</url>
+          <line>198</line>
+          <option name="timeStamp" value="59" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" suspend="THREAD" type="python-line">
+          <url>file://$PROJECT_DIR$/plots/views.py</url>
+          <line>203</line>
+          <option name="timeStamp" value="61" />
+        </line-breakpoint>
       </breakpoints>
     </breakpoint-manager>
-    <watches-manager>
-      <configuration name="PythonConfigurationType">
-        <watch expression="request.session" />
-        <watch expression="request.headers" />
-      </configuration>
-    </watches-manager>
   </component>
   <component name="com.intellij.coverage.CoverageDataManagerImpl">
-    <SUITE FILE_PATH="coverage/AppraisalSystem$create_user__1_.coverage" NAME="create_user (1) Coverage Results" MODIFIED="1587027793453" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$" />
-    <SUITE FILE_PATH="coverage/AppraisalSystem$manage.coverage" NAME="manage Coverage Results" MODIFIED="1587021651224" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$" />
+    <SUITE FILE_PATH="coverage/AppraisalSystem$create_user__1_.coverage" NAME="create_user (1) Coverage Results" MODIFIED="1587040960283" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$" />
+    <SUITE FILE_PATH="coverage/AppraisalSystem$manage.coverage" NAME="manage Coverage Results" MODIFIED="1587049231768" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$" />
     <SUITE FILE_PATH="coverage/AppraisalSystem$points.coverage" NAME="points Coverage Results" MODIFIED="1587008038394" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/plots" />
   </component>
 </project>

@@ -5,8 +5,8 @@ datettime: 2020/3/20 14:00
 """
 import json
 import string
+import sys
 from copy import deepcopy
-import datetime
 
 import numpy as np
 import pandas as pd
@@ -14,12 +14,10 @@ import plotly.graph_objects as go
 from _plotly_utils.utils import PlotlyJSONEncoder
 from sqlalchemy import create_engine
 
-import sys
-
 from plots.points import get_point
 
 sys.path.append("../..")
-from settings import  MSSQL_SETTINGS
+from settings import MSSQL_SETTINGS
 
 USER = MSSQL_SETTINGS.USER
 PASSWORD = MSSQL_SETTINGS.PASSWORD
@@ -27,10 +25,12 @@ HOST = MSSQL_SETTINGS.HOST
 DATABASE = MSSQL_SETTINGS.NAME
 DRIVER = MSSQL_SETTINGS.DRIVER.replace(' ', '+')
 
+
 def sql_engine():
     engine_str = "mssql+pyodbc://" + USER + ":" + PASSWORD + "@" + HOST + "/" + DATABASE + "?driver=" + DRIVER
     engine = create_engine(engine_str)
     return engine
+
 
 engine = sql_engine()
 
@@ -118,48 +118,49 @@ def get_area(df):
     return area1_x, area1_y, area2_x, area2_y
 
 
-def get_data(month, category):
-    year = int(month[:4])
-    month = int(month[5:])
+# def get_data(month, category):
+#     year = int(month[:4])
+#     month = int(month[5:])
+#     sql = f'''
+#         select loginid,
+#                lastname,
+#                total score, point,
+#                v1 ,v2 ,v3 ,v4 ,v5 ,v6 ,v7 ,v8 ,v9 ,v10,v11,
+#                departmentid,
+#                row_number() over (order by total desc) num
+#         from cp_result where years={year} and months={month}
+#         and category={category}
+#             '''
+#     df = pd.read_sql(sql, engine)
+#     area1_x, area1_y, area2_x, area2_y = get_area(df)
+#     return df, area1_x, area1_y, area2_x, area2_y
+
+def get_data(date, category):
+    year = int(date[:4])
+    month = int(date[5:])
+
     sql = f'''
-        select loginid,
-               lastname,
-               total score, point,
-               v1 ,v2 ,v3 ,v4 ,v5 ,v6 ,v7 ,v8 ,v9 ,v10,v11,
-               departmentid,
-               row_number() over (order by total desc) num
-        from cp_result where years={year} and months={month}
-        and category={category}
-            '''
-    df = pd.read_sql(sql, engine)
+    select
+        lastname,
+        total score,
+        cp_result.*,
+        loginid,
+        HrmDepartment.departmentname, HrmResource.departmentid
+    from cp_result
+    INNER JOIN HrmResource  ON HrmResource.id = btprid
+    INNER JOIN a_CpYgDepBind  ON a_CpYgDepBind.childId  = HrmResource.departmentid
+    INNER JOIN HrmDepartment ON HrmDepartment.id = a_CpYgDepBind.supdepId
+    WHERE years = {year} AND months = {month}  and category = {category}
+    AND HrmResource.status in (0,1,2,3)
+    '''
+
+    df_ap = pd.read_sql(sql, engine)
+    df_point = get_point(date)  # todo 使用字典保存每个月的数据
+    df = pd.merge(df_ap, df_point, left_on='loginid', right_on='userAccount')
+
     area1_x, area1_y, area2_x, area2_y = get_area(df)
     return df, area1_x, area1_y, area2_x, area2_y
 
-# def get_data(date, category):
-#     year = int(date[:4])
-#     month = int(date[5:])
-#
-#     sql = f'''
-#     select
-#         lastname,
-#         total score,
-#         cp_result.*,
-#         loginid,
-#         HrmDepartment.departmentname, HrmResource.departmentid
-#     from cp_result
-#     INNER JOIN HrmResource  ON HrmResource.id = btprid
-#     INNER JOIN a_CpYgDepBind  ON a_CpYgDepBind.childId  = HrmResource.departmentid
-#     INNER JOIN HrmDepartment ON HrmDepartment.id = a_CpYgDepBind.supdepId
-#     WHERE years = {year} AND months = {month}  and category = {category}
-#     AND HrmResource.status in (0,1,2,3)
-#     '''
-#
-#     df_ap = pd.read_sql(sql, engine)
-#     df_point = get_point(date)         # todo 使用字典保存每个月的数据
-#     df = pd.merge(df_ap, df_point, left_on='loginid', right_on='userAccount')
-#
-#     area1_x, area1_y, area2_x, area2_y = get_area(df)
-#     return df, area1_x, area1_y, area2_x, area2_y
 
 def get_base_chart(month, group):
     df, area1_x, area1_y, area2_x, area2_y = get_data(month, group)
@@ -173,7 +174,10 @@ def get_base_chart(month, group):
                        mode='lines', fill='toself', name='perf')
 
     fig = go.Figure([area1, area2, point])
-    fig.update_layout(showlegend=False)
+    fig.update_layout(autosize=False,
+                      width=980,
+                      height=800,
+                      showlegend=False)
     return df, fig
 
 
@@ -202,7 +206,8 @@ class ChartsGallery():
         if not department:
             indices = list(self.dataframes[(month, group)].loginid == name)
         else:
-            indices = list(self.dataframes[(month, group)].departmentid == int(department))
+            # indices = list(self.dataframes[(month, group)].departmentid == int(department))
+            indices = list(self.dataframes[(month, group)].departmentid.isin(department))
         # text = [n if n == name else None for n in chart.data[2].text]
         text = [self.dataframes[(month, group)].url[i] if v else None for i, v in enumerate(indices)]
         # text = [f"<a href='https://google.com'>{n}</a>" if n == name else None for n in chart.data[2].text]
@@ -235,6 +240,8 @@ def get_date_list():
 
 
 DEP_FRAM = {}
+
+
 class Tree:
     def __init__(self, id, departmentname):
         self.id = id
@@ -251,30 +258,43 @@ class Tree:
         self.offspring[id] = DEP_FRAM[id]
 
     def print_offsprings(self, id=None, pre_fix=''):
-        if id:
-            print(pre_fix + self.offspring[id].departmentname)
-            if self.offspring[id].offspring:
-                for key in self.offspring[id].offspring:
-                    self.offspring[id].offspring[key].print_offsprings(pre_fix=pre_fix)
-        else:
-            print(pre_fix + self.departmentname)
-            pre_fix += '  '
-            for key in self.offspring:
-                self.print_offsprings(id=key, pre_fix=pre_fix)
+        print(pre_fix + self.departmentname)
+        pre_fix += '+'
+        for key in self.offspring:
+            self.offspring[key].print_offsprings(pre_fix=pre_fix)
+
+    # def print_offsprings(self, id=None, pre_fix=''):
+    #     if id:
+    #         print(pre_fix + self.offspring[id].departmentname)
+    #         if self.offspring[id].offspring:
+    #             for key in self.offspring[id].offspring:
+    #                 self.offspring[id].offspring[key].print_offsprings(pre_fix=pre_fix)
+    #     else:
+    #         print(pre_fix + self.departmentname)
+    #         pre_fix += '  '
+    #         for key in self.offspring:
+    #             self.print_offsprings(id=key, pre_fix=pre_fix)
 
     def get_offsprings(self, id=None, pre_fix=''):
-        res = []
-        if id:
-            res.append((id, pre_fix + self.offspring[id].departmentname))
-            if self.offspring[id].offspring:
-                for key in self.offspring[id].offspring:
-                    res += self.offspring[id].offspring[key].get_offsprings(pre_fix=pre_fix)
-        else:
-            res.append((self.id, pre_fix + self.departmentname))
-            pre_fix += '  '
-            for key in self.offspring:
-                res += self.get_offsprings(id=key, pre_fix=pre_fix)
+        res = [(self.id, pre_fix + self.departmentname)]
+        pre_fix += '+'
+        for key in self.offspring:
+            res.extend(self.offspring[key].get_offsprings(pre_fix=pre_fix))
         return res
+
+    # def get_offsprings(self, id=None, pre_fix=''):
+    #     res = []
+    #     if id:
+    #         res.append((id, pre_fix + self.offspring[id].departmentname))
+    #         if self.offspring[id].offspring:
+    #             for key in self.offspring[id].offspring:
+    #                 res += self.offspring[id].offspring[key].get_offsprings(pre_fix=pre_fix)
+    #     else:
+    #         res.append((self.id, pre_fix + self.departmentname))
+    #         pre_fix += '  '
+    #         for key in self.offspring:
+    #             res += self.get_offsprings(id=key, pre_fix=pre_fix)
+    #     return res
 
 
 def get_department_framework():
@@ -282,6 +302,7 @@ def get_department_framework():
     SELECT id,departmentname,supdepid FROM hrmdepartment
     where canceled is null
     ''', engine)
+    global DEP_FRAM
     DEP_FRAM = {0: Tree(0, 'ALL')}
 
     for i, (id, dep, sup) in df.iterrows():
@@ -291,6 +312,7 @@ def get_department_framework():
         if sup not in DEP_FRAM: continue
         DEP_FRAM[sup].add_offspring(id, dep)
     return DEP_FRAM
+
 
 def get_auth_department():
     df = pd.read_sql(f'''
