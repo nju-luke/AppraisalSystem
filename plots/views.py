@@ -23,7 +23,7 @@ charts_gallery = plots.ChartsGallery()
 
 date_list = get_date_list()
 department_framework = get_department_framework()
-auth_department = get_auth_department()
+auth_department = get_auth_department() # todo 直接查询数据库
 
 charts_gallery.initialize_chart(max(date_list), 6)
 charts_gallery.initialize_chart(max(date_list), 7)
@@ -35,7 +35,7 @@ charts_gallery.initialize_chart(max(date_list), 7)
 def index_view(request):
     if not request.session.session_key:
         return render(request, 'index.html')
-    return HttpResponseRedirect('/charts')  # todo 修改跳转页
+    return HttpResponseRedirect('/charts')
     # return HttpResponse('''您已登录，<a href=http://127.0.0.1:8000/logout>退出</a>''')
 
 
@@ -89,7 +89,8 @@ class Charts(LoginRequiredMixin, View):
     def get(self, request):
         user = request.user.username
         request.session['args'] = {'date_list': date_list}
-        month = datetime.date.today().strftime('%Y%m')
+        #month = datetime.date.today().strftime('%Y%m')
+        month = max(date_list)
 
 
         if not user in auth_department:
@@ -197,6 +198,8 @@ def dtl(request):
     month = request.GET['month']
     group = request.GET['group']
     if not has_auth(request.user, name):
+        # todo 从request传入权限参数， 不可行
+        # todo 保存用户id，与登录人的id，匹配
         return HttpResponse('没有权限！')
 
     graphJason, table = charts_gallery.get_chart_and_dtl(name=name, month=month, group=group)

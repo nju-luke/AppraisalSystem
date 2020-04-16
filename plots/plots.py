@@ -34,7 +34,7 @@ def sql_engine():
 
 engine = sql_engine()
 
-TABLE_COLS = ['lastname', 'score', 'point', 'v1', 'v2', 'v3', 'v4', 'v5', 'v6', 'v7', 'v8', 'v9', 'v10', 'v11', 'num']
+TABLE_COLS = ['lastname', 'score', 'point', 'v1', 'v2', 'v3', 'v4', 'v5', 'v6', 'v7', 'v8', 'v9', 'v10', 'v11']
 
 
 def get_areas():
@@ -118,48 +118,48 @@ def get_area(df):
     return area1_x, area1_y, area2_x, area2_y
 
 
-# def get_data(month, category):
-#     year = int(month[:4])
-#     month = int(month[5:])
-#     sql = f'''
-#         select loginid,
-#                lastname,
-#                total score, point,
-#                v1 ,v2 ,v3 ,v4 ,v5 ,v6 ,v7 ,v8 ,v9 ,v10,v11,
-#                departmentid,
-#                row_number() over (order by total desc) num
-#         from cp_result where years={year} and months={month}
-#         and category={category}
-#             '''
-#     df = pd.read_sql(sql, engine)
-#     area1_x, area1_y, area2_x, area2_y = get_area(df)
-#     return df, area1_x, area1_y, area2_x, area2_y
-
-def get_data(date, category):
-    year = int(date[:4])
-    month = int(date[5:])
-
+def get_data(month, category):
+    year = int(month[:4])
+    month = int(month[5:])
     sql = f'''
-    select
-        lastname,
-        total score,
-        cp_result.*,
-        loginid,
-        HrmDepartment.departmentname, HrmResource.departmentid
-    from cp_result
-    INNER JOIN HrmResource  ON HrmResource.id = btprid
-    INNER JOIN a_CpYgDepBind  ON a_CpYgDepBind.childId  = HrmResource.departmentid
-    INNER JOIN HrmDepartment ON HrmDepartment.id = a_CpYgDepBind.supdepId
-    WHERE years = {year} AND months = {month}  and category = {category}
-    AND HrmResource.status in (0,1,2,3)
-    '''
-
-    df_ap = pd.read_sql(sql, engine)
-    df_point = get_point(date)         # todo 使用字典保存每个月的数据
-    df = pd.merge(df_ap, df_point, left_on='userAccount', right_on='loginid')
-
+        select loginid,
+               lastname,
+               total score, point,
+               v1 ,v2 ,v3 ,v4 ,v5 ,v6 ,v7 ,v8 ,v9 ,v10,v11,
+               departmentid,
+               row_number() over (order by total desc) num
+        from cp_result where years={year} and months={month}
+        and category={category}
+            '''
+    df = pd.read_sql(sql, engine)
     area1_x, area1_y, area2_x, area2_y = get_area(df)
     return df, area1_x, area1_y, area2_x, area2_y
+
+# def get_data(date, category):
+#     year = int(date[:4])
+#     month = int(date[5:])
+#
+#     sql = f'''
+#     select
+#         lastname,
+#         total score,
+#         cp_result.*,
+#         loginid,
+#         HrmDepartment.departmentname, HrmResource.departmentid
+#     from cp_result
+#     INNER JOIN HrmResource  ON HrmResource.id = btprid
+#     INNER JOIN a_CpYgDepBind  ON a_CpYgDepBind.childId  = HrmResource.departmentid
+#     INNER JOIN HrmDepartment ON HrmDepartment.id = a_CpYgDepBind.supdepId
+#     WHERE years = {year} AND months = {month}  and category = {category}
+#     AND HrmResource.status in (0,1,2,3)
+#     '''
+#
+#     df_ap = pd.read_sql(sql, engine)
+#     df_point = get_point(date)         # todo 使用字典保存每个月的数据
+#     df = pd.merge(df_ap, df_point, left_on='loginid', right_on='userAccount')
+#
+#     area1_x, area1_y, area2_x, area2_y = get_area(df)
+#     return df, area1_x, area1_y, area2_x, area2_y
 
 def get_base_chart(month, group):
     df, area1_x, area1_y, area2_x, area2_y = get_data(month, group)
@@ -304,4 +304,6 @@ def get_auth_department():
 
 # 权限控制
 def has_auth(user, name):
+    # 同一个人
+    # 拥有部门权限的人
     return True
