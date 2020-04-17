@@ -1,10 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="ChangeListManager">
-    <list default="true" id="40b176f2-ad87-490d-8319-8ba786427039" name="Default Changelist" comment="">
+    <list default="true" id="f096b6e8-0674-4d88-851a-3ddbb5511968" name="Default Changelist" comment="">
+      <change afterPath="$PROJECT_DIR$/.gitignore" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Dockerfile" beforeDir="false" afterPath="$PROJECT_DIR$/Dockerfile" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/plots/plots.py" beforeDir="false" afterPath="$PROJECT_DIR$/plots/plots.py" afterDir="false" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="SHOW_DIALOG" value="false" />
@@ -69,6 +68,7 @@
       </list>
     </option>
     <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
+    <option name="RESET_MODE" value="MIXED" />
   </component>
   <component name="InvalidFacetManager">
     <ignored-facets>
@@ -465,126 +465,66 @@
     <option name="LAST_COMMIT_MESSAGE" value="准备分离员工与干部" />
   </component>
   <component name="WindowStateProjectService">
-    <state x="552" y="179" key="#Notifications" timestamp="1586880895846">
-      <screen x="0" y="0" width="1920" height="1040" />
-    </state>
-    <state x="552" y="179" key="#Notifications/0.0.1920.1040@0.0.1920.1040" timestamp="1586880895846" />
-    <state x="414" y="175" key="#com.intellij.execution.impl.EditConfigurationsDialog" timestamp="1586955761246">
-      <screen x="0" y="0" width="1920" height="1040" />
-    </state>
-    <state x="414" y="175" key="#com.intellij.execution.impl.EditConfigurationsDialog/0.0.1920.1040@0.0.1920.1040" timestamp="1586955761246" />
-    <state x="668" y="145" key="#manage" timestamp="1584619408121">
-      <screen x="0" y="0" width="1920" height="1040" />
-    </state>
-    <state x="668" y="145" key="#manage/0.0.1920.1040@0.0.1920.1040" timestamp="1584619408121" />
-    <state x="264" y="364" width="1197" height="561" key="#xdebugger.evaluate" timestamp="1586957957677">
-      <screen x="0" y="0" width="1920" height="1040" />
-    </state>
-    <state x="264" y="364" width="1197" height="561" key="#xdebugger.evaluate/0.0.1920.1040@0.0.1920.1040" timestamp="1586957957677" />
-    <state x="598" y="114" key="CommitChangelistDialog2" timestamp="1586959179752">
-      <screen x="0" y="0" width="1920" height="1040" />
-    </state>
-    <state x="598" y="114" key="CommitChangelistDialog2/0.0.1920.1040@0.0.1920.1040" timestamp="1586959179752" />
-    <state x="809" y="398" width="302" height="247" key="DBNavigator.ConnectionAuthenticationDialog" timestamp="1584714371249">
-      <screen x="0" y="0" width="1920" height="1040" />
-    </state>
-    <state x="809" y="398" width="302" height="247" key="DBNavigator.ConnectionAuthenticationDialog/0.0.1920.1040@0.0.1920.1040" timestamp="1584714371249" />
-    <state x="699" y="249" key="DBNavigator.ExportDataDialog" timestamp="1586190248650">
-      <screen x="0" y="0" width="1920" height="1040" />
-    </state>
-    <state x="699" y="249" key="DBNavigator.ExportDataDialog/0.0.1920.1040@0.0.1920.1040" timestamp="1586190248650" />
-    <state x="0" y="0" width="560" height="275" key="DBNavigator.IdleConnectionDialog" timestamp="1585052061398">
-      <screen x="0" y="0" width="1920" height="1040" />
-    </state>
-    <state x="0" y="0" width="560" height="275" key="DBNavigator.IdleConnectionDialog/0.0.1920.1040@0.0.1920.1040" timestamp="1585052061398" />
-    <state x="490" y="175" key="DBNavigator.ProjectSettingsDialog" timestamp="1586527091123">
-      <screen x="0" y="0" width="1920" height="1040" />
-    </state>
-    <state x="490" y="175" key="DBNavigator.ProjectSettingsDialog/0.0.1920.1040@0.0.1920.1040" timestamp="1586527091123" />
-    <state x="742" y="346" key="DBNavigator.ResultSetRecordViewerDialog" timestamp="1586190237797">
-      <screen x="0" y="0" width="1920" height="1040" />
-    </state>
-    <state x="742" y="346" key="DBNavigator.ResultSetRecordViewerDialog/0.0.1920.1040@0.0.1920.1040" timestamp="1586190237797" />
-    <state x="1061" y="224" key="FileChooserDialogImpl" timestamp="1586687931511">
-      <screen x="0" y="0" width="1920" height="1040" />
-    </state>
-    <state x="1061" y="224" key="FileChooserDialogImpl/0.0.1920.1040@0.0.1920.1040" timestamp="1586687931511" />
-    <state width="1899" height="405" key="GridCell.Tab.0.bottom" timestamp="1586958013115">
-      <screen x="0" y="0" width="1920" height="1040" />
-    </state>
-    <state width="1899" height="405" key="GridCell.Tab.0.bottom/0.0.1920.1040@0.0.1920.1040" timestamp="1586958013115" />
-    <state width="1899" height="405" key="GridCell.Tab.0.center" timestamp="1586958013114">
-      <screen x="0" y="0" width="1920" height="1040" />
-    </state>
-    <state width="1899" height="405" key="GridCell.Tab.0.center/0.0.1920.1040@0.0.1920.1040" timestamp="1586958013114" />
-    <state width="1899" height="405" key="GridCell.Tab.0.left" timestamp="1586958013114">
-      <screen x="0" y="0" width="1920" height="1040" />
-    </state>
-    <state width="1899" height="405" key="GridCell.Tab.0.left/0.0.1920.1040@0.0.1920.1040" timestamp="1586958013114" />
-    <state width="1899" height="405" key="GridCell.Tab.0.right" timestamp="1586958013114">
-      <screen x="0" y="0" width="1920" height="1040" />
-    </state>
-    <state width="1899" height="405" key="GridCell.Tab.0.right/0.0.1920.1040@0.0.1920.1040" timestamp="1586958013114" />
-    <state width="1899" height="405" key="GridCell.Tab.1.bottom" timestamp="1586958013115">
-      <screen x="0" y="0" width="1920" height="1040" />
-    </state>
-    <state width="1899" height="405" key="GridCell.Tab.1.bottom/0.0.1920.1040@0.0.1920.1040" timestamp="1586958013115" />
-    <state width="1899" height="405" key="GridCell.Tab.1.center" timestamp="1586958013115">
-      <screen x="0" y="0" width="1920" height="1040" />
-    </state>
-    <state width="1899" height="405" key="GridCell.Tab.1.center/0.0.1920.1040@0.0.1920.1040" timestamp="1586958013115" />
-    <state width="1899" height="405" key="GridCell.Tab.1.left" timestamp="1586958013115">
-      <screen x="0" y="0" width="1920" height="1040" />
-    </state>
-    <state width="1899" height="405" key="GridCell.Tab.1.left/0.0.1920.1040@0.0.1920.1040" timestamp="1586958013115" />
-    <state width="1899" height="405" key="GridCell.Tab.1.right" timestamp="1586958013115">
-      <screen x="0" y="0" width="1920" height="1040" />
-    </state>
-    <state width="1899" height="405" key="GridCell.Tab.1.right/0.0.1920.1040@0.0.1920.1040" timestamp="1586958013115" />
-    <state width="129" height="60" key="LargeValuePreview.bs_name" timestamp="1586190229808">
-      <screen x="0" y="0" width="1920" height="1040" />
-    </state>
-    <state width="129" height="60" key="LargeValuePreview.bs_name/0.0.1920.1040@0.0.1920.1040" timestamp="1586190229808" />
-    <state width="138" height="60" key="LargeValuePreview.txr_loginid" timestamp="1585049874057">
-      <screen x="0" y="0" width="1920" height="1040" />
-    </state>
-    <state width="138" height="60" key="LargeValuePreview.txr_loginid/0.0.1920.1040@0.0.1920.1040" timestamp="1585049874057" />
-    <state width="135" height="60" key="LargeValuePreview.username" timestamp="1586190232100">
-      <screen x="0" y="0" width="1920" height="1040" />
-    </state>
-    <state width="135" height="60" key="LargeValuePreview.username/0.0.1920.1040@0.0.1920.1040" timestamp="1586190232100" />
-    <state x="461" y="162" key="SettingsEditor" timestamp="1586565477011">
-      <screen x="0" y="0" width="1920" height="1040" />
-    </state>
-    <state x="461" y="162" key="SettingsEditor/0.0.1920.1040@0.0.1920.1040" timestamp="1586565477011" />
-    <state x="904" y="382" key="Vcs.Push.Dialog.v2" timestamp="1586877997978">
-      <screen x="0" y="0" width="1920" height="1040" />
-    </state>
-    <state x="904" y="382" key="Vcs.Push.Dialog.v2/0.0.1920.1040@0.0.1920.1040" timestamp="1586877997978" />
-    <state width="968" height="528" key="XDebugger.FullValuePopup" timestamp="1586614840297">
-      <screen x="0" y="0" width="1920" height="1040" />
-    </state>
-    <state width="968" height="528" key="XDebugger.FullValuePopup/0.0.1920.1040@0.0.1920.1040" timestamp="1586614840297" />
-    <state x="92" y="92" width="1736" height="856" key="com.intellij.history.integration.ui.views.FileHistoryDialog" timestamp="1586657152197">
-      <screen x="0" y="0" width="1920" height="1040" />
-    </state>
-    <state x="92" y="92" width="1736" height="856" key="com.intellij.history.integration.ui.views.FileHistoryDialog/0.0.1920.1040@0.0.1920.1040" timestamp="1586657152197" />
-    <state x="649" y="311" key="git4idea.merge.GitPullDialog" timestamp="1586951319619">
-      <screen x="0" y="0" width="1920" height="1040" />
-    </state>
-    <state x="649" y="311" key="git4idea.merge.GitPullDialog/0.0.1920.1040@0.0.1920.1040" timestamp="1586951319619" />
-    <state x="623" y="363" key="git4idea.ui.GitUnstashDialog" timestamp="1586786466623">
-      <screen x="0" y="0" width="1920" height="1040" />
-    </state>
-    <state x="623" y="363" key="git4idea.ui.GitUnstashDialog/0.0.1920.1040@0.0.1920.1040" timestamp="1586786466623" />
-    <state x="701" y="162" key="refactoring.ChangeSignatureDialog" timestamp="1586604543911">
-      <screen x="0" y="0" width="1920" height="1040" />
-    </state>
-    <state x="701" y="162" key="refactoring.ChangeSignatureDialog/0.0.1920.1040@0.0.1920.1040" timestamp="1586604543910" />
-    <state x="623" y="225" width="672" height="678" key="search.everywhere.popup" timestamp="1586786527621">
-      <screen x="0" y="0" width="1920" height="1040" />
-    </state>
-    <state x="623" y="225" width="672" height="678" key="search.everywhere.popup/0.0.1920.1040@0.0.1920.1040" timestamp="1586786527621" />
+    <state x="552" y="179" key="#Notifications" />
+    <state x="552" y="179" key="#Notifications/0.0.1920.1040@0.0.1920.1040" />
+    <state x="414" y="175" key="#com.intellij.execution.impl.EditConfigurationsDialog" />
+    <state x="414" y="175" key="#com.intellij.execution.impl.EditConfigurationsDialog/0.0.1920.1040@0.0.1920.1040" />
+    <state x="668" y="145" key="#manage" />
+    <state x="668" y="145" key="#manage/0.0.1920.1040@0.0.1920.1040" />
+    <state x="264" y="364" width="1197" height="561" key="#xdebugger.evaluate" />
+    <state x="264" y="364" width="1197" height="561" key="#xdebugger.evaluate/0.0.1920.1040@0.0.1920.1040" />
+    <state x="598" y="114" key="CommitChangelistDialog2" />
+    <state x="598" y="114" key="CommitChangelistDialog2/0.0.1920.1040@0.0.1920.1040" />
+    <state x="809" y="398" width="302" height="247" key="DBNavigator.ConnectionAuthenticationDialog" />
+    <state x="809" y="398" width="302" height="247" key="DBNavigator.ConnectionAuthenticationDialog/0.0.1920.1040@0.0.1920.1040" />
+    <state x="699" y="249" key="DBNavigator.ExportDataDialog" />
+    <state x="699" y="249" key="DBNavigator.ExportDataDialog/0.0.1920.1040@0.0.1920.1040" />
+    <state x="0" y="0" width="560" height="275" key="DBNavigator.IdleConnectionDialog" />
+    <state x="0" y="0" width="560" height="275" key="DBNavigator.IdleConnectionDialog/0.0.1920.1040@0.0.1920.1040" />
+    <state x="490" y="175" key="DBNavigator.ProjectSettingsDialog" />
+    <state x="490" y="175" key="DBNavigator.ProjectSettingsDialog/0.0.1920.1040@0.0.1920.1040" />
+    <state x="742" y="346" key="DBNavigator.ResultSetRecordViewerDialog" />
+    <state x="742" y="346" key="DBNavigator.ResultSetRecordViewerDialog/0.0.1920.1040@0.0.1920.1040" />
+    <state x="1061" y="224" key="FileChooserDialogImpl" />
+    <state x="1061" y="224" key="FileChooserDialogImpl/0.0.1920.1040@0.0.1920.1040" />
+    <state width="1899" height="405" key="GridCell.Tab.0.bottom" />
+    <state width="1899" height="405" key="GridCell.Tab.0.bottom/0.0.1920.1040@0.0.1920.1040" />
+    <state width="1899" height="405" key="GridCell.Tab.0.center" />
+    <state width="1899" height="405" key="GridCell.Tab.0.center/0.0.1920.1040@0.0.1920.1040" />
+    <state width="1899" height="405" key="GridCell.Tab.0.left" />
+    <state width="1899" height="405" key="GridCell.Tab.0.left/0.0.1920.1040@0.0.1920.1040" />
+    <state width="1899" height="405" key="GridCell.Tab.0.right" />
+    <state width="1899" height="405" key="GridCell.Tab.0.right/0.0.1920.1040@0.0.1920.1040" />
+    <state width="1899" height="405" key="GridCell.Tab.1.bottom" />
+    <state width="1899" height="405" key="GridCell.Tab.1.bottom/0.0.1920.1040@0.0.1920.1040" />
+    <state width="1899" height="405" key="GridCell.Tab.1.center" />
+    <state width="1899" height="405" key="GridCell.Tab.1.center/0.0.1920.1040@0.0.1920.1040" />
+    <state width="1899" height="405" key="GridCell.Tab.1.left" />
+    <state width="1899" height="405" key="GridCell.Tab.1.left/0.0.1920.1040@0.0.1920.1040" />
+    <state width="1899" height="405" key="GridCell.Tab.1.right" />
+    <state width="1899" height="405" key="GridCell.Tab.1.right/0.0.1920.1040@0.0.1920.1040" />
+    <state width="129" height="60" key="LargeValuePreview.bs_name" />
+    <state width="129" height="60" key="LargeValuePreview.bs_name/0.0.1920.1040@0.0.1920.1040" />
+    <state width="138" height="60" key="LargeValuePreview.txr_loginid" />
+    <state width="138" height="60" key="LargeValuePreview.txr_loginid/0.0.1920.1040@0.0.1920.1040" />
+    <state width="135" height="60" key="LargeValuePreview.username" />
+    <state width="135" height="60" key="LargeValuePreview.username/0.0.1920.1040@0.0.1920.1040" />
+    <state x="461" y="162" key="SettingsEditor" />
+    <state x="461" y="162" key="SettingsEditor/0.0.1920.1040@0.0.1920.1040" />
+    <state x="904" y="382" key="Vcs.Push.Dialog.v2" />
+    <state x="904" y="382" key="Vcs.Push.Dialog.v2/0.0.1920.1040@0.0.1920.1040" />
+    <state width="968" height="528" key="XDebugger.FullValuePopup" />
+    <state width="968" height="528" key="XDebugger.FullValuePopup/0.0.1920.1040@0.0.1920.1040" />
+    <state x="92" y="92" width="1736" height="856" key="com.intellij.history.integration.ui.views.FileHistoryDialog" />
+    <state x="92" y="92" width="1736" height="856" key="com.intellij.history.integration.ui.views.FileHistoryDialog/0.0.1920.1040@0.0.1920.1040" />
+    <state x="649" y="311" key="git4idea.merge.GitPullDialog" />
+    <state x="649" y="311" key="git4idea.merge.GitPullDialog/0.0.1920.1040@0.0.1920.1040" />
+    <state x="623" y="363" key="git4idea.ui.GitUnstashDialog" />
+    <state x="623" y="363" key="git4idea.ui.GitUnstashDialog/0.0.1920.1040@0.0.1920.1040" />
+    <state x="701" y="162" key="refactoring.ChangeSignatureDialog" />
+    <state x="701" y="162" key="refactoring.ChangeSignatureDialog/0.0.1920.1040@0.0.1920.1040" />
+    <state x="623" y="225" width="672" height="678" key="search.everywhere.popup" />
+    <state x="623" y="225" width="672" height="678" key="search.everywhere.popup/0.0.1920.1040@0.0.1920.1040" />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>
