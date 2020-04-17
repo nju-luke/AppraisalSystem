@@ -92,7 +92,6 @@ class Charts(LoginRequiredMixin, View):
         #month = datetime.date.today().strftime('%Y%m')
         month = max(date_list)
 
-
         if not user in auth_department:
             group = 7
             return HttpResponseRedirect(f"/dtl?name={user}&month={month}&group={group}")
@@ -108,14 +107,6 @@ class Charts(LoginRequiredMixin, View):
         request.session['args']['select_department'] = auth_dep_ids[0]
 
         request.session['args']['select_month'] = month
-        # request.session['args'] = return_dict
-
-        # graphJason = charts_gallery.get_chart(name = name, month=month) # todo 修改日期, 根据用户名，找到对应的chart
-        # return render(request, 'charts.html', {'plot':graphJason, 'is_manager': is_manager})
-        # request.session.trans_args = self.return_dict
-        # request.environ['trans_args'] = self.return_dict
-        # return HttpResponseRedirect("/manager", self.return_dict)
-        # return redirect('/manager', kwargs = self.return_dict)
         return self.manager(request)
 
     def post(self, request):
@@ -151,6 +142,8 @@ class Charts(LoginRequiredMixin, View):
         else:
             departments = department_framework[request.session['args']['select_department']].get_offsprings()
             departments = [group[0] for group in departments]
+
+        ## todo 获取权限，显示对应数据
 
         return_kargs = request.session['args']
         graphJason = charts_gallery.get_chart(name=request.user.username,

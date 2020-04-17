@@ -34,7 +34,21 @@ def sql_engine():
 
 engine = sql_engine()
 
-TABLE_COLS = ['lastname', 'score', 'point', 'v1', 'v2', 'v3', 'v4', 'v5', 'v6', 'v7', 'v8', 'v9', 'v10', 'v11']
+TABLE_COLS = ['lastname', 'score', 'v1', 'v2', 'v3', 'v4', 'v5', 'v6', 'v7', 'v8', 'v9', 'v10', 'v11', 'point']
+SHOW_COLS = {'lastname':'姓名', 'score':'总分',
+             'v1': '客户意识',
+             'v2': '成本意识',
+             'v3': '责任心',
+             'v4': '日清日毕',
+             'v5': '坚持力',
+             'v6': '领导力',
+             'v7': '学习创新',
+             'v8': '团队协作',
+             'v9': '公平公正',
+             'v10': '廉洁诚信',
+             'v11': '微笑服务',
+             'point': '积分',
+             }
 
 
 def get_areas():
@@ -218,8 +232,8 @@ class ChartsGallery():
     def get_chart_and_dtl(self, name, month, group=7):
         # todo 只显示个人信息
         graph = self.get_chart(name, month, group=group)
-        table = self.dataframes[(month, group)][self.dataframes[(month, group)].loginid == name][TABLE_COLS]. \
-            to_html(index=False).replace('dataframe', 'table')
+        table = self.dataframes[(month, group)][self.dataframes[(month, group)].loginid == name][TABLE_COLS]
+        table = table.rename(columns=SHOW_COLS).to_html(index=False).replace('dataframe', 'table')
         return graph, table
 
 
