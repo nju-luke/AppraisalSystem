@@ -24,14 +24,15 @@ RUN yum install -y git
 
 RUN mkdir -p /home
 
+RUN pip install  pyodbc Django==3.0.4 django-mssql-backend plotly==4.5.4 SQLAlchemy==1.3.10 pandas==0.24.2 numpy==1.16.4
+#-i https://pypi.tuna.tsinghua.edu.cn/simple
+
 ## copy files
 ADD . /home/AppraisalSystem
 
 ## setting the working directory
 WORKDIR /home/AppraisalSystem
 
-RUN pip install -r requirements.txt
-#-i https://pypi.tuna.tsinghua.edu.cn/simple
 
 CMD ["bash"]
 

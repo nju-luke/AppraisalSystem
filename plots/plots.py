@@ -212,10 +212,7 @@ class ChartsGallery():
 
         if not (month, group) in self.charts:
             self.initialize_chart(month, group)
-        chart = deepcopy(self.charts[(month, group)])  # todo 是否需要copy
-
-        # todo 处理部门数据
-        # todo 部门权限
+        chart = deepcopy(self.charts[(month, group)])  # 需要做copy
 
         if not department:
             indices = list(self.dataframes[(month, group)].loginid == name)
@@ -243,16 +240,6 @@ def get_date_list():
     return list(df.dt.values)
 
 
-# def get_auth_department(user=None):
-#     # todo 权限
-#     df = pd.read_sql('''
-#     SELECT id,departmentname FROM ecology.hrmdepartment
-#     where canceled is null
-#     ''', engine)
-#
-#     return [(id, dp) for id, dp in df.values]
-
-
 DEP_FRAM = {}
 
 
@@ -277,38 +264,12 @@ class Tree:
         for key in self.offspring:
             self.offspring[key].print_offsprings(pre_fix=pre_fix)
 
-    # def print_offsprings(self, id=None, pre_fix=''):
-    #     if id:
-    #         print(pre_fix + self.offspring[id].departmentname)
-    #         if self.offspring[id].offspring:
-    #             for key in self.offspring[id].offspring:
-    #                 self.offspring[id].offspring[key].print_offsprings(pre_fix=pre_fix)
-    #     else:
-    #         print(pre_fix + self.departmentname)
-    #         pre_fix += '  '
-    #         for key in self.offspring:
-    #             self.print_offsprings(id=key, pre_fix=pre_fix)
-
     def get_offsprings(self, id=None, pre_fix=''):
         res = [(self.id, pre_fix + self.departmentname)]
         pre_fix += '+'
         for key in self.offspring:
             res.extend(self.offspring[key].get_offsprings(pre_fix=pre_fix))
         return res
-
-    # def get_offsprings(self, id=None, pre_fix=''):
-    #     res = []
-    #     if id:
-    #         res.append((id, pre_fix + self.offspring[id].departmentname))
-    #         if self.offspring[id].offspring:
-    #             for key in self.offspring[id].offspring:
-    #                 res += self.offspring[id].offspring[key].get_offsprings(pre_fix=pre_fix)
-    #     else:
-    #         res.append((self.id, pre_fix + self.departmentname))
-    #         pre_fix += '  '
-    #         for key in self.offspring:
-    #             res += self.get_offsprings(id=key, pre_fix=pre_fix)
-    #     return res
 
 
 def get_department_framework():
