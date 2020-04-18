@@ -12,6 +12,8 @@ from urllib import request
 import pandas as pd
 import requests
 from dateutil.relativedelta import relativedelta
+from sqlalchemy import NVARCHAR
+from utils import engine, get_cut_val
 
 sys.path.append("../..")
 
@@ -60,7 +62,85 @@ def get_point(month):
     return df
 
 
+def get_classes(df):
+    cut_v = get_cut_val(df)
+    if not cut_v:
+        df['score_class'] = None
+        df['point_class'] = None
+        return df
+
+    df['score_class'] = pd.cut(df.score, cut_v, labels=list('ABCD'))
+    df['point_class'] = pd.cut(df.point, cut_v, labels=list('ABCD'))
+    return df
+
+
+def prepare_cp_point(date):
+    year = int(date[:4])
+    month = int(date[5:])
+    df_point = get_point(date)
+    df_point.to_sql('tmp_point', engine, if_exists='replace')
+
+    df_gb = pd.read_sql(f'''
+    select
+        lastname,
+        total,
+        cp_result.*,
+        loginid,
+           a_CpYgDepBind.supdepId,
+        h1.departmentname supName,
+           HrmResource.departmentid,
+        h2.departmentname,
+        rank() over (partition by years,months order by total desc) score,
+        rank() over (partition by years,months order by total) score1,
+        rank() over (partition by years,months order by point desc) point,
+        rank() over (partition by years,months order by point) point1
+    from cp_result
+    INNER JOIN HrmResource  ON HrmResource.id = btprid
+    INNER JOIN a_CpYgDepBind  ON a_CpYgDepBind.childId  = HrmResource.departmentid
+    INNER JOIN HrmDepartment h1 ON h1.id = a_CpYgDepBind.supdepId
+    INNER JOIN HrmDepartment h2 ON h2.id = HrmResource.departmentid
+    INNER JOIN tmp_point on loginid = tmp_point.userAccount
+    WHERE years = {year} AND months = {month}  and category = 6
+    AND HrmResource.status in (0,1,2,3)
+    ''', engine)
+    df_gb = get_classes(df_gb)
+
+    df_yg = pd.read_sql(f'''
+    select
+        lastname,
+        total,
+        cp_result.*,
+        loginid,
+           a_CpYgDepBind.supdepId,
+        h1.departmentname supName,
+           HrmResource.departmentid,
+        h2.departmentname,
+    rank() over (partition by years,months,a_CpYgDepBind.supdepId order by total desc) score,
+    rank() over (partition by years,months,a_CpYgDepBind.supdepId order by total) score1,
+    rank() over (partition by years,months,a_CpYgDepBind.supdepId order by point desc) point,
+    rank() over (partition by years,months,a_CpYgDepBind.supdepId order by point) point1
+    from cp_result
+    INNER JOIN HrmResource  ON HrmResource.id = btprid
+    INNER JOIN a_CpYgDepBind  ON a_CpYgDepBind.childId  = HrmResource.departmentid
+    INNER JOIN HrmDepartment h1 ON h1.id = a_CpYgDepBind.supdepId
+    INNER JOIN HrmDepartment h2 ON h2.id = HrmResource.departmentid
+    INNER JOIN tmp_point on loginid = tmp_point.userAccount
+    WHERE years = {year} AND months = {month}  and category = 7
+    AND HrmResource.status in (0,1,2,3)
+    ''', engine)
+    df_yg = df_yg.groupby('supdepId').apply(get_classes)
+
+    df = pd.concat([df_gb, df_yg], axis=0)
+
+    df.to_sql('result_all', engine, if_exists='replace', index=False,
+              dtype={'lastname': NVARCHAR('max'), 'supName': NVARCHAR('max'),
+                     'departmentname': NVARCHAR('max')})  # todo 修改为append
+
+    print(df.shape)
+
+
 if __name__ == '__main__':
     month = '202003'
-    df = get_point(month)
+    # df = get_point(month)
+    df = prepare_cp_point(month)
     print('done')

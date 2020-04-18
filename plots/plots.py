@@ -5,37 +5,17 @@ datettime: 2020/3/20 14:00
 """
 import json
 import string
-import sys
 from copy import deepcopy
 
 import numpy as np
 import pandas as pd
 import plotly.graph_objects as go
 from _plotly_utils.utils import PlotlyJSONEncoder
-from sqlalchemy import create_engine
 
-from plots.points import get_point
-
-sys.path.append("../..")
-from settings import MSSQL_SETTINGS
-
-USER = MSSQL_SETTINGS.USER
-PASSWORD = MSSQL_SETTINGS.PASSWORD
-HOST = MSSQL_SETTINGS.HOST
-DATABASE = MSSQL_SETTINGS.NAME
-DRIVER = MSSQL_SETTINGS.DRIVER.replace(' ', '+')
-
-
-def sql_engine():
-    engine_str = "mssql+pyodbc://" + USER + ":" + PASSWORD + "@" + HOST + "/" + DATABASE + "?driver=" + DRIVER
-    engine = create_engine(engine_str)
-    return engine
-
-
-engine = sql_engine()
+from .utils import engine, get_cut_val
 
 TABLE_COLS = ['lastname', 'score', 'v1', 'v2', 'v3', 'v4', 'v5', 'v6', 'v7', 'v8', 'v9', 'v10', 'v11', 'point']
-SHOW_COLS = {'lastname':'姓名', 'score':'总分',
+SHOW_COLS = {'lastname': '姓名', 'score': '总分',
              'v1': '客户意识',
              'v2': '成本意识',
              'v3': '责任心',
@@ -115,13 +95,18 @@ def stuff_plot(username):
 
 
 def get_area(df):
-    xs = np.quantile(df.score, [0, 0.25, 0.5, 0.75, 1])
-    ys = np.quantile(df.point, [0, 0.25, 0.5, 0.75, 1])
+    # xs = np.quantile(df.score.astype(float), [0, 0.25, 0.5, 0.75, 1])
+    # ys = np.quantile(df.point.astype(float), [0, 0.25, 0.5, 0.75, 1])
+    xs = get_cut_val(df)
+    if not xs: return None
 
-    xs[0] -= 5
-    xs[-1] += 5
-    ys[0] -= 5
-    ys[-1] += 5
+    xs = [max(xs) - v for v in xs]
+    ys = xs
+
+    # xs[0] -= 5
+    # xs[-1] += 5
+    # ys[0] -= 5
+    # ys[-1] += 5
 
     area1_x = [xs[0], xs[1], xs[1], xs[0], xs[0]]
     area1_y = [ys[0], ys[0], ys[1], ys[1], ys[0]]
@@ -154,41 +139,58 @@ def get_data(date, category):
     month = int(date[5:])
 
     sql = f'''
-    select
-        lastname,
-        total score,
-        cp_result.*,
-        loginid,
-        HrmDepartment.departmentname, HrmResource.departmentid
-    from cp_result
-    INNER JOIN HrmResource  ON HrmResource.id = btprid
-    INNER JOIN a_CpYgDepBind  ON a_CpYgDepBind.childId  = HrmResource.departmentid
-    INNER JOIN HrmDepartment ON HrmDepartment.id = a_CpYgDepBind.supdepId
-    WHERE years = {year} AND months = {month}  and category = {category}
-    AND HrmResource.status in (0,1,2,3)
+        select
+            lastname,
+            total,
+            cp_result.*,
+            loginid,
+            HrmDepartment.departmentname, HrmResource.departmentid,
+            rank() over (partition by years,months order by total desc) score,
+            rank() over (partition by years,months order by total) score1,
+            rank() over (partition by years,months order by point desc) point,
+            rank() over (partition by years,months order by point) point1
+        from cp_result
+        INNER JOIN HrmResource  ON HrmResource.id = btprid
+        INNER JOIN a_CpYgDepBind  ON a_CpYgDepBind.childId  = HrmResource.departmentid
+        INNER JOIN HrmDepartment ON HrmDepartment.id = a_CpYgDepBind.supdepId
+        INNER JOIN tmp_point on loginid = tmp_point.userAccount
+        WHERE years = {year} AND months = {month}  and category = {category}
+        AND HrmResource.status in (0,1,2,3)
     '''
 
-    df_ap = pd.read_sql(sql, engine)
-    df_point = get_point(date)  # todo 使用字典保存每个月的数据
-    df = pd.merge(df_ap, df_point, left_on='loginid', right_on='userAccount')
-
-    area1_x, area1_y, area2_x, area2_y = get_area(df)
-    return df, area1_x, area1_y, area2_x, area2_y
+    # df_ap = pd.read_sql(sql, engine)
+    # df_point = get_point(date)  # todo 使用字典保存每个月的数据
+    # df = pd.merge(df_ap, df_point, left_on='loginid', right_on='userAccount')
+    df = pd.read_sql(sql, engine)
+    df['hover_txt'] = df.score.astype(str) + f'/{len(df)}' + ", " + df.point.astype(str) + f'/{len(df)}'
+    # area1_x, area1_y, area2_x, area2_y = get_area(df)
+    areas = get_area(df)
+    return df, areas
 
 
 def get_base_chart(month, group):
-    df, area1_x, area1_y, area2_x, area2_y = get_data(month, group)
+    df, areas = get_data(month, group)
     df['url'] = "<a href='/dtl/?name=" + df.loginid + f"&month={month}" \
                 + f"&group={group}" + "'>" + df.lastname + "</a>"
-    point = go.Scatter(x=df.score, y=df.point, mode='markers + text',
-                       text=df.url, textposition='top center')
-    area1 = go.Scatter(x=area1_x, y=area1_y, line_color='LightSalmon',
-                       mode='lines', fill='toself', name='warn')
-    area2 = go.Scatter(x=area2_x, y=area2_y, line_color='lightskyblue',
-                       mode='lines', fill='toself', name='perf')
+    point = go.Scatter(x=df.score1, y=df.point1, mode='markers + text',
+                       text=df.url, textposition='top center',
+                       hovertext=df['hover_txt'],
+                       hoverinfo='text'
+                       )
+    if areas:
+        area1_x, area1_y, area2_x, area2_y = areas
+        area1 = go.Scatter(x=area1_x, y=area1_y, line_color='LightSalmon',
+                           mode='lines', fill='toself', name='warn')
+        area2 = go.Scatter(x=area2_x, y=area2_y, line_color='lightskyblue',
+                           mode='lines', fill='toself', name='perf')
 
-    fig = go.Figure([area1, area2, point])
-    fig.update_layout(autosize=False,
+        fig = go.Figure([area1, area2, point])
+    else:
+        fig = go.Figure([point])
+    fig.update_layout(    xaxis={
+                        'title':'测评'},
+                    yaxis={'title':'积分'},
+                      autosize=False,
                       width=980,
                       height=800,
                       showlegend=False)
