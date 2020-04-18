@@ -14,8 +14,13 @@ from _plotly_utils.utils import PlotlyJSONEncoder
 
 from .utils import engine, get_cut_val
 
-TABLE_COLS = ['lastname', 'score', 'v1', 'v2', 'v3', 'v4', 'v5', 'v6', 'v7', 'v8', 'v9', 'v10', 'v11', 'point']
-SHOW_COLS = {'lastname': '姓名', 'score': '总分',
+TABLE_COLS = ['lastname', 'score_ori', 'score',
+              'v1', 'v2', 'v3', 'v4', 'v5', 'v6', 'v7', 'v8', 'v9', 'v10', 'v11',
+              'point_ori', 'point']
+TABLE_COLS_EMP = ['lastname', 'score_ori', 'score',
+              'v1', 'v2', 'v3', 'v4', 'v5',
+              'point_ori', 'point']
+SHOW_COLS = {'lastname': '姓名', 'score_ori': '测评分', 'score': '测评排名',
              'v1': '客户意识',
              'v2': '成本意识',
              'v3': '责任心',
@@ -27,7 +32,8 @@ SHOW_COLS = {'lastname': '姓名', 'score': '总分',
              'v9': '公平公正',
              'v10': '廉洁诚信',
              'v11': '微笑服务',
-             'point': '积分',
+             'point_ori': '积分',
+             'point': '积分排名',
              }
 
 
@@ -134,14 +140,15 @@ def get_area(df):
 #     area1_x, area1_y, area2_x, area2_y = get_area(df)
 #     return df, area1_x, area1_y, area2_x, area2_y
 
-def get_data(date, category):
+def get_data(date, category, depart=None):
     year = int(date[:4])
     month = int(date[5:])
 
     sql = f'''
         select
             lastname,
-            total,
+            total score_ori,
+            point point_ori,
             cp_result.*,
             loginid,
             HrmDepartment.departmentname, HrmResource.departmentid,
@@ -157,6 +164,15 @@ def get_data(date, category):
         WHERE years = {year} AND months = {month}  and category = {category}
         AND HrmResource.status in (0,1,2,3)
     '''
+    if category == 6:
+        pass
+    elif category == 7:
+        assert depart is not None
+        sql += f" and a_CpYgDepBind.supdepId = {depart}"
+    else:
+        raise ValueError(f"Cant find the category of {category}")
+
+    sql += " order by score_ori desc"
 
     # df_ap = pd.read_sql(sql, engine)
     # df_point = get_point(date)  # todo 使用字典保存每个月的数据
@@ -168,10 +184,10 @@ def get_data(date, category):
     return df, areas
 
 
-def get_base_chart(month, group):
-    df, areas = get_data(month, group)
+def get_base_chart(month, group, depart=None):
+    df, areas = get_data(month, group, depart)
     df['url'] = "<a href='/dtl/?name=" + df.loginid + f"&month={month}" \
-                + f"&group={group}" + "'>" + df.lastname + "</a>"
+                + f"&group={group}" + f"&depart={depart}" + "'>" + df.lastname + "</a>"
     point = go.Scatter(x=df.score1, y=df.point1, mode='markers + text',
                        text=df.url, textposition='top center',
                        hovertext=df['hover_txt'],
@@ -201,17 +217,24 @@ class ChartsGallery():
     charts = {}
     dataframes = {}
 
+    charts_emp = {}
+    dataframes_emp = {}
+
     def initialize_chart(self, month, group):
         df, chart = get_base_chart(month, group)
         self.charts[(month, group)] = chart
         self.dataframes[(month, group)] = df
 
+    def initialize_chart_emp(self, month, group, depart):
+        df, chart = get_base_chart(month, group, depart)
+        self.charts_emp[(month, group, depart)] = chart
+        self.dataframes_emp[(month, group, depart)] = df
+
     def _get_department_auth(self, username):
         # todo 权限
         pass
 
-    def get_chart(self, name, month, department=None, group=None):
-
+    def get_chart_gb(self, name, month, department=None, group=None):
         if not (month, group) in self.charts:
             self.initialize_chart(month, group)
         chart = deepcopy(self.charts[(month, group)])  # 需要做copy
@@ -219,20 +242,50 @@ class ChartsGallery():
         if not department:
             indices = list(self.dataframes[(month, group)].loginid == name)
         else:
-            # indices = list(self.dataframes[(month, group)].departmentid == int(department))
             indices = list(self.dataframes[(month, group)].departmentid.isin(department))
-        # text = [n if n == name else None for n in chart.data[2].text]
+
         text = [self.dataframes[(month, group)].url[i] if v else None for i, v in enumerate(indices)]
-        # text = [f"<a href='https://google.com'>{n}</a>" if n == name else None for n in chart.data[2].text]
         chart.data[2].update({'text': text})
         graphJason = json.dumps(chart, cls=PlotlyJSONEncoder)
-        return graphJason
+        return graphJason, self.dataframes[(month, group)][indices]
 
-    def get_chart_and_dtl(self, name, month, group=7):
+    def get_chart_emp(self, name, month, department=None, group=None, depart=None):
+        if  not (month, group, depart) in self.charts_emp:
+            self.initialize_chart_emp(month, group, depart)
+
+        chart = deepcopy(self.charts_emp[(month, group, depart)])  # 需要做copy
+
+        if not department:
+            indices = list(self.dataframes_emp[(month, group, depart)].loginid == name)
+        else:
+            indices = list(self.dataframes_emp[(month, group, depart)].departmentid.isin(department))
+
+        text = [self.dataframes_emp[(month, group,depart)].url[i] if v else None for i, v in enumerate(indices)]
+        chart.data[2].update({'text': text})
+        graphJason = json.dumps(chart, cls=PlotlyJSONEncoder)
+        return graphJason, self.dataframes_emp[(month, group,depart)][indices]
+
+    def get_chart(self, name, month, department=None, group=None, sup_depart=None):
+        if group == 6 :
+            graph, df = self.get_chart_gb(name, month, department, group)
+            table = df[TABLE_COLS]
+            table = table.rename(columns=SHOW_COLS).to_html(index=False, classes='table-striped', border=0).replace(
+                'dataframe', 'table')
+            return graph, table
+        if group == 7:
+            graph, df = self.get_chart_emp(name, month, department, group, depart=sup_depart)
+            table = df[TABLE_COLS_EMP]
+            table = table.rename(columns=SHOW_COLS).to_html(index=False).replace('dataframe', 'table')
+            return graph, table
+
+        raise ValueError
+
+    def get_chart_and_dtl(self, name, month, group=7, sup_depart=None):
         # todo 只显示个人信息
-        graph = self.get_chart(name, month, group=group)
-        table = self.dataframes[(month, group)][self.dataframes[(month, group)].loginid == name][TABLE_COLS]
-        table = table.rename(columns=SHOW_COLS).to_html(index=False).replace('dataframe', 'table')
+
+        # todo 添加权限的明细信息
+
+        graph, table  = self.get_chart(name, month, group=group, sup_depart=sup_depart)
         return graph, table
 
 
@@ -306,3 +359,30 @@ def has_auth(user, name):
     # 同一个人
     # 拥有部门权限的人
     return True
+
+
+def get_sup_dep_loginId():
+    df = pd.read_sql('''
+    select loginid, supdepId from a_CpYgDepBind sup
+    inner join HrmResource h on sup.childId=h.departmentid
+    ''', engine)
+
+    sup_dep = {l:d for l,d in df.values}
+    return sup_dep
+
+def get_sup_dep():
+    df = pd.read_sql('''
+    select childId, supdepId from a_CpYgDepBind
+    ''', engine)
+
+    sup_dep = {l:d for l,d in df.values}
+    return sup_dep
+
+def get_sup_permission():
+    df = pd.read_sql('''
+    select loginid, departmentid from sup_permission
+    ''', engine)
+
+    sup_dep = {l:d for l,d in df.values}
+    return sup_dep
+

@@ -2,10 +2,11 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="f096b6e8-0674-4d88-851a-3ddbb5511968" name="Default Changelist" comment="">
-      <change afterPath="$PROJECT_DIR$/plots/utils.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/plots/plots.py" beforeDir="false" afterPath="$PROJECT_DIR$/plots/plots.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/plots/points.py" beforeDir="false" afterPath="$PROJECT_DIR$/plots/points.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/plots/templates/charts.html" beforeDir="false" afterPath="$PROJECT_DIR$/plots/templates/charts.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/plots/views.py" beforeDir="false" afterPath="$PROJECT_DIR$/plots/views.py" afterDir="false" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="SHOW_DIALOG" value="false" />
@@ -92,7 +93,7 @@
     <property name="RunOnceActivity.ShowReadmeOnStart" value="true" />
     <property name="SHARE_PROJECT_CONFIGURATION_FILES" value="true" />
     <property name="WebServerToolWindowFactoryState" value="false" />
-    <property name="last_opened_file_path" value="$USER_HOME$/Desktop/apprai/data/HrmResource.tsv" />
+    <property name="last_opened_file_path" value="$USER_HOME$/Desktop/apprai/data/ecology_permission.tsv" />
     <property name="settings.editor.selected.configurable" value="preferences.pluginManager" />
   </component>
   <component name="RecentsManager">
@@ -123,7 +124,7 @@
       </list>
     </option>
   </component>
-  <component name="RunManager" selected="Python.points">
+  <component name="RunManager" selected="Python.manage">
     <configuration name="create_user (1)" type="PythonConfigurationType" factoryName="Python" temporary="true" nameIsGenerated="true">
       <module name="AppraisalSystem" />
       <option name="INTERPRETER_OPTIONS" value="" />
@@ -328,7 +329,7 @@
   </component>
   <component name="TaskManager">
     <task active="true" id="Default" summary="Default task">
-      <changelist id="40b176f2-ad87-490d-8319-8ba786427039" name="Default Changelist" comment="" />
+      <changelist id="f096b6e8-0674-4d88-851a-3ddbb5511968" name="Default Changelist" comment="" />
       <created>1584618808482</created>
       <option name="number" value="Default" />
       <option name="presentableId" value="Default" />
@@ -340,6 +341,7 @@
       <workItem from="1587038723754" duration="6634000" />
       <workItem from="1587046311027" duration="1481000" />
       <workItem from="1587049039684" duration="5735000" />
+      <workItem from="1587216802519" duration="10371000" />
     </task>
     <task id="LOCAL-00001" summary="mytest">
       <created>1584682894883</created>
@@ -446,7 +448,14 @@
       <option name="project" value="LOCAL" />
       <updated>1587112577703</updated>
     </task>
-    <option name="localTasksCounter" value="16" />
+    <task id="LOCAL-00016" summary="使用名次">
+      <created>1587212982055</created>
+      <option name="number" value="00016" />
+      <option name="presentableId" value="LOCAL-00016" />
+      <option name="project" value="LOCAL" />
+      <updated>1587212982055</updated>
+    </task>
+    <option name="localTasksCounter" value="17" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -482,7 +491,8 @@
     <MESSAGE value="auth?" />
     <MESSAGE value="准备分离员工与干部" />
     <MESSAGE value="add ignore" />
-    <option name="LAST_COMMIT_MESSAGE" value="add ignore" />
+    <MESSAGE value="使用名次" />
+    <option name="LAST_COMMIT_MESSAGE" value="使用名次" />
   </component>
   <component name="WindowStateProjectService">
     <state x="552" y="179" key="#Notifications" />
@@ -550,86 +560,23 @@
     <breakpoint-manager>
       <breakpoints>
         <line-breakpoint enabled="true" suspend="THREAD" type="python-line">
-          <url>file://$PROJECT_DIR$/polls/views.py</url>
-          <line>73</line>
-          <option name="timeStamp" value="1" />
-        </line-breakpoint>
-        <line-breakpoint enabled="true" suspend="THREAD" type="python-line">
-          <url>file://D:/Miniconda3/Lib/site-packages/django/contrib/auth/decorators.py</url>
-          <line>59</line>
-          <option name="timeStamp" value="2" />
-        </line-breakpoint>
-        <line-breakpoint enabled="true" suspend="THREAD" type="python-line">
-          <url>file://$PROJECT_DIR$/data_prepare/prepare.py</url>
-          <line>108</line>
-          <option name="timeStamp" value="6" />
-        </line-breakpoint>
-        <line-breakpoint enabled="true" suspend="THREAD" type="python-line">
-          <url>file://$PROJECT_DIR$/data_prepare/prepare.py</url>
-          <line>41</line>
-          <option name="timeStamp" value="8" />
-        </line-breakpoint>
-        <line-breakpoint enabled="true" suspend="THREAD" type="python-line">
-          <url>file://$PROJECT_DIR$/data_prepare/prepare.py</url>
-          <line>72</line>
-          <option name="timeStamp" value="11" />
-        </line-breakpoint>
-        <line-breakpoint enabled="true" suspend="THREAD" type="python-line">
-          <url>file://$PROJECT_DIR$/data_prepare/prepare.py</url>
-          <line>71</line>
-          <option name="timeStamp" value="12" />
-        </line-breakpoint>
-        <line-breakpoint enabled="true" suspend="THREAD" type="python-line">
-          <url>file://$PROJECT_DIR$/data_prepare/prepare.py</url>
-          <line>69</line>
-          <option name="timeStamp" value="13" />
-        </line-breakpoint>
-        <line-breakpoint enabled="true" suspend="THREAD" type="python-line">
-          <url>file://$PROJECT_DIR$/mytest/views.py</url>
-          <line>39</line>
-          <option name="timeStamp" value="48" />
-        </line-breakpoint>
-        <line-breakpoint enabled="true" suspend="THREAD" type="python-line">
           <url>file://$PROJECT_DIR$/plots/plots.py</url>
-          <line>34</line>
-          <option name="timeStamp" value="64" />
-        </line-breakpoint>
-        <line-breakpoint enabled="true" suspend="THREAD" type="python-line">
-          <url>file://$PROJECT_DIR$/plots/views.py</url>
-          <line>112</line>
-          <option name="timeStamp" value="67" />
-        </line-breakpoint>
-        <line-breakpoint enabled="true" suspend="THREAD" type="python-line">
-          <url>file://$PROJECT_DIR$/plots/views.py</url>
-          <line>148</line>
-          <option name="timeStamp" value="68" />
-        </line-breakpoint>
-        <line-breakpoint enabled="true" suspend="THREAD" type="python-line">
-          <url>file://$PROJECT_DIR$/plots/plots.py</url>
-          <line>209</line>
-          <option name="timeStamp" value="69" />
-        </line-breakpoint>
-        <line-breakpoint enabled="true" suspend="THREAD" type="python-line">
-          <url>file://$PROJECT_DIR$/plots/plots.py</url>
-          <line>211</line>
-          <option name="timeStamp" value="70" />
-        </line-breakpoint>
-        <line-breakpoint enabled="true" suspend="THREAD" type="python-line">
-          <url>file://$PROJECT_DIR$/plots/plots.py</url>
-          <line>199</line>
-          <option name="timeStamp" value="72" />
-        </line-breakpoint>
-        <line-breakpoint enabled="true" suspend="THREAD" type="python-line">
-          <url>file://$PROJECT_DIR$/plots/points.py</url>
-          <line>71</line>
-          <option name="timeStamp" value="81" />
+          <line>271</line>
+          <option name="timeStamp" value="100" />
         </line-breakpoint>
       </breakpoints>
+      <default-breakpoints>
+        <breakpoint type="python-exception">
+          <properties notifyOnTerminate="true" exception="BaseException">
+            <option name="notifyOnTerminate" value="true" />
+          </properties>
+        </breakpoint>
+      </default-breakpoints>
     </breakpoint-manager>
   </component>
   <component name="com.intellij.coverage.CoverageDataManagerImpl">
     <SUITE FILE_PATH="coverage/AppraisalSystem$create_user__1_.coverage" NAME="create_user (1) Coverage Results" MODIFIED="1587040960283" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$" />
-    <SUITE FILE_PATH="coverage/AppraisalSystem$manage.coverage" NAME="manage Coverage Results" MODIFIED="1587212881754" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$" />
-    <SUITE FILE_PATH="coverage/AppraisalSystem$points.coverage" NAME="points Coverage Results" MODIFIED="1587212754990" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/plots" />
+    <SUITE FILE_PATH="coverage/AppraisalSystem$manage.coverage" NAME="manage Coverage Results" MODIFIED="1587229122678" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$" />
+    <SUITE FILE_PATH="coverage/AppraisalSystem$points.coverage" NAME="points Coverage Results" MODIFIED="1587226791149" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/plots" />
   </component>
 </project>

@@ -84,6 +84,7 @@ def prepare_cp_point(date):
     select
         lastname,
         total,
+        point point_ori,
         cp_result.*,
         loginid,
            a_CpYgDepBind.supdepId,
@@ -109,6 +110,7 @@ def prepare_cp_point(date):
     select
         lastname,
         total,
+        point point_ori,
         cp_result.*,
         loginid,
            a_CpYgDepBind.supdepId,
