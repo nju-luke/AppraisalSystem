@@ -83,7 +83,7 @@ def prepare_cp_point(date):
     df_gb = pd.read_sql(f'''
     select
         lastname,
-        total,
+        total score_ori,
         point point_ori,
         cp_result.*,
         loginid,
@@ -109,7 +109,7 @@ def prepare_cp_point(date):
     df_yg = pd.read_sql(f'''
     select
         lastname,
-        total,
+        total score_ori,
         point point_ori,
         cp_result.*,
         loginid,
@@ -139,6 +139,7 @@ def prepare_cp_point(date):
                      'departmentname': NVARCHAR('max')})  # todo 修改为append
 
     print(df.shape)
+
 
 
 if __name__ == '__main__':

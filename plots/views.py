@@ -224,12 +224,15 @@ def dtl(request):
         is_sup_perm = True
 
     # todo 添加明细数据
-    graphJason, table = charts_gallery.get_chart_and_dtl(name=name, month=month, group=group, sup_depart=sup_depart,
+    graphJason, table, cp_dtl = charts_gallery.get_chart_and_dtl(name=name, month=month, group=group,
+                                                                 sup_depart=sup_depart,
                                                          is_sup_perm = is_sup_perm)
 
     return render(request, 'charts.html', {'plot': graphJason, 'table': table,
                                            'select_month': month,
-                                           'date_list': request.session['args']['date_list']})
+                                           'date_list': request.session['args']['date_list'],
+                                           'cp_dtl' : cp_dtl
+                                           },)
 
 
 def test(request):

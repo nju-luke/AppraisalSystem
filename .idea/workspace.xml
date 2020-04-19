@@ -4,6 +4,8 @@
     <list default="true" id="f096b6e8-0674-4d88-851a-3ddbb5511968" name="Default Changelist" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/plots/plots.py" beforeDir="false" afterPath="$PROJECT_DIR$/plots/plots.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/plots/points.py" beforeDir="false" afterPath="$PROJECT_DIR$/plots/points.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/plots/templates/charts.html" beforeDir="false" afterPath="$PROJECT_DIR$/plots/templates/charts.html" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/plots/views.py" beforeDir="false" afterPath="$PROJECT_DIR$/plots/views.py" afterDir="false" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
@@ -122,7 +124,7 @@
       </list>
     </option>
   </component>
-  <component name="RunManager" selected="Python.manage">
+  <component name="RunManager" selected="Python.points">
     <configuration name="create_user (1)" type="PythonConfigurationType" factoryName="Python" temporary="true" nameIsGenerated="true">
       <module name="AppraisalSystem" />
       <option name="INTERPRETER_OPTIONS" value="" />
@@ -301,17 +303,12 @@
           <expand>
             <path>
               <item name="services root" type="e789fda9:ObjectUtils$Sentinel" />
-              <item name="com.intellij.execution.services.ServiceModel$ServiceGroupNode@13b72a2" type="7427dc5b:ServiceModel$ServiceGroupNode" />
+              <item name="com.intellij.execution.services.ServiceModel$ServiceGroupNode@7fa42d2f" type="7427dc5b:ServiceModel$ServiceGroupNode" />
             </path>
             <path>
               <item name="services root" type="e789fda9:ObjectUtils$Sentinel" />
-              <item name="com.intellij.execution.services.ServiceModel$ServiceGroupNode@13b72a2" type="7427dc5b:ServiceModel$ServiceGroupNode" />
-              <item name="com.intellij.execution.services.ServiceModel$ServiceNode@41c74384" type="9fbbdea:ServiceModel$ServiceNode" />
-            </path>
-            <path>
-              <item name="services root" type="e789fda9:ObjectUtils$Sentinel" />
-              <item name="com.intellij.execution.services.ServiceModel$ServiceGroupNode@13b72a2" type="7427dc5b:ServiceModel$ServiceGroupNode" />
-              <item name="com.intellij.execution.services.ServiceModel$ServiceNode@3f5a483e" type="9fbbdea:ServiceModel$ServiceNode" />
+              <item name="com.intellij.execution.services.ServiceModel$ServiceGroupNode@7fa42d2f" type="7427dc5b:ServiceModel$ServiceGroupNode" />
+              <item name="com.intellij.execution.services.ServiceModel$ServiceNode@497ddd2b" type="9fbbdea:ServiceModel$ServiceNode" />
             </path>
           </expand>
           <select />
@@ -339,7 +336,7 @@
       <workItem from="1587038723754" duration="6634000" />
       <workItem from="1587046311027" duration="1481000" />
       <workItem from="1587049039684" duration="5735000" />
-      <workItem from="1587216802519" duration="14559000" />
+      <workItem from="1587216802519" duration="19295000" />
     </task>
     <task id="LOCAL-00001" summary="mytest">
       <created>1584682894883</created>
@@ -460,7 +457,14 @@
       <option name="project" value="LOCAL" />
       <updated>1587229502826</updated>
     </task>
-    <option name="localTasksCounter" value="18" />
+    <task id="LOCAL-00018" summary="to add cp dtl">
+      <created>1587262850669</created>
+      <option name="number" value="00018" />
+      <option name="presentableId" value="LOCAL-00018" />
+      <option name="project" value="LOCAL" />
+      <updated>1587262850669</updated>
+    </task>
+    <option name="localTasksCounter" value="19" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -498,7 +502,8 @@
     <MESSAGE value="add ignore" />
     <MESSAGE value="使用名次" />
     <MESSAGE value="prepare to fix the permission" />
-    <option name="LAST_COMMIT_MESSAGE" value="prepare to fix the permission" />
+    <MESSAGE value="to add cp dtl" />
+    <option name="LAST_COMMIT_MESSAGE" value="to add cp dtl" />
   </component>
   <component name="WindowStateProjectService">
     <state x="552" y="179" key="#Notifications" />
@@ -564,6 +569,13 @@
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>
+      <breakpoints>
+        <line-breakpoint enabled="true" suspend="THREAD" type="python-line">
+          <url>file://$PROJECT_DIR$/plots/points.py</url>
+          <line>134</line>
+          <option name="timeStamp" value="110" />
+        </line-breakpoint>
+      </breakpoints>
       <default-breakpoints>
         <breakpoint type="python-exception">
           <properties notifyOnTerminate="true" exception="BaseException">
@@ -575,7 +587,7 @@
   </component>
   <component name="com.intellij.coverage.CoverageDataManagerImpl">
     <SUITE FILE_PATH="coverage/AppraisalSystem$create_user__1_.coverage" NAME="create_user (1) Coverage Results" MODIFIED="1587040960283" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$" />
-    <SUITE FILE_PATH="coverage/AppraisalSystem$manage.coverage" NAME="manage Coverage Results" MODIFIED="1587262512424" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$" />
-    <SUITE FILE_PATH="coverage/AppraisalSystem$points.coverage" NAME="points Coverage Results" MODIFIED="1587226791149" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/plots" />
+    <SUITE FILE_PATH="coverage/AppraisalSystem$manage.coverage" NAME="manage Coverage Results" MODIFIED="1587263501836" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$" />
+    <SUITE FILE_PATH="coverage/AppraisalSystem$points.coverage" NAME="points Coverage Results" MODIFIED="1587264758730" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/plots" />
   </component>
 </project>

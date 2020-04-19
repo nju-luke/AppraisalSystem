@@ -14,28 +14,17 @@ from _plotly_utils.utils import PlotlyJSONEncoder
 
 from .utils import engine, get_cut_val
 
-TABLE_COLS = ['lastname', 'score_ori', 'score',
+TABLE_COLS = ['lastname', 'score_ori', 'score', 'score_class',
               'v1', 'v2', 'v3', 'v4', 'v5', 'v6', 'v7', 'v8', 'v9', 'v10', 'v11',
-              'point_ori', 'point']
-TABLE_COLS_EMP = ['lastname', 'score_ori', 'score',
-              'v1', 'v2', 'v3', 'v4', 'v5',
-              'point_ori', 'point']
-SHOW_COLS = {'lastname': '姓名', 'score_ori': '测评分', 'score': '测评排名',
-             'v1': '客户意识',
-             'v2': '成本意识',
-             'v3': '责任心',
-             'v4': '日清日毕',
-             'v5': '坚持力',
-             'v6': '领导力',
-             'v7': '学习创新',
-             'v8': '团队协作',
-             'v9': '公平公正',
-             'v10': '廉洁诚信',
-             'v11': '微笑服务',
-             'point_ori': '积分',
-             'point': '积分排名',
+              'point_ori', 'point', 'point_class']
+TABLE_COLS_EMP = ['lastname', 'score_ori', 'score','score_class',
+                  'v1', 'v2', 'v3', 'v4', 'v5',
+                  'point_ori', 'point', 'point_class']
+SHOW_COLS = {'lastname': '姓名', 'score_ori': '测评分', 'score': '测评排名','score_class': '测评等级',
+             'v1': '客户意识', 'v2': '成本意识', 'v3': '责任心', 'v4': '日清日毕', 'v5': '坚持力',
+             'v6': '领导力', 'v7': '学习创新', 'v8': '团队协作', 'v9': '公平公正', 'v10': '廉洁诚信', 'v11': '微笑服务',
+             'point_ori': '积分', 'point': '积分排名','point_class': '积分等级',
              }
-
 
 def get_areas():
     df_area = pd.DataFrame([[1, 1, 2, 2, 1], [1, 2, 2, 1, 1]]).T * 10
@@ -144,31 +133,37 @@ def get_data(date, category, depart=None):
     year = int(date[:4])
     month = int(date[5:])
 
+    # sql = f'''
+    #     select
+    #         lastname,
+    #         total score_ori,
+    #         point point_ori,
+    #         cp_result.*,
+    #         loginid,
+    #         HrmDepartment.departmentname, HrmResource.departmentid,
+    #         rank() over (partition by years,months order by total desc) score,
+    #         rank() over (partition by years,months order by total) score1,
+    #         rank() over (partition by years,months order by point desc) point,
+    #         rank() over (partition by years,months order by point) point1
+    #     from cp_result
+    #     INNER JOIN HrmResource  ON HrmResource.id = btprid
+    #     INNER JOIN a_CpYgDepBind  ON a_CpYgDepBind.childId  = HrmResource.departmentid
+    #     INNER JOIN HrmDepartment ON HrmDepartment.id = a_CpYgDepBind.supdepId
+    #     INNER JOIN tmp_point on loginid = tmp_point.userAccount
+    #     WHERE years = {year} AND months = {month}  and category = {category}
+    #     AND HrmResource.status in (0,1,2,3)
+    # '''
+
     sql = f'''
-        select
-            lastname,
-            total score_ori,
-            point point_ori,
-            cp_result.*,
-            loginid,
-            HrmDepartment.departmentname, HrmResource.departmentid,
-            rank() over (partition by years,months order by total desc) score,
-            rank() over (partition by years,months order by total) score1,
-            rank() over (partition by years,months order by point desc) point,
-            rank() over (partition by years,months order by point) point1
-        from cp_result
-        INNER JOIN HrmResource  ON HrmResource.id = btprid
-        INNER JOIN a_CpYgDepBind  ON a_CpYgDepBind.childId  = HrmResource.departmentid
-        INNER JOIN HrmDepartment ON HrmDepartment.id = a_CpYgDepBind.supdepId
-        INNER JOIN tmp_point on loginid = tmp_point.userAccount
-        WHERE years = {year} AND months = {month}  and category = {category}
-        AND HrmResource.status in (0,1,2,3)
+        select * from result_all
+        where years = {year} AND months = {month}  and category = {category}
     '''
+
     if category == 6:
         pass
     elif category == 7:
         assert depart is not None
-        sql += f" and a_CpYgDepBind.supdepId = {depart}"
+        sql += f" and supdepId = {depart}"
     else:
         raise ValueError(f"Cant find the category of {category}")
 
@@ -203,15 +198,22 @@ def get_base_chart(month, group, depart=None):
         fig = go.Figure([area1, area2, point])
     else:
         fig = go.Figure([point])
-    fig.update_layout(    xaxis={
-                        'title':'测评'},
-                    yaxis={'title':'积分'},
-                      autosize=False,
-                      width=980,
-                      height=800,
-                      showlegend=False)
+    fig.update_layout(xaxis={
+        'title': '测评'},
+        yaxis={'title': '积分'},
+        autosize=False,
+        width=980,
+        height=800,
+        showlegend=False)
     return df, fig
 
+def get_loginid_id():
+    df = pd.read_sql('''
+    select loginid, id from HrmResource
+    ''', engine)
+
+    loginid_id = {l: i for l, i in df.values}
+    return loginid_id
 
 class ChartsGallery():
     charts = {}
@@ -219,6 +221,8 @@ class ChartsGallery():
 
     charts_emp = {}
     dataframes_emp = {}
+
+    loginid_id = get_loginid_id()
 
     def initialize_chart(self, month, group):
         df, chart = get_base_chart(month, group)
@@ -250,7 +254,7 @@ class ChartsGallery():
         return graphJason, self.dataframes[(month, group)][indices]
 
     def get_chart_emp(self, name, month, department=None, group=None, depart=None):
-        if  not (month, group, depart) in self.charts_emp:
+        if not (month, group, depart) in self.charts_emp:
             self.initialize_chart_emp(month, group, depart)
 
         chart = deepcopy(self.charts_emp[(month, group, depart)])  # 需要做copy
@@ -260,13 +264,13 @@ class ChartsGallery():
         else:
             indices = list(self.dataframes_emp[(month, group, depart)].departmentid.isin(department))
 
-        text = [self.dataframes_emp[(month, group,depart)].url[i] if v else None for i, v in enumerate(indices)]
+        text = [self.dataframes_emp[(month, group, depart)].url[i] if v else None for i, v in enumerate(indices)]
         chart.data[2].update({'text': text})
         graphJason = json.dumps(chart, cls=PlotlyJSONEncoder)
-        return graphJason, self.dataframes_emp[(month, group,depart)][indices]
+        return graphJason, self.dataframes_emp[(month, group, depart)][indices]
 
     def get_chart(self, name, month, department=None, group=None, sup_depart=None):
-        if group == 6 :
+        if group == 6:
             graph, df = self.get_chart_gb(name, month, department, group)
             table = df[TABLE_COLS]
             table = table.rename(columns=SHOW_COLS).to_html(index=False, classes='table-striped', border=0).replace(
@@ -282,15 +286,149 @@ class ChartsGallery():
         raise ValueError
 
     def get_chart_and_dtl(self, name, month, group=7, sup_depart=None, is_sup_perm=False):
-        graph, table  = self.get_chart(name, month, group=group, sup_depart=sup_depart)
+        graph, table = self.get_chart(name, month, group=group, sup_depart=sup_depart)
         if is_sup_perm:
-            cp_dtl = self.get_dtl_table(name)
+            cp_dtl = self.get_dtl_table(name, month, group)
+        else:
+            cp_dtl = None
 
-        return graph, table
+        return graph, table, cp_dtl
 
-    def get_dtl_table(self, name):
+    def get_dtl_table(self, name, month ,group):
+        id = self.loginid_id[name]
+        start_date = ''
+        end_date = ''
 
-        pass
+        if group == 7:
+            sql = f'''
+            -- 员工
+            SELECT t1.txr,
+                   t5.lastname as txrName,
+                   t2.bsbtpr,
+                   t4.lastname as btprName,
+                   t4.loginid,
+                   (convert(Int, s1.name) + convert(Int, s2.name) + convert(Int, s3.name)
+                       + convert(Int, s4.name) + convert(Int, s5.name))
+                               as total,
+                   s1.name     as v1,
+                   s2.name     as v2,
+                   s3.name     as v3,
+                   s4.name     as v4,
+                   s5.name     as v5
+            FROM formtable_main_130 t1
+                     INNER JOIN formtable_main_130_dt1 t2 ON t2.mainid = t1.id
+            
+                     INNER JOIN workflow_currentoperator t3 ON t3.requestid = t1.requestId
+                     INNER JOIN HrmResource t4 ON t4.id = t2.bsbtpr
+                     INNER JOIN HrmResource t5 ON t5.id = t1.txr
+            
+                     INNER JOIN a_CpYgDepBind t6 ON t6.childId = t4.departmentid
+                     INNER JOIN a_CpYgDepBind t7 ON t7.childId = t5.departmentid
+            
+                     INNER JOIN mode_selectitempagedetail s1 ON s1.mainid = 22 AND s1.disorder = t2.f1
+                     INNER JOIN mode_selectitempagedetail s2 ON s2.mainid = 23 AND s2.disorder = t2.f2
+                     INNER JOIN mode_selectitempagedetail s3 ON s3.mainid = 23 AND s3.disorder = t2.f3
+                     INNER JOIN mode_selectitempagedetail s4 ON s4.mainid = 23 AND s4.disorder = t2.f4
+                     INNER JOIN mode_selectitempagedetail s5 ON s5.mainid = 23 AND s5.disorder = t2.f5
+            WHERE
+            --被打分人
+                t2.bsbtpr = {id}
+              AND t1.txrq >= '{start_date}'
+              AND t1.txrq < '{end_date}'
+              AND t6.supdepId = t7.supdepId
+            
+              AND (t3.isremark = 4)
+              AND (t3.iscomplete = 1)
+            
+              AND t1.txr <> t2.bsbtpr
+              -- 去重复
+              AND t2.id not in (
+                select MAX(t2.id) as id
+                FROM formtable_main_114 t1
+                         INNER JOIN formtable_main_114_dt1 t2 ON t2.mainid = t1.id
+                         INNER JOIN workflow_currentoperator t4 ON t4.requestid = t1.requestId
+                WHERE (t4.isremark = 4)
+                  AND (t4.iscomplete = 1)
+                  --被打分人
+                  AND bsbtpr = {id}
+                  AND t1.txrq >= '{start_date}'
+                  AND t1.txrq < '{end_date}'
+                GROUP BY txr, bsbtpr
+                HAVING COUNT(*) > 1)
+            '''
+        elif group == 6:
+            sql = '''
+            SELECT t1.txr,
+               t5.lastname as txrName,
+               t2.bsbtpr,
+               t4.lastname as btprName,
+               t4.loginid,
+               (convert(Int, s1.name) + convert(Int, s2.name) + convert(Int, s3.name)
+                   + convert(Int, s4.name) + convert(Int, s5.name) + convert(Int, s6.name) + convert(Int, s7.name)
+                   + convert(Int, s8.name) + convert(Int, s9.name) + convert(Int, s10.name) + convert(Int, s11.name))
+                           as total,
+               s1.name     as v1,
+               s2.name     as v2,
+               s3.name     as v3,
+               s4.name     as v4,
+               s5.name     as v5,
+               s6.name     as v6,
+               s7.name     as v7,
+               s8.name     as v8,
+               s9.name     as v9,
+               s10.name    as v10,
+               s11.name    as v11
+        FROM formtable_main_114 t1
+                 INNER JOIN formtable_main_114_dt1 t2 ON t2.mainid = t1.id
+                 INNER JOIN workflow_currentoperator t3 ON t3.requestid = t1.requestId
+                 INNER JOIN HrmResource t4 ON t4.id = t2.bsbtpr
+        
+                 INNER JOIN HrmResource t5 ON t5.id = t1.txr
+        
+                 INNER JOIN mode_selectitempagedetail s1 ON s1.mainid = 24 AND s1.disorder = t2.f1
+                 INNER JOIN mode_selectitempagedetail s2 ON s2.mainid = 13 AND s2.disorder = t2.f2
+                 INNER JOIN mode_selectitempagedetail s3 ON s3.mainid = 13 AND s3.disorder = t2.f3
+                 INNER JOIN mode_selectitempagedetail s4 ON s4.mainid = 13 AND s4.disorder = t2.f4
+                 INNER JOIN mode_selectitempagedetail s5 ON s5.mainid = 13 AND s5.disorder = t2.f5
+                 INNER JOIN mode_selectitempagedetail s6 ON s6.mainid = 13 AND s6.disorder = t2.f6
+                 INNER JOIN mode_selectitempagedetail s7 ON s7.mainid = 13 AND s7.disorder = t2.f7
+                 INNER JOIN mode_selectitempagedetail s8 ON s8.mainid = 13 AND s8.disorder = t2.f8
+                 INNER JOIN mode_selectitempagedetail s9 ON s9.mainid = 21 AND s9.disorder = t2.f9
+                 INNER JOIN mode_selectitempagedetail s10 ON s10.mainid = 21 AND s10.disorder = t2.f10
+                 INNER JOIN mode_selectitempagedetail s11 ON s11.mainid = 21 AND s11.disorder = t2.f11
+        WHERE (t3.isremark = 4)
+          AND (t3.iscomplete = 1)
+          --被打分人
+          AND  t2.bsbtpr = {id}
+          AND t1.txrq >= '{start_date}'
+          AND t1.txrq < '{end_date}'
+          -- 去重复
+          AND t2.id not in (
+            select MAX(t2.id) as id
+            FROM formtable_main_114 t1
+                     INNER JOIN formtable_main_114_dt1 t2 ON t2.mainid = t1.id
+                     INNER JOIN workflow_currentoperator t4 ON t4.requestid = t1.requestId
+            WHERE (t4.isremark = 4)
+              AND (t4.iscomplete = 1)
+              --被打分人
+              AND  t2.bsbtpr = {id}
+              AND t1.txrq >= '{start_date}'
+              AND t1.txrq < '{end_date}'
+            GROUP BY txr, bsbtpr
+            HAVING COUNT(*) > 1
+        )
+          AND t4.id <> t5.id
+            '''
+        else:
+            raise ValueError(group)
+        df = pd.read_sql(sql, engine)
+
+
+        # table = table.rename(columns=SHOW_COLS).to_html(index=False, classes='table-striped', border=0).replace(
+        #     'dataframe', 'table')
+        table = df.to_html(index=False, classes='table-striped', border=0).replace(
+            'dataframe', 'table')
+        return table
 
 
 def get_date_list():
@@ -371,24 +509,27 @@ def get_sup_dep_loginId():
     inner join HrmResource h on sup.childId=h.departmentid
     ''', engine)
 
-    sup_dep = {l:d for l,d in df.values}
+    sup_dep = {l: d for l, d in df.values}
     return sup_dep
+
 
 def get_dep_loginId():
     df = pd.read_sql('''
     select loginid, departmentid from HrmResource
     ''', engine)
 
-    loginId_dep = {l:d for l,d in df.values}
+    loginId_dep = {l: d for l, d in df.values}
     return loginId_dep
+
 
 def get_sup_dep():
     df = pd.read_sql('''
     select childId, supdepId from a_CpYgDepBind
     ''', engine)
 
-    sup_dep = {l:d for l,d in df.values}
+    sup_dep = {l: d for l, d in df.values}
     return sup_dep
+
 
 def get_sup_permission():
     df = pd.read_sql('''
@@ -398,4 +539,3 @@ def get_sup_permission():
     sup_permission = df.groupby('loginid').agg(list).to_dict()['departmentid']
     # sup_dep = {l:d for l,d in df.values}
     return sup_permission
-
