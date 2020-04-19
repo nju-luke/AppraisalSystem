@@ -4,8 +4,6 @@
     <list default="true" id="f096b6e8-0674-4d88-851a-3ddbb5511968" name="Default Changelist" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/plots/plots.py" beforeDir="false" afterPath="$PROJECT_DIR$/plots/plots.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/plots/points.py" beforeDir="false" afterPath="$PROJECT_DIR$/plots/points.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/plots/templates/charts.html" beforeDir="false" afterPath="$PROJECT_DIR$/plots/templates/charts.html" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/plots/views.py" beforeDir="false" afterPath="$PROJECT_DIR$/plots/views.py" afterDir="false" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
@@ -93,7 +91,7 @@
     <property name="RunOnceActivity.ShowReadmeOnStart" value="true" />
     <property name="SHARE_PROJECT_CONFIGURATION_FILES" value="true" />
     <property name="WebServerToolWindowFactoryState" value="false" />
-    <property name="last_opened_file_path" value="$USER_HOME$/Desktop/apprai/data/ecology_permission.tsv" />
+    <property name="last_opened_file_path" value="$USER_HOME$/Desktop/apprai/data/workflow_currentoperator.tsv" />
     <property name="settings.editor.selected.configurable" value="preferences.pluginManager" />
   </component>
   <component name="RecentsManager">
@@ -341,7 +339,7 @@
       <workItem from="1587038723754" duration="6634000" />
       <workItem from="1587046311027" duration="1481000" />
       <workItem from="1587049039684" duration="5735000" />
-      <workItem from="1587216802519" duration="10371000" />
+      <workItem from="1587216802519" duration="14559000" />
     </task>
     <task id="LOCAL-00001" summary="mytest">
       <created>1584682894883</created>
@@ -455,7 +453,14 @@
       <option name="project" value="LOCAL" />
       <updated>1587212982055</updated>
     </task>
-    <option name="localTasksCounter" value="17" />
+    <task id="LOCAL-00017" summary="prepare to fix the permission">
+      <created>1587229502826</created>
+      <option name="number" value="00017" />
+      <option name="presentableId" value="LOCAL-00017" />
+      <option name="project" value="LOCAL" />
+      <updated>1587229502826</updated>
+    </task>
+    <option name="localTasksCounter" value="18" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -492,7 +497,8 @@
     <MESSAGE value="准备分离员工与干部" />
     <MESSAGE value="add ignore" />
     <MESSAGE value="使用名次" />
-    <option name="LAST_COMMIT_MESSAGE" value="使用名次" />
+    <MESSAGE value="prepare to fix the permission" />
+    <option name="LAST_COMMIT_MESSAGE" value="prepare to fix the permission" />
   </component>
   <component name="WindowStateProjectService">
     <state x="552" y="179" key="#Notifications" />
@@ -558,13 +564,6 @@
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>
-      <breakpoints>
-        <line-breakpoint enabled="true" suspend="THREAD" type="python-line">
-          <url>file://$PROJECT_DIR$/plots/plots.py</url>
-          <line>271</line>
-          <option name="timeStamp" value="100" />
-        </line-breakpoint>
-      </breakpoints>
       <default-breakpoints>
         <breakpoint type="python-exception">
           <properties notifyOnTerminate="true" exception="BaseException">
@@ -576,7 +575,7 @@
   </component>
   <component name="com.intellij.coverage.CoverageDataManagerImpl">
     <SUITE FILE_PATH="coverage/AppraisalSystem$create_user__1_.coverage" NAME="create_user (1) Coverage Results" MODIFIED="1587040960283" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$" />
-    <SUITE FILE_PATH="coverage/AppraisalSystem$manage.coverage" NAME="manage Coverage Results" MODIFIED="1587229122678" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$" />
+    <SUITE FILE_PATH="coverage/AppraisalSystem$manage.coverage" NAME="manage Coverage Results" MODIFIED="1587262512424" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$" />
     <SUITE FILE_PATH="coverage/AppraisalSystem$points.coverage" NAME="points Coverage Results" MODIFIED="1587226791149" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/plots" />
   </component>
 </project>

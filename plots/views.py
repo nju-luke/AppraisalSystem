@@ -10,34 +10,31 @@ from django.shortcuts import render
 from django.views import View
 
 from plots.plots import get_date_list, get_auth_department, has_auth, get_department_framework, get_sup_dep_loginId, \
-    get_sup_dep, get_sup_permission
+    get_sup_dep, get_sup_permission,get_dep_loginId
 from . import plots
 
 # Create your views here.
 
-charts_gallery = plots.ChartsGallery()
 
 date_list = get_date_list()
 department_framework = get_department_framework()
-auth_department = get_auth_department()  # todo 直接查询数据库
-supdep_loginId = get_sup_dep_loginId()
-supdep_depart = get_sup_dep()
-sup_permission = get_sup_permission()
+auth_department = get_auth_department()  # 授权的部门
+loginId_supdep = get_sup_dep_loginId()   # 登录用户的最高级部门
+loginId_dep = get_dep_loginId()   # 登录用户的最高级部门
+depart_supdep = get_sup_dep()            # 当前部门的最高级部门
+sup_permission = get_sup_permission()    # 最高级权限
 
+charts_gallery = plots.ChartsGallery()
 charts_gallery.initialize_chart(max(date_list), 6)
-for sup in set(supdep_loginId.values()):
+for sup in set(loginId_supdep.values()):
     charts_gallery.initialize_chart_emp(max(date_list), 7, sup)
 
 
-# class IndexView(TemplateView):
-#     template_name = "index.html"
 
 def index_view(request):
     if not request.session.session_key:
         return render(request, 'index.html')
     return HttpResponseRedirect('/charts')
-    # return HttpResponse('''您已登录，<a href=http://127.0.0.1:8000/logout>退出</a>''')
-
 
 def login_view(request):
     try:
@@ -68,7 +65,6 @@ def chgpwd(request):
     new_pwd = request.POST['newpwd']
     user.set_password(new_pwd)
     user.save()
-
     return render(request, 'chgpwd.html', {'error': '密码修改成功！'})
 
 
@@ -94,7 +90,7 @@ class Charts(LoginRequiredMixin, View):
 
         if not user in auth_department:
             group = 7
-            depart = supdep_loginId[user]
+            depart = loginId_supdep[user]
             return HttpResponseRedirect(f"/dtl?name={user}&month={month}&group={group}&depart={depart}")
 
         request.session['args']['is_manager'] = True
@@ -104,7 +100,20 @@ class Charts(LoginRequiredMixin, View):
         request.session['args']['department_list'] = []
         for auth_dep_id in auth_dep_ids:
             request.session['args']['department_list'] += department_framework[auth_dep_id].get_offsprings()
+        request.session['args']['department_list_ids'] = [id_ for id_,name in request.session['args'][
+            'department_list']]
         request.session['args']['select_department'] = auth_dep_ids[0]
+
+        # 显示授权的部门
+        try:
+            sup_perm_ids = sup_permission[user]
+            request.session['args']['sup_perm_list'] = []
+            for sup_perm in sup_perm_ids:
+                request.session['args']['sup_perm_list'] += department_framework[sup_perm].get_offsprings()
+            request.session['args']['sup_perm_list'] = [id_ for id_,name in request.session['args']['sup_perm_list']]
+            # request.session['args']['select_department'] = auth_dep_ids[0]
+        except KeyError:
+            pass
 
         if request.session['args']['select_department'] == 1:
             request.session['args']['select_department'] = 0    # 默认高管拥有全部权限
@@ -149,7 +158,7 @@ class Charts(LoginRequiredMixin, View):
         else:
             departments = department_framework[request.session['args']['select_department']].get_offsprings()
             departments = [group[0] for group in departments]  ##获取权限，显示对应数据
-            sup_depart = supdep_depart[request.session['args']['select_department']] \
+            sup_depart = depart_supdep[request.session['args']['select_department']] \
                 if not request.session['args']['select_department'] == 0 else 0
 
 
@@ -204,15 +213,20 @@ def dtl(request):
     name = request.GET['name']
     month = request.GET['month']
     group = int(request.GET['group'])
-    depart = request.GET['depart']
-    if not has_auth(request.user, name):
-        # todo 从request传入权限参数， 不可行
-        # todo 保存用户id，与登录人的id，匹配
+    sup_depart = request.GET['depart']
+
+    dep = loginId_dep[name]
+    if name != request.user.username and dep not in request.session['args']['department_list_ids']:
         return HttpResponse('没有权限！')
 
-    graphJason, table = charts_gallery.get_chart_and_dtl(name=name, month=month, group=group, sup_depart=depart)
-    # obj = charts_gallery.get_chart_and_dtl(name = name)
-    # return HttpResponse(obj)
+    is_sup_perm = False
+    if dep in request.session['args']['sup_perm_list']:
+        is_sup_perm = True
+
+    # todo 添加明细数据
+    graphJason, table = charts_gallery.get_chart_and_dtl(name=name, month=month, group=group, sup_depart=sup_depart,
+                                                         is_sup_perm = is_sup_perm)
+
     return render(request, 'charts.html', {'plot': graphJason, 'table': table,
                                            'select_month': month,
                                            'date_list': request.session['args']['date_list']})
@@ -223,10 +237,8 @@ def test(request):
         date_list = get_date_list()
         # data = [1,2,3,4,5]
         return render(request, 'test.html', {'date_list': date_list})
-
     else:
         select_month = request.POST['select_month']
-
         return render(request, 'test.html', {'select_month': select_month})
 
 

@@ -275,18 +275,22 @@ class ChartsGallery():
         if group == 7:
             graph, df = self.get_chart_emp(name, month, department, group, depart=sup_depart)
             table = df[TABLE_COLS_EMP]
-            table = table.rename(columns=SHOW_COLS).to_html(index=False).replace('dataframe', 'table')
+            table = table.rename(columns=SHOW_COLS).to_html(index=False, classes='table-striped', border=0).replace(
+                'dataframe', 'table')
             return graph, table
 
         raise ValueError
 
-    def get_chart_and_dtl(self, name, month, group=7, sup_depart=None):
-        # todo 只显示个人信息
-
-        # todo 添加权限的明细信息
-
+    def get_chart_and_dtl(self, name, month, group=7, sup_depart=None, is_sup_perm=False):
         graph, table  = self.get_chart(name, month, group=group, sup_depart=sup_depart)
+        if is_sup_perm:
+            cp_dtl = self.get_dtl_table(name)
+
         return graph, table
+
+    def get_dtl_table(self, name):
+
+        pass
 
 
 def get_date_list():
@@ -370,6 +374,14 @@ def get_sup_dep_loginId():
     sup_dep = {l:d for l,d in df.values}
     return sup_dep
 
+def get_dep_loginId():
+    df = pd.read_sql('''
+    select loginid, departmentid from HrmResource
+    ''', engine)
+
+    loginId_dep = {l:d for l,d in df.values}
+    return loginId_dep
+
 def get_sup_dep():
     df = pd.read_sql('''
     select childId, supdepId from a_CpYgDepBind
@@ -383,6 +395,7 @@ def get_sup_permission():
     select loginid, departmentid from sup_permission
     ''', engine)
 
-    sup_dep = {l:d for l,d in df.values}
-    return sup_dep
+    sup_permission = df.groupby('loginid').agg(list).to_dict()['departmentid']
+    # sup_dep = {l:d for l,d in df.values}
+    return sup_permission
 
