@@ -1,7 +1,6 @@
 import datetime
 from urllib import parse
 
-from django.contrib import messages
 from django.contrib.auth import authenticate, login, logout
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth.mixins import LoginRequiredMixin
@@ -9,8 +8,8 @@ from django.http import HttpResponseRedirect, HttpResponse
 from django.shortcuts import render
 from django.views import View
 
-from plots.plots import get_date_list, get_auth_department, has_auth, get_department_framework, get_sup_dep_loginId, \
-    get_sup_dep, get_sup_permission,get_dep_loginId
+from plots.plots import get_date_list, get_auth_department, get_department_framework, get_sup_dep_loginId, \
+    get_sup_dep, get_sup_permission, get_dep_loginId
 from . import plots
 
 # Create your views here.
@@ -19,10 +18,10 @@ from . import plots
 date_list = get_date_list()
 department_framework = get_department_framework()
 auth_department = get_auth_department()  # 授权的部门
-loginId_supdep = get_sup_dep_loginId()   # 登录用户的最高级部门
-loginId_dep = get_dep_loginId()   # 登录用户的最高级部门
-depart_supdep = get_sup_dep()            # 当前部门的最高级部门
-sup_permission = get_sup_permission()    # 最高级权限
+loginId_supdep = get_sup_dep_loginId()  # 登录用户的最高级部门
+loginId_dep = get_dep_loginId()  # 登录用户的最高级部门
+depart_supdep = get_sup_dep()  # 当前部门的最高级部门
+sup_permission = get_sup_permission()  # 最高级权限
 
 charts_gallery = plots.ChartsGallery()
 charts_gallery.initialize_chart(max(date_list), 6)
@@ -30,11 +29,11 @@ for sup in set(loginId_supdep.values()):
     charts_gallery.initialize_chart_emp(max(date_list), 7, sup)
 
 
-
 def index_view(request):
     if not request.session.session_key:
         return render(request, 'index.html')
     return HttpResponseRedirect('/charts')
+
 
 def login_view(request):
     try:
@@ -100,7 +99,7 @@ class Charts(LoginRequiredMixin, View):
         request.session['args']['department_list'] = []
         for auth_dep_id in auth_dep_ids:
             request.session['args']['department_list'] += department_framework[auth_dep_id].get_offsprings()
-        request.session['args']['department_list_ids'] = [id_ for id_,name in request.session['args'][
+        request.session['args']['department_list_ids'] = [id_ for id_, name in request.session['args'][
             'department_list']]
         request.session['args']['select_department'] = auth_dep_ids[0]
 
@@ -110,13 +109,13 @@ class Charts(LoginRequiredMixin, View):
             request.session['args']['sup_perm_list'] = []
             for sup_perm in sup_perm_ids:
                 request.session['args']['sup_perm_list'] += department_framework[sup_perm].get_offsprings()
-            request.session['args']['sup_perm_list'] = [id_ for id_,name in request.session['args']['sup_perm_list']]
+            request.session['args']['sup_perm_list'] = [id_ for id_, name in request.session['args']['sup_perm_list']]
             # request.session['args']['select_department'] = auth_dep_ids[0]
         except KeyError:
             pass
 
         if request.session['args']['select_department'] == 1:
-            request.session['args']['select_department'] = 0    # 默认高管拥有全部权限
+            request.session['args']['select_department'] = 0  # 默认高管拥有全部权限
 
         request.session['args']['select_month'] = month
         return self.manager(request)
@@ -161,14 +160,13 @@ class Charts(LoginRequiredMixin, View):
             sup_depart = depart_supdep[request.session['args']['select_department']] \
                 if not request.session['args']['select_department'] == 0 else 0
 
-
         return_kargs = request.session['args']
         graphJason, table = charts_gallery.get_chart(name=request.user.username,
-                                              month=return_kargs['select_month'],
-                                              department=departments,
-                                              group=return_kargs['select_group'],
-                                              sup_depart=sup_depart
-                                              )  # 修改日期
+                                                     month=return_kargs['select_month'],
+                                                     department=departments,
+                                                     group=return_kargs['select_group'],
+                                                     sup_depart=sup_depart
+                                                     )  # 修改日期
         return_kargs['plot'] = graphJason
         return_kargs['table'] = table
         # return graphJason
@@ -220,19 +218,22 @@ def dtl(request):
         return HttpResponse('没有权限！')
 
     is_sup_perm = False
-    if dep in request.session['args']['sup_perm_list']:
-        is_sup_perm = True
+    try:
+        if dep in request.session['args']['sup_perm_list']:
+            is_sup_perm = True
+    except KeyError:
+        pass
 
     # todo 添加明细数据
     graphJason, table, cp_dtl = charts_gallery.get_chart_and_dtl(name=name, month=month, group=group,
                                                                  sup_depart=sup_depart,
-                                                         is_sup_perm = is_sup_perm)
+                                                                 is_sup_perm=is_sup_perm)
 
     return render(request, 'charts.html', {'plot': graphJason, 'table': table,
                                            'select_month': month,
                                            'date_list': request.session['args']['date_list'],
-                                           'cp_dtl' : cp_dtl
-                                           },)
+                                           'cp_dtl': cp_dtl
+                                           }, )
 
 
 def test(request):

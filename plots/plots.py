@@ -5,12 +5,14 @@ datettime: 2020/3/20 14:00
 """
 import json
 import string
+import datetime
 from copy import deepcopy
 
 import numpy as np
 import pandas as pd
 import plotly.graph_objects as go
 from _plotly_utils.utils import PlotlyJSONEncoder
+from dateutil.relativedelta import relativedelta
 
 from .utils import engine, get_cut_val
 
@@ -24,7 +26,11 @@ SHOW_COLS = {'lastname': '姓名', 'score_ori': '测评分', 'score': '测评排
              'v1': '客户意识', 'v2': '成本意识', 'v3': '责任心', 'v4': '日清日毕', 'v5': '坚持力',
              'v6': '领导力', 'v7': '学习创新', 'v8': '团队协作', 'v9': '公平公正', 'v10': '廉洁诚信', 'v11': '微笑服务',
              'point_ori': '积分', 'point': '积分排名','point_class': '积分等级',
+             'txrName':'测评人','total':'被测评人'
              }
+
+PERM_COLS = ['txrName','total','v1', 'v2', 'v3', 'v4', 'v5', 'v6', 'v7', 'v8', 'v9', 'v10', 'v11']
+PERM_COLS_EMP = ['txrName','total','v1', 'v2', 'v3', 'v4', 'v5']
 
 def get_areas():
     df_area = pd.DataFrame([[1, 1, 2, 2, 1], [1, 2, 2, 1, 1]]).T * 10
@@ -106,10 +112,19 @@ def get_area(df):
     area1_x = [xs[0], xs[1], xs[1], xs[0], xs[0]]
     area1_y = [ys[0], ys[0], ys[1], ys[1], ys[0]]
 
-    area2_x = [xs[3], xs[4], xs[4], xs[3], xs[3]]
-    area2_y = [ys[3], ys[3], ys[4], ys[4], ys[3]]
+    area2_x = [xs[4], xs[2], xs[2], xs[1], xs[1], xs[0], xs[0], xs[1], xs[1], xs[4], xs[4]]
+    area2_y = [ys[1], ys[1], ys[2], ys[2], ys[4], ys[4], ys[1], ys[1], ys[0], ys[0], xs[1]]
 
-    return area1_x, area1_y, area2_x, area2_y
+    area3_x = [xs[4], xs[3], xs[3], xs[1], xs[1], xs[2], xs[2], xs[4], xs[4]]
+    area3_y = [ys[3], ys[3], ys[4], ys[4], ys[2], ys[2], ys[1], ys[1], ys[3]]
+
+    area4_x = [xs[3], xs[4], xs[4], xs[3], xs[3]]
+    area4_y = [ys[3], ys[3], ys[4], ys[4], ys[3]]
+
+    return area1_x, area1_y, \
+           area2_x, area2_y, \
+           area3_x, area3_y, \
+           area4_x, area4_y
 
 
 # def get_data(month, category):
@@ -183,19 +198,26 @@ def get_base_chart(month, group, depart=None):
     df, areas = get_data(month, group, depart)
     df['url'] = "<a href='/dtl/?name=" + df.loginid + f"&month={month}" \
                 + f"&group={group}" + f"&depart={depart}" + "'>" + df.lastname + "</a>"
-    point = go.Scatter(x=df.score1, y=df.point1, mode='markers + text',
+    point = go.Scatter(x=df.score1, y=df.point1, mode='markers + text', marker=dict(color='blue'),
                        text=df.url, textposition='top center',
                        hovertext=df['hover_txt'],
                        hoverinfo='text'
                        )
     if areas:
-        area1_x, area1_y, area2_x, area2_y = areas
-        area1 = go.Scatter(x=area1_x, y=area1_y, line_color='LightSalmon',
-                           mode='lines', fill='toself', name='warn')
-        area2 = go.Scatter(x=area2_x, y=area2_y, line_color='lightskyblue',
-                           mode='lines', fill='toself', name='perf')
+        # https://www.color-hex.com/color/7fffd4
+        str_colors = "#349bff #66d8ff #7fdfff #99e5ff"
+        colors = str_colors.split(" ")
+        area1_x, area1_y, area2_x, area2_y,area3_x, area3_y,area4_x, area4_y  = areas
+        area1 = go.Scatter(x=area1_x, y=area1_y, line_color=colors[3],fillcolor=colors[3],
+                           mode='lines', fill='toself', name='Perfect')
+        area2 = go.Scatter(x=area2_x, y=area2_y, line_color=colors[2], fillcolor=colors[2],
+                           mode='lines', fill='toself', name='Medium')
+        area3 = go.Scatter(x=area3_x, y=area3_y, line_color=colors[1], fillcolor=colors[1],
+                           mode='lines', fill='toself', name='Normal')
+        area4 = go.Scatter(x=area4_x, y=area4_y, line_color=colors[0], fillcolor=colors[0],
+                           mode='lines', fill='toself', name='Pool')
 
-        fig = go.Figure([area1, area2, point])
+        fig = go.Figure([area1, area2, area3, area4, point])
     else:
         fig = go.Figure([point])
     fig.update_layout(xaxis={
@@ -214,6 +236,13 @@ def get_loginid_id():
 
     loginid_id = {l: i for l, i in df.values}
     return loginid_id
+
+def get_html(df):
+    html = df.to_html(index=False, classes='table-striped', border=0).replace(
+        'dataframe', 'table').replace('<tr>', '<tr style=" white-space:nowrap" class="text-center">').\
+        replace('<tr style="text-align: right;">','<tr style=" white-space:nowrap" class="text-center">')
+
+    return html
 
 class ChartsGallery():
     charts = {}
@@ -249,7 +278,7 @@ class ChartsGallery():
             indices = list(self.dataframes[(month, group)].departmentid.isin(department))
 
         text = [self.dataframes[(month, group)].url[i] if v else None for i, v in enumerate(indices)]
-        chart.data[2].update({'text': text})
+        chart.data[-1].update({'text': text})
         graphJason = json.dumps(chart, cls=PlotlyJSONEncoder)
         return graphJason, self.dataframes[(month, group)][indices]
 
@@ -265,7 +294,7 @@ class ChartsGallery():
             indices = list(self.dataframes_emp[(month, group, depart)].departmentid.isin(department))
 
         text = [self.dataframes_emp[(month, group, depart)].url[i] if v else None for i, v in enumerate(indices)]
-        chart.data[2].update({'text': text})
+        chart.data[-1].update({'text': text})
         graphJason = json.dumps(chart, cls=PlotlyJSONEncoder)
         return graphJason, self.dataframes_emp[(month, group, depart)][indices]
 
@@ -273,14 +302,12 @@ class ChartsGallery():
         if group == 6:
             graph, df = self.get_chart_gb(name, month, department, group)
             table = df[TABLE_COLS]
-            table = table.rename(columns=SHOW_COLS).to_html(index=False, classes='table-striped', border=0).replace(
-                'dataframe', 'table')
+            table = get_html(table.rename(columns=SHOW_COLS))
             return graph, table
         if group == 7:
             graph, df = self.get_chart_emp(name, month, department, group, depart=sup_depart)
             table = df[TABLE_COLS_EMP]
-            table = table.rename(columns=SHOW_COLS).to_html(index=False, classes='table-striped', border=0).replace(
-                'dataframe', 'table')
+            table = get_html(table.rename(columns=SHOW_COLS))
             return graph, table
 
         raise ValueError
@@ -296,17 +323,19 @@ class ChartsGallery():
 
     def get_dtl_table(self, name, month ,group):
         id = self.loginid_id[name]
-        start_date = ''
-        end_date = ''
+        cur_date = datetime.date(int(month[:4]), int(month[5:]), 1)
+
+        start_date = cur_date + relativedelta(day=31) + datetime.timedelta(days=1)
+        end_date = start_date + relativedelta(day=31) + datetime.timedelta(days=1)
 
         if group == 7:
             sql = f'''
             -- 员工
-            SELECT t1.txr,
-                   t5.lastname as txrName,
-                   t2.bsbtpr,
-                   t4.lastname as btprName,
-                   t4.loginid,
+            SELECT  -- t1.txr,
+               t5.lastname as txrName,
+               -- t2.bsbtpr,
+               -- t4.lastname as btprName,
+               -- t4.loginid,
                    (convert(Int, s1.name) + convert(Int, s2.name) + convert(Int, s3.name)
                        + convert(Int, s4.name) + convert(Int, s5.name))
                                as total,
@@ -357,12 +386,12 @@ class ChartsGallery():
                 HAVING COUNT(*) > 1)
             '''
         elif group == 6:
-            sql = '''
-            SELECT t1.txr,
+            sql = f'''
+            SELECT -- t1.txr,
                t5.lastname as txrName,
-               t2.bsbtpr,
-               t4.lastname as btprName,
-               t4.loginid,
+               -- t2.bsbtpr,
+               -- t4.lastname as btprName,
+               -- t4.loginid,
                (convert(Int, s1.name) + convert(Int, s2.name) + convert(Int, s3.name)
                    + convert(Int, s4.name) + convert(Int, s5.name) + convert(Int, s6.name) + convert(Int, s7.name)
                    + convert(Int, s8.name) + convert(Int, s9.name) + convert(Int, s10.name) + convert(Int, s11.name))
@@ -426,8 +455,7 @@ class ChartsGallery():
 
         # table = table.rename(columns=SHOW_COLS).to_html(index=False, classes='table-striped', border=0).replace(
         #     'dataframe', 'table')
-        table = df.to_html(index=False, classes='table-striped', border=0).replace(
-            'dataframe', 'table')
+        table = get_html(df.rename(columns=SHOW_COLS))
         return table
 
 
