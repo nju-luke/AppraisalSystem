@@ -12,3 +12,6 @@ class MSSQL_SETTINGS():
 username = "apiAdmin"
 password= "LongkingApiAdmin"
 authorization = "Basic bG9uZ2tpbmc6TG9uZ2tpbmc2MDAzODhMS0NMMjAxOQ=="
+
+corpid = ""
+corpsecret = ""

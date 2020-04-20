@@ -21,7 +21,7 @@ target_url = "localhost:1324/wechat"
 # 未登录
 url_unlogin = f"https://open.weixin.qq.com/connect/oauth2/authorize?appid={corpid}&redirect_uri={target_url}" \
              "&response_type=code&scope=snsapi_base&state=STATE#wechat_redirect"
-# "localhost:1324/wechat"code=CODE&state=STATE
+# "localhost:1324/wechat?code=CODE&state=STATE
 
 CODE = ''
 

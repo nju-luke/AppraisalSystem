@@ -7,6 +7,8 @@ datettime: 2020/4/15 20:18
 import datetime
 import json
 import sys
+import os
+import argparse
 from urllib import request
 
 import pandas as pd
@@ -15,7 +17,7 @@ from dateutil.relativedelta import relativedelta
 from sqlalchemy import NVARCHAR
 from utils import engine, get_cut_val
 
-sys.path.append("../..")
+sys.path.append(os.path.split(os.path.split(os.path.abspath(__file__))[0])[0])
 
 from settings import username, password, authorization
 
@@ -78,7 +80,9 @@ def prepare_cp_point(date):
     year = int(date[:4])
     month = int(date[5:])
     df_point = get_point(date)
-    df_point.to_sql('tmp_point', engine, if_exists='replace')
+    df_point.to_sql('tmp_point', engine, if_exists='replace',
+                    dtype={'userAccount': NVARCHAR('max')}
+                    )
 
     df_gb = pd.read_sql(f'''
     select
@@ -134,6 +138,7 @@ def prepare_cp_point(date):
 
     df = pd.concat([df_gb, df_yg], axis=0)
 
+    # todo 删除对应数据， 修改月份等数据为result_all
     df.to_sql('result_all', engine, if_exists='replace', index=False,
               dtype={'lastname': NVARCHAR('max'), 'supName': NVARCHAR('max'),
                      'departmentname': NVARCHAR('max')})  # todo 修改为append
@@ -141,9 +146,9 @@ def prepare_cp_point(date):
     print(df.shape)
 
 
-
 if __name__ == '__main__':
-    month = '202003'
-    # df = get_point(month)
-    df = prepare_cp_point(month)
-    print('done')
+    parser = argparse.ArgumentParser()
+    parser.add_argument('month',type=str,help='月份，使用格式：202003')
+    args = parser.parse_args()
+    df = prepare_cp_point(args.month)
+    print(f"Process data for {args.month} success.")

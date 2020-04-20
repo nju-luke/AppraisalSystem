@@ -1,9 +1,12 @@
 import datetime
+import json
 from urllib import parse
 
+import requests
 from django.contrib.auth import authenticate, login, logout
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth.mixins import LoginRequiredMixin
+from django.contrib.auth.models import User
 from django.http import HttpResponseRedirect, HttpResponse
 from django.shortcuts import render
 from django.views import View
@@ -11,6 +14,13 @@ from django.views import View
 from plots.plots import get_date_list, get_auth_department, get_department_framework, get_sup_dep_loginId, \
     get_sup_dep, get_sup_permission, get_dep_loginId
 from . import plots
+
+import sys
+import os
+
+sys.path.append(os.path.split(os.path.split(os.path.abspath(__file__))[0])[0])
+
+from settings import corpid, corpsecret
 
 # Create your views here.
 
@@ -228,7 +238,8 @@ def dtl(request):
     graphJason, table, cp_dtl = charts_gallery.get_chart_and_dtl(name=name, month=month, group=group,
                                                                  sup_depart=sup_depart,
                                                                  is_sup_perm=is_sup_perm)
-
+    if request.user.username == name:
+        cp_dtl = None
     return render(request, 'charts.html', {'plot': graphJason, 'table': table,
                                            'select_month': month,
                                            'date_list': request.session['args']['date_list'],
@@ -251,8 +262,6 @@ class TestView(LoginRequiredMixin, View):
     department_list = get_auth_department()
 
     def get(self, request):
-        # date_list =
-        # data = [1,2,3,4,5]
         return render(request, 'test.html', {'date_list': self.date_list,
                                              'departments': self.department_list
                                              })
@@ -267,5 +276,32 @@ class TestView(LoginRequiredMixin, View):
             'select_department': select_department
         })
 
-def wechat(request):
-    pass
+def ewechat(request):
+    if request.session.session_key:
+        HttpResponseRedirect("/charts")
+
+    if request.user.is_anonymous and 'code' not in request.GET:
+        target_url = request.path
+        url_unlogin = f"https://open.weixin.qq.com/connect/oauth2/authorize?appid={corpid}&redirect_uri={target_url}" \
+                      "&response_type=code&scope=snsapi_base&state=STATE#wechat_redirect"
+        return HttpResponseRedirect(url_unlogin)
+
+    code = request.GET['code'][0]
+
+    token_url = f"https://qyapi.weixin.qq.com/cgi-bin/gettoken?corpid={corpid}&corpsecret={corpsecret}"
+    response = requests.post(token_url).text
+    ACCESS_TOKEN = json.loads(response)['access_token']
+
+    user_url = f"https://qyapi.weixin.qq.com/cgi-bin/user/getuserinfo?access_token={ACCESS_TOKEN}&code={code}"
+    response = requests.post(user_url).text
+    username = json.loads(response)['UserId']
+
+    user = User.objects.get(username=username)
+
+    if user:
+        login(request, user)
+    else:
+        raise ValueError(f'用户名不存在：{username}')
+
+    return HttpResponseRedirect("/charts")
+

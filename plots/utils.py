@@ -5,8 +5,10 @@ datettime: 2020/4/18 17:07
 """
 from sqlalchemy import create_engine
 import sys
+import os
 
-sys.path.append("../..")
+sys.path.append(os.path.split(os.path.split(os.path.abspath(__file__))[0])[0])
+
 from settings import MSSQL_SETTINGS
 
 USER = MSSQL_SETTINGS.USER

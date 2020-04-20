@@ -16,6 +16,7 @@ urlpatterns = [
     # path('charts/', views.charts, name='charts'),
     path('charts/', views.Charts.as_view(), name='charts'),
     path('dtl/', views.dtl, name='dtl'),
+
     path('employee/', views.employee, name='employee'),
     path('manager/', views.manager, name='manager'),
 
@@ -26,7 +27,7 @@ urlpatterns = [
     path('test/', views.TestView.as_view(), name='test'),
     # path('test/', views.test, name='test'),
 
-    path('wechat/', views.wechat, name='wechat')
+    path('ewechat/', views.ewechat, name='ewechat')
 
 
 ]
