@@ -14,8 +14,8 @@ urlpatterns = [
     path('', views.index_view,name='index'),
     # path('stuff/', views.StuffView.as_view(), name='stuff'),
     # path('charts/', views.charts, name='charts'),
-    path('charts/', views.Charts.as_view(), name='charts'),
     path('dtl/', views.dtl, name='dtl'),
+    path('charts/', views.Charts.as_view(), name='charts'),
 
     path('employee/', views.employee, name='employee'),
     path('manager/', views.manager, name='manager'),

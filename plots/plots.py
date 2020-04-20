@@ -13,8 +13,12 @@ import pandas as pd
 import plotly.graph_objects as go
 from _plotly_utils.utils import PlotlyJSONEncoder
 from dateutil.relativedelta import relativedelta
+from django.urls import reverse
 
 from .utils import engine, get_cut_val
+
+import os
+os.environ['DJANGO_SETTINGS_MODULE'] = "AppraisalSystem.settings"
 
 TABLE_COLS = ['lastname', 'score_ori', 'score', 'score_class',
               'v1', 'v2', 'v3', 'v4', 'v5', 'v6', 'v7', 'v8', 'v9', 'v10', 'v11',
@@ -196,8 +200,10 @@ def get_data(date, category, depart=None):
 
 def get_base_chart(month, group, depart=None):
     df, areas = get_data(month, group, depart)
-    df['url'] = "<a href='/dtl/?name=" + df.loginid + f"&month={month}" \
+    df['url'] = "<a href='/appraisal/dtl?name=" + df.loginid + f"&month={month}" \
                 + f"&group={group}" + f"&depart={depart}" + "'>" + df.lastname + "</a>"
+    # df['url'] = "<a href='" + reverse("dtl") + "?name=" + df.loginid + f"&month={month}" \
+    #             + f"&group={group}" + f"&depart={depart}" + "'>" + df.lastname + "</a>"
     point = go.Scatter(x=df.score1, y=df.point1, mode='markers + text', marker=dict(color='blue'),
                        text=df.url, textposition='top center',
                        hovertext=df['hover_txt'],

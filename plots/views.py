@@ -9,6 +9,7 @@ from django.contrib.auth.mixins import LoginRequiredMixin
 from django.contrib.auth.models import User
 from django.http import HttpResponseRedirect, HttpResponse
 from django.shortcuts import render
+from django.urls import reverse
 from django.views import View
 
 from plots.plots import get_date_list, get_auth_department, get_department_framework, get_sup_dep_loginId, \
@@ -42,7 +43,7 @@ for sup in set(loginId_supdep.values()):
 def index_view(request):
     if not request.session.session_key:
         return render(request, 'index.html')
-    return HttpResponseRedirect('/charts')
+    return HttpResponseRedirect(reverse('charts'))
 
 
 def login_view(request):
@@ -55,7 +56,7 @@ def login_view(request):
         # user = User.objects.get(username=username)
         if user:
             login(request, user)
-            return HttpResponseRedirect("/")
+            return HttpResponseRedirect(reverse("index"))
         else:
             return render(request, 'index.html', {'error': '用户名或密码不正确！'})
     except Exception as e:
@@ -84,7 +85,7 @@ def logout_view(request):
         request.user.user_permissions.clear()
         # 清空会话
         logout(request)
-        return HttpResponseRedirect("/")
+        return HttpResponseRedirect(reverse("index"))
     except Exception as e:
         return HttpResponse('您未登录！')
 
@@ -100,7 +101,7 @@ class Charts(LoginRequiredMixin, View):
         if not user in auth_department:
             group = 7
             depart = loginId_supdep[user]
-            return HttpResponseRedirect(f"/dtl?name={user}&month={month}&group={group}&depart={depart}")
+            return HttpResponseRedirect(reverse('dtl')+f"?name={user}&month={month}&group={group}&depart={depart}")
 
         request.session['args']['is_manager'] = True
 
@@ -141,9 +142,9 @@ class Charts(LoginRequiredMixin, View):
             user = referer_args['name']
             group = referer_args['group']
             if group == 6:
-                return HttpResponseRedirect(f"/dtl?name={user}&month={select_month}&group={group}")  #
+                return HttpResponseRedirect(reverse('dtl')+f"??name={user}&month={select_month}&group={group}")  #
             depart = referer_args['depart']
-            return HttpResponseRedirect(f"/dtl?name={user}&month={select_month}&group={group}&depart={depart}")
+            return HttpResponseRedirect(reverse('dtl')+f"??name={user}&month={select_month}&group={group}&depart={depart}")
         try:
             request.session['args']['select_group'] = int(request.POST['select_group'])
             request.session['args']['select_department'] = int(request.POST['select_department'])
@@ -190,10 +191,10 @@ def charts(request):
     # todo, 修改日期，获取权限,  #此处根据员工是否领导，直接跳转到可选页面，以及dtl
     is_manager = True
     if not is_manager:
-        return HttpResponseRedirect(f"/dtl?name={name}&month={month}")
+        return HttpResponseRedirect(reverse('dtl')+f"??name={name}&month={month}")
     # graphJason = charts_gallery.get_chart(name = name, month=month) # todo 修改日期, 根据用户名，找到对应的chart
     # return render(request, 'charts.html', {'plot':graphJason, 'is_manager': is_manager})
-    return HttpResponseRedirect("/manager")
+    return HttpResponseRedirect(reverse("manager"))
 
 
 @login_required(login_url='login')
@@ -278,10 +279,10 @@ class TestView(LoginRequiredMixin, View):
 
 def ewechat(request):
     if request.session.session_key:
-        HttpResponseRedirect("/charts")
+        HttpResponseRedirect(reverse("charts"))
 
     if request.user.is_anonymous and 'code' not in request.GET:
-        target_url = request.path
+        target_url = reverse("ewechat")
         url_unlogin = f"https://open.weixin.qq.com/connect/oauth2/authorize?appid={corpid}&redirect_uri={target_url}" \
                       "&response_type=code&scope=snsapi_base&state=STATE#wechat_redirect"
         return HttpResponseRedirect(url_unlogin)
@@ -303,5 +304,5 @@ def ewechat(request):
     else:
         raise ValueError(f'用户名不存在：{username}')
 
-    return HttpResponseRedirect("/charts")
+    return HttpResponseRedirect(reverse("charts"))
 
