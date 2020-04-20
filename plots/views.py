@@ -266,3 +266,6 @@ class TestView(LoginRequiredMixin, View):
             'select_month': select_month,
             'select_department': select_department
         })
+
+def wechat(request):
+    pass

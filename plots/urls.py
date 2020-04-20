@@ -26,6 +26,8 @@ urlpatterns = [
     path('test/', views.TestView.as_view(), name='test'),
     # path('test/', views.test, name='test'),
 
+    path('wechat/', views.wechat, name='wechat')
+
 
 ]
 
