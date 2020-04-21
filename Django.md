@@ -124,7 +124,9 @@ user.user_permissions.add(permission)  # permission.content_type.app_label + per
 
 ### 用户登录与权限认证
 ```python
-    user = User.objects.get(username=username)
+    
+    user = authenticate(request, username=username, password=password) # 如果存在，则返回用户User，不存在返回None
+    # user = User.objects.get(username=username)
     if user:
         login(request, user)
         if user.has_perm('admin.add_logentry'):     # permission.content_type.app_label + permission.codename ??
@@ -138,6 +140,7 @@ request.session['args'] = {'key1':'value1'}
 ```
 
 ## centos 中django使用mssql
+> django 本身是支持mysql等数据库的，但不支持microsoft sql server
 1. 安装相关驱动
     ```sh
     mv /etc/yum.repos.d/CentOS-Base.repo /etc/yum.repos.d/CentOS-Base.repo_bak \
@@ -174,3 +177,164 @@ request.session['args'] = {'key1':'value1'}
            }
     }
     ```
+
+## View的两种定义方式
+urls中的两种使用方式：
+```python
+    path('chgpwd/', views.chgpwd, name='chgpwd'),
+    path('test/', views.TestView.as_view(), name='test'),
+```
+1. 函数式
+    ```python
+    @login_required(login_url='login')
+    def chgpwd(request):
+        if request.method == "GET":
+    ```
+    通过装饰器指定权限，通过判断method确定是GET还是POST
+2. 对象式
+    ```python
+    class TestView(LoginRequiredMixin, View):
+        date_list = get_date_list()
+        department_list = get_auth_department()
+    
+        def get(self, request):
+            return render(request, 'test.html', {'date_list': self.date_list,
+                                                 'departments': self.department_list
+                                                 })
+    
+        def post(self, request):
+            select_month = request.POST['select_month']
+            select_department = request.POST['select_department']
+            return render(request, 'test.html', {
+                'date_list': self.date_list,
+                'departments': self.department_list,
+                'select_month': select_month,
+                'select_department': select_department
+            })
+    ```
+    通过Mixin指定权限，（暂未使用其他权限，不知如何指定？）
+    通过 get 与 post方法，确定逻辑
+
+## urls 中 name的使用
+```python
+path('chgpwd/', views.chgpwd, name='chgpwd'),
+```
+1. views代码中
+    ```python
+    reverse("chgpwd")
+    ```
+2. html中
+    ```html
+    href="{% url 'manager' %}"
+    ```
+
+## 使用企业微信认证登录
+判断是否登录 ——》 获取code ——》获取token ——》获取用户名 ——》登录
+```python
+
+def ewechat(request):
+    if request.session.session_key:
+        HttpResponseRedirect(reverse("charts"))
+
+    if request.user.is_anonymous and 'code' not in request.GET:
+        target_url = request.META["HTTP_HOST"] + reverse("ewechat")
+        url_unlogin = f"https://open.weixin.qq.com/connect/oauth2/authorize?appid={corpid}&redirect_uri={target_url}" \
+                      "&response_type=code&scope=snsapi_base&state=STATE#wechat_redirect"
+        return HttpResponseRedirect(url_unlogin)
+
+    code = request.GET['code']
+
+    token_url = f"https://qyapi.weixin.qq.com/cgi-bin/gettoken?corpid={corpid}&corpsecret={corpsecret}"
+    response = requests.post(token_url).text
+    ACCESS_TOKEN = json.loads(response)['access_token']
+
+    user_url = f"https://qyapi.weixin.qq.com/cgi-bin/user/getuserinfo?access_token={ACCESS_TOKEN}&code={code}"
+    response = requests.post(user_url).text
+    username = json.loads(response)['UserId']
+
+    user = User.objects.get(username=username)
+
+    if user:
+        login(request, user)
+    else:
+        raise ValueError(f'用户名不存在：{username}')
+
+    return HttpResponseRedirect(reverse("charts"))
+```
+
+## 下拉框
+1. html
+    ```html
+    {% for dt in date_list %}
+    <option id="dt" value="{{ dt }}" {%if select_month == dt%} selected {%endif%}>{{ dt }}</option>
+    {% endfor %}
+    ```
+
+## plotly js 作图
+后台返回的参数
+```python
+area1_x, area1_y, area2_x, area2_y,area3_x, area3_y,area4_x, area4_y  = areas
+area1 = go.Scatter(x=area1_x, y=area1_y, line_color=colors[3],fillcolor=colors[3],
+                   mode='lines', fill='toself', name='Perfect')
+fig = go.Figure([area1, point])
+graphJason = json.dumps(fig, cls=PlotlyJSONEncoder)
+```
+前端作图代码， 引用js plotly-latest.min.js
+```html
+<!--<script src="../../static/js/plotly-latest.min.js"></script>--> <!-- 注意路径 -->
+
+<div class="container">
+    <div class="row">
+        <div class="col-md-12">
+            <div class="chart" id="bargraph">
+                <script>
+                var graphs = {{plot | safe}};
+                Plotly.plot('bargraph',graphs,{});
+                </script>
+            </div>
+        </div>
+    </div>
+</div>
+```
+
+
+## plotly
+1. 通过url实现点击text跳转到指定网页
+    ```python
+        df['url'] = "<a href='/appraisal/dtl?name=" + df.loginid + f"&month={month}" \
+                    + f"&group={group}" + f"&depart={depart}" + "'>" + df.lastname + "</a>"
+        point = go.Scatter(x=df.score1, y=df.point1, mode='markers + text', marker=dict(color='blue'),
+                           text=df.url, textposition='top center', # 显示在点上方的文字
+                           hovertext=df['hover_txt'],   # 鼠标移到点上以后显示的文字
+                           hoverinfo='text'
+                           )
+    ```
+2. 面积图
+    ```python
+        area3 = go.Scatter(x=area3_x, y=area3_y, line_color=colors[1], fillcolor=colors[1],
+                           mode='lines', fill='toself', name='Normal')
+        area4 = go.Scatter(x=area4_x, y=area4_y, line_color=colors[0], fillcolor=colors[0],
+                           mode='lines', fill='toself', name='Pool')
+    ```
+
+
+## pandas 操作
+1. to_html, 修改表格
+    ```python
+        html = df.to_html(index=False, classes='table-striped', border=0).replace(
+            'dataframe', 'table').replace('<tr>', '<tr style=" white-space:nowrap" class="text-center">').\
+            replace('<tr style="text-align: right;">','<tr style=" white-space:nowrap" class="text-center">')
+    ```
+2. to_sql, 指定类型
+    ```python
+        from sqlalchemy import NVARCHAR
+        df.to_sql('result_all', engine, if_exists='replace', index=False,
+                  dtype={'lastname': NVARCHAR('max'), 'supName': NVARCHAR('max'),
+                         'departmentname': NVARCHAR('max')})  # todo 修改为append
+    ```
+3. 修改部分列名
+    ```python
+    SHOW_COLS = {"name": "姓名"}
+    df = df.rename(columns=SHOW_COLS)
+    ```
+

@@ -203,8 +203,6 @@ def employee(request):
     name = 'songchen'
     is_manager = True
     graphJason, table = charts_gallery.get_chart(name=name, month='2020-03')  # 修改日期
-    ## todo 修改颜色
-    # return graphJason
     return render(request, 'charts.html', {'plot': graphJason, 'is_manager': is_manager})
 
 
@@ -235,7 +233,6 @@ def dtl(request):
     except KeyError:
         pass
 
-    # todo 添加明细数据
     graphJason, table, cp_dtl = charts_gallery.get_chart_and_dtl(name=name, month=month, group=group,
                                                                  sup_depart=sup_depart,
                                                                  is_sup_perm=is_sup_perm)
@@ -282,12 +279,12 @@ def ewechat(request):
         HttpResponseRedirect(reverse("charts"))
 
     if request.user.is_anonymous and 'code' not in request.GET:
-        target_url = reverse("ewechat")
+        target_url = request.META["HTTP_HOST"] + reverse("ewechat")
         url_unlogin = f"https://open.weixin.qq.com/connect/oauth2/authorize?appid={corpid}&redirect_uri={target_url}" \
                       "&response_type=code&scope=snsapi_base&state=STATE#wechat_redirect"
         return HttpResponseRedirect(url_unlogin)
 
-    code = request.GET['code'][0]
+    code = request.GET['code']
 
     token_url = f"https://qyapi.weixin.qq.com/cgi-bin/gettoken?corpid={corpid}&corpsecret={corpsecret}"
     response = requests.post(token_url).text
