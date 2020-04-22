@@ -13,7 +13,7 @@ from django.urls import reverse
 from django.views import View
 
 from plots.plots import get_date_list, get_auth_department, get_department_framework, get_sup_dep_loginId, \
-    get_sup_dep, get_sup_permission, get_dep_loginId
+    get_sup_dep, get_sup_permission, get_dep_loginId, get_loginid_group
 from . import plots
 
 import sys
@@ -30,9 +30,10 @@ date_list = get_date_list()
 department_framework = get_department_framework()
 auth_department = get_auth_department()  # 授权的部门
 loginId_supdep = get_sup_dep_loginId()  # 登录用户的最高级部门
-loginId_dep = get_dep_loginId()  # 登录用户的最高级部门
+loginId_dep = get_dep_loginId()  # 登录用户的部门
 depart_supdep = get_sup_dep()  # 当前部门的最高级部门
 sup_permission = get_sup_permission()  # 最高级权限
+loginId_group = get_loginid_group()
 
 charts_gallery = plots.ChartsGallery()
 charts_gallery.initialize_chart(max(date_list), 6)
@@ -99,7 +100,8 @@ class Charts(LoginRequiredMixin, View):
         month = max(date_list)
 
         if not user in auth_department:
-            group = 7
+            # group = 7 # 修改干部
+            group = loginId_group[user]
             depart = loginId_supdep[user]
             return HttpResponseRedirect(reverse('dtl')+f"?name={user}&month={month}&group={group}&depart={depart}")
 
@@ -137,14 +139,15 @@ class Charts(LoginRequiredMixin, View):
 
         if not 'select_group' in request.POST:
             # todo 在别人的详情页查看时，修改前端  request.headers['referer']
-            url = request.headers['referer']
+            # url = request.headers['referer']
+            url = request.META['HTTP_REFERER']
             referer_args = dict(parse.parse_qsl(parse.urlsplit(url).query))
             user = referer_args['name']
             group = referer_args['group']
             if group == 6:
-                return HttpResponseRedirect(reverse('dtl')+f"??name={user}&month={select_month}&group={group}")  #
+                return HttpResponseRedirect(reverse('dtl')+f"?name={user}&month={select_month}&group={group}")  #
             depart = referer_args['depart']
-            return HttpResponseRedirect(reverse('dtl')+f"??name={user}&month={select_month}&group={group}&depart={depart}")
+            return HttpResponseRedirect(reverse('dtl')+f"?name={user}&month={select_month}&group={group}&depart={depart}")
         try:
             request.session['args']['select_group'] = int(request.POST['select_group'])
             request.session['args']['select_department'] = int(request.POST['select_department'])
@@ -191,7 +194,7 @@ def charts(request):
     # todo, 修改日期，获取权限,  #此处根据员工是否领导，直接跳转到可选页面，以及dtl
     is_manager = True
     if not is_manager:
-        return HttpResponseRedirect(reverse('dtl')+f"??name={name}&month={month}")
+        return HttpResponseRedirect(reverse('dtl')+f"?name={name}&month={month}")
     # graphJason = charts_gallery.get_chart(name = name, month=month) # todo 修改日期, 根据用户名，找到对应的chart
     # return render(request, 'charts.html', {'plot':graphJason, 'is_manager': is_manager})
     return HttpResponseRedirect(reverse("manager"))
@@ -294,7 +297,10 @@ def ewechat(request):
     response = requests.post(user_url).text
     username = json.loads(response)['UserId']
 
-    user = User.objects.get(username=username)
+    try:
+        user = User.objects.get(username=username)
+    except :
+        user = User.objects.create_user(username)
 
     if user:
         login(request, user)

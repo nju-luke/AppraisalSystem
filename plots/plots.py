@@ -284,7 +284,8 @@ class ChartsGallery():
             indices = list(self.dataframes[(month, group)].departmentid.isin(department))
 
         text = [self.dataframes[(month, group)].url[i] if v else None for i, v in enumerate(indices)]
-        chart.data[-1].update({'text': text})
+        hover_txt = [self.dataframes[(month, group)].hover_txt[i] if v else None for i, v in enumerate(indices)]
+        chart.data[-1].update({'text': text, 'hovertext':hover_txt})
         graphJason = json.dumps(chart, cls=PlotlyJSONEncoder)
         return graphJason, self.dataframes[(month, group)][indices]
 
@@ -300,7 +301,8 @@ class ChartsGallery():
             indices = list(self.dataframes_emp[(month, group, depart)].departmentid.isin(department))
 
         text = [self.dataframes_emp[(month, group, depart)].url[i] if v else None for i, v in enumerate(indices)]
-        chart.data[-1].update({'text': text})
+        hover_txt = [self.dataframes_emp[(month, group, depart)].hover_txt[i] if v else None for i, v in enumerate(indices)]
+        chart.data[-1].update({'text': text, 'hovertext':hover_txt})
         graphJason = json.dumps(chart, cls=PlotlyJSONEncoder)
         return graphJason, self.dataframes_emp[(month, group, depart)][indices]
 
@@ -573,3 +575,14 @@ def get_sup_permission():
     sup_permission = df.groupby('loginid').agg(list).to_dict()['departmentid']
     # sup_dep = {l:d for l,d in df.values}
     return sup_permission
+
+
+def get_loginid_group():
+    df = pd.read_sql('''
+    select loginid, category from
+    (select loginid, category,
+           row_number() over (partition by loginid, category order by years desc, months desc) rn
+    from result_all) A
+    where rn = 1
+    ''', engine)
+    return dict(df.values)

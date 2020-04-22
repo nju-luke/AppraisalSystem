@@ -141,7 +141,8 @@ def prepare_cp_point(date):
     # todo 删除对应数据， 修改月份等数据为result_all
     df.to_sql('result_all', engine, if_exists='replace', index=False,
               dtype={'lastname': NVARCHAR('max'), 'supName': NVARCHAR('max'),
-                     'departmentname': NVARCHAR('max')})  # todo 修改为append
+                     'departmentname': NVARCHAR('max'),'loginid': NVARCHAR('max'),
+                     })  # todo 修改为append
 
     print(df.shape)
 
