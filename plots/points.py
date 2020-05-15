@@ -4,6 +4,10 @@ author: Luke
 datettime: 2020/4/15 20:18
 """
 
+"""
+使用points更新数据， python ./plots/points.py
+"""
+
 import datetime
 import json
 import sys
@@ -56,7 +60,7 @@ def get_point(month):
     response = request.urlopen(url)
     res = response.read().decode('utf-8')
     df = pd.DataFrame(json.loads(res)['data'])
-    df['date'] = month
+    df['date'] = start_date.strftime('%Y%m')
 
     df = df[['bscoreMonth', 'userAccount', 'date']]
     df.columns = ['point', 'userAccount', 'date']
@@ -80,8 +84,14 @@ def prepare_cp_point(date):
     year = int(date[:4])
     month = int(date[5:])
     df_point = get_point(date)
-    df_point.to_sql('tmp_point', engine, if_exists='replace',
-                    dtype={'userAccount': NVARCHAR('max')}
+
+    try:
+        pd.read_sql(f"DELETE  FROM tmp_point  WHERE date = '{date}'", engine)
+    except:
+        pass
+    # engine.execute(f"DELETE  FROM tmp_point  WHERE date = '{date}'")
+    df_point.to_sql('tmp_point', engine, if_exists='append',
+                    dtype={'userAccount': NVARCHAR('max'),'date': NVARCHAR('max')}
                     )
 
     df_gb = pd.read_sql(f'''
@@ -106,6 +116,7 @@ def prepare_cp_point(date):
     INNER JOIN HrmDepartment h2 ON h2.id = HrmResource.departmentid
     INNER JOIN tmp_point on loginid = tmp_point.userAccount
     WHERE years = {year} AND months = {month}  and category = 6
+    and tmp_point.date = {date}
     AND HrmResource.status in (0,1,2,3)
     ''', engine)
     df_gb = get_classes(df_gb)
@@ -132,16 +143,23 @@ def prepare_cp_point(date):
     INNER JOIN HrmDepartment h2 ON h2.id = HrmResource.departmentid
     INNER JOIN tmp_point on loginid = tmp_point.userAccount
     WHERE years = {year} AND months = {month}  and category = 7
+    and tmp_point.date = {date}
     AND HrmResource.status in (0,1,2,3)
     ''', engine)
     df_yg = df_yg.groupby('supdepId').apply(get_classes)
 
     df = pd.concat([df_gb, df_yg], axis=0)
 
-    # todo 删除对应数据， 修改月份等数据为result_all
-    df.to_sql('result_all', engine, if_exists='replace', index=False,
+    try:
+        pd.read_sql(f"DELETE  FROM result_all  WHERE date = '{date}'", engine)
+    except:
+        pass
+    # engine.execute(f"DELETE  FROM result_all  WHERE date = '{date}'")
+    df['date'] = date
+    df.to_sql('result_all', engine, if_exists='append', index=False,
               dtype={'lastname': NVARCHAR('max'), 'supName': NVARCHAR('max'),
                      'departmentname': NVARCHAR('max'),'loginid': NVARCHAR('max'),
+                     'date': NVARCHAR('max')
                      })  # todo 修改为append
 
     print(df.shape)

@@ -1,6 +1,12 @@
 # -*- coding:utf-8 -*-
 """
 author: byangg
+datettime: 2020/5/15 9:49
+"""
+
+# -*- coding:utf-8 -*-
+"""
+author: byangg
 datettime: 2020/3/20 14:00
 """
 import json
@@ -26,9 +32,7 @@ TABLE_COLS = ['lastname', 'score_ori', 'score', 'score_class',
               'point_ori', 'point', 'point_class']
 TABLE_COLS_EMP = ['lastname', 'score_ori', 'score', 'score_class',
                   'v1', 'v2', 'v3', 'v4', 'v5',
-                  'point_ori', 'point', 'point_class',
-                    'txrName', 'total'
-                  ]
+                  'point_ori', 'point', 'point_class']
 SHOW_COLS = {'lastname': '姓名', 'score_ori': '测评分', 'score': '测评排名', 'score_class': '测评等级',
              'v1': '客户意识(15)', 'v2': '成本意识(10)', 'v3': '责任心(10)', 'v4': '日清日毕(10)', 'v5': '坚持力(10)',
              'v6': '领导力(10)', 'v7': '学习创新(10)', 'v8': '团队协作(10)', 'v9': '公平公正(5)', 'v10': '廉洁诚信(5)', 'v11': '微笑服务(5)',

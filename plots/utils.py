@@ -31,9 +31,9 @@ def get_cut_val(df):
     num_emp = len(df)
     if num_emp < 4:
         return None
-    n_ab = int(num_emp * 0.3)
+    n_ab = int(round(num_emp * 0.3))
     n_ab = n_ab if n_ab > 1 else 1
-    n_d = int(num_emp * 0.1)
+    n_d = int(round(num_emp * 0.1))
     n_d = n_d if n_d > 1 else 1
     n_c = num_emp - n_d
     cut_v = [0, n_ab, n_ab * 2, n_c, num_emp + 0.01]
