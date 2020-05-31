@@ -103,7 +103,7 @@ class Charts(LoginRequiredMixin, View):
             # group = 7 # 修改干部
             group = loginId_group[user]
             depart = loginId_supdep[user]
-            return HttpResponseRedirect(reverse('dtl')+f"?name={user}&month={month}&group={group}&depart={depart}")
+            return HttpResponseRedirect(reverse('dtl') + f"?name={user}&month={month}&group={group}&depart={depart}")
 
         request.session['args']['is_manager'] = True
 
@@ -145,9 +145,10 @@ class Charts(LoginRequiredMixin, View):
             user = referer_args['name']
             group = referer_args['group']
             if group == 6:
-                return HttpResponseRedirect(reverse('dtl')+f"?name={user}&month={select_month}&group={group}")  #
+                return HttpResponseRedirect(reverse('dtl') + f"?name={user}&month={select_month}&group={group}")  #
             depart = referer_args['depart']
-            return HttpResponseRedirect(reverse('dtl')+f"?name={user}&month={select_month}&group={group}&depart={depart}")
+            return HttpResponseRedirect(
+                reverse('dtl') + f"?name={user}&month={select_month}&group={group}&depart={depart}")
         try:
             request.session['args']['select_group'] = int(request.POST['select_group'])
             request.session['args']['select_department'] = int(request.POST['select_department'])
@@ -194,7 +195,7 @@ def charts(request):
     # todo, 修改日期，获取权限,  #此处根据员工是否领导，直接跳转到可选页面，以及dtl
     is_manager = True
     if not is_manager:
-        return HttpResponseRedirect(reverse('dtl')+f"?name={name}&month={month}")
+        return HttpResponseRedirect(reverse('dtl') + f"?name={name}&month={month}")
     # graphJason = charts_gallery.get_chart(name = name, month=month) # todo 修改日期, 根据用户名，找到对应的chart
     # return render(request, 'charts.html', {'plot':graphJason, 'is_manager': is_manager})
     return HttpResponseRedirect(reverse("manager"))
@@ -225,6 +226,8 @@ def dtl(request):
     group = int(request.GET['group'])
     sup_depart = request.GET['depart']
 
+    #print(f'user:{request.user}');
+
     dep = loginId_dep[name]
     if name != request.user.username and dep not in request.session['args']['department_list_ids']:
         return HttpResponse('没有权限！')
@@ -236,9 +239,19 @@ def dtl(request):
     except KeyError:
         pass
 
+    if request.user.username == 'denglifeng' or request.user.username == 'wantongji' or request.user.username == 'luochunyun':
+        isDetails = True
+    else:
+        isDetails = False
+    print(f'username:{request.user.username },isDetails:{isDetails}')
+
+    #request.user.username
     graphJason, table, cp_dtl = charts_gallery.get_chart_and_dtl(name=name, month=month, group=group,
                                                                  sup_depart=sup_depart,
-                                                                 is_sup_perm=is_sup_perm)
+                                                                 is_sup_perm=is_sup_perm,isDetails = isDetails)
+
+    #print(f'cp_dtl:{cp_dtl}');
+
     if request.user.username == name:
         cp_dtl = None
     return render(request, 'charts.html', {'plot': graphJason, 'table': table,
@@ -277,6 +290,7 @@ class TestView(LoginRequiredMixin, View):
             'select_department': select_department
         })
 
+
 def ewechat(request):
     if request.session.session_key:
         HttpResponseRedirect(reverse("charts"))
@@ -284,7 +298,7 @@ def ewechat(request):
     if request.user.is_anonymous and 'code' not in request.GET:
         target_url = request.META["HTTP_HOST"] + reverse("ewechat")
         url_unlogin = f"https://open.weixin.qq.com/connect/oauth2/authorize?appid={corpid}&redirect_uri={target_url}" \
-                      "&response_type=code&scope=snsapi_base&state=STATE#wechat_redirect"
+            "&response_type=code&scope=snsapi_base&state=STATE#wechat_redirect"
         return HttpResponseRedirect(url_unlogin)
 
     code = request.GET['code']
@@ -295,17 +309,28 @@ def ewechat(request):
 
     user_url = f"https://qyapi.weixin.qq.com/cgi-bin/user/getuserinfo?access_token={ACCESS_TOKEN}&code={code}"
     response = requests.post(user_url).text
+    errcode = json.loads(response)['errcode']
+    if (errcode != 0):
+        errmsg = json.loads(response)['errmsg']
+        print(f'CODE登录失败返回代码：{errcode}');
+        print(f'CODE登录失败返回消息：{errmsg}');
+        raise ValueError(f'登录失败！！')
+
+
     username = json.loads(response)['UserId']
+
+
 
     try:
         user = User.objects.get(username=username)
-    except :
+    except:
         user = User.objects.create_user(username)
+        print(f'创建用户：{username}');
 
     if user:
+        print(f'登录用户：{username}');
         login(request, user)
     else:
         raise ValueError(f'用户名不存在：{username}')
 
     return HttpResponseRedirect(reverse("charts"))
-

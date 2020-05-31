@@ -92,7 +92,7 @@ def prepare_cp_point(date):
     # engine.execute(f"DELETE  FROM tmp_point  WHERE date = '{date}'")
     df_point.to_sql('tmp_point', engine, if_exists='append',
                     dtype={'userAccount': NVARCHAR('max'),'date': NVARCHAR('max')}
-                    )
+     )
 
     df_gb = pd.read_sql(f'''
     select
@@ -159,7 +159,6 @@ def prepare_cp_point(date):
     df.to_sql('result_all', engine, if_exists='append', index=False,
               dtype={'lastname': NVARCHAR('max'), 'supName': NVARCHAR('max'),
                      'departmentname': NVARCHAR('max'),'loginid': NVARCHAR('max'),
-                     'date': NVARCHAR('max')
                      })  # todo 修改为append
 
     print(df.shape)

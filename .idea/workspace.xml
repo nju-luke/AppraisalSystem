@@ -2,13 +2,10 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="f096b6e8-0674-4d88-851a-3ddbb5511968" name="Default Changelist" comment="">
-      <change afterPath="$PROJECT_DIR$/data_prepare/exp.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/AppraisalSystem/settings.py" beforeDir="false" afterPath="$PROJECT_DIR$/AppraisalSystem/settings.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/README.md" beforeDir="false" afterPath="$PROJECT_DIR$/README.md" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/plots/plots.py" beforeDir="false" afterPath="$PROJECT_DIR$/plots/plots.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/plots/points.py" beforeDir="false" afterPath="$PROJECT_DIR$/plots/points.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/plots/utils.py" beforeDir="false" afterPath="$PROJECT_DIR$/plots/utils.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/plots/views.py" beforeDir="false" afterPath="$PROJECT_DIR$/plots/views.py" afterDir="false" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="SHOW_DIALOG" value="false" />
@@ -307,11 +304,6 @@
               <item name="services root" type="e789fda9:ObjectUtils$Sentinel" />
               <item name="com.intellij.execution.services.ServiceModel$ServiceGroupNode@134df6be" type="7427dc5b:ServiceModel$ServiceGroupNode" />
             </path>
-            <path>
-              <item name="services root" type="e789fda9:ObjectUtils$Sentinel" />
-              <item name="com.intellij.execution.services.ServiceModel$ServiceGroupNode@134df6be" type="7427dc5b:ServiceModel$ServiceGroupNode" />
-              <item name="com.intellij.execution.services.ServiceModel$ServiceNode@3ae97350" type="9fbbdea:ServiceModel$ServiceNode" />
-            </path>
           </expand>
           <select />
         </treeState>
@@ -342,7 +334,7 @@
       <workItem from="1587865944818" duration="39000" />
       <workItem from="1588992295587" duration="3236000" />
       <workItem from="1589333914176" duration="2661000" />
-      <workItem from="1589440441848" duration="3514000" />
+      <workItem from="1589440441848" duration="5656000" />
     </task>
     <task id="LOCAL-00001" summary="mytest">
       <created>1584682894883</created>
@@ -505,7 +497,14 @@
       <option name="project" value="LOCAL" />
       <updated>1587523485283</updated>
     </task>
-    <option name="localTasksCounter" value="24" />
+    <task id="LOCAL-00024" summary="20200515-1">
+      <created>1589510673141</created>
+      <option name="number" value="00024" />
+      <option name="presentableId" value="LOCAL-00024" />
+      <option name="project" value="LOCAL" />
+      <updated>1589510673141</updated>
+    </task>
+    <option name="localTasksCounter" value="25" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -549,7 +548,8 @@
     <MESSAGE value="ewe test 1" />
     <MESSAGE value="ewe success&#10;modify redirect url to relative url" />
     <MESSAGE value="隐藏不显示名字的名次" />
-    <option name="LAST_COMMIT_MESSAGE" value="隐藏不显示名字的名次" />
+    <MESSAGE value="20200515-1" />
+    <option name="LAST_COMMIT_MESSAGE" value="20200515-1" />
   </component>
   <component name="WindowStateProjectService">
     <state x="552" y="179" key="#Notifications" />
@@ -618,12 +618,12 @@
       <breakpoints>
         <line-breakpoint enabled="true" suspend="THREAD" type="python-line">
           <url>file://$PROJECT_DIR$/plots/views.py</url>
-          <line>222</line>
+          <line>223</line>
           <option name="timeStamp" value="133" />
         </line-breakpoint>
         <line-breakpoint enabled="true" suspend="THREAD" type="python-line">
           <url>file://$PROJECT_DIR$/plots/views.py</url>
-          <line>238</line>
+          <line>248</line>
           <option name="timeStamp" value="134" />
         </line-breakpoint>
       </breakpoints>

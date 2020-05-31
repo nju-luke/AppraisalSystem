@@ -26,9 +26,8 @@ TABLE_COLS = ['lastname', 'score_ori', 'score', 'score_class',
               'point_ori', 'point', 'point_class']
 TABLE_COLS_EMP = ['lastname', 'score_ori', 'score', 'score_class',
                   'v1', 'v2', 'v3', 'v4', 'v5',
-                  'point_ori', 'point', 'point_class',
-                    'txrName', 'total'
-                  ]
+                  'point_ori', 'point', 'point_class']
+                  
 SHOW_COLS = {'lastname': '姓名', 'score_ori': '测评分', 'score': '测评排名', 'score_class': '测评等级',
              'v1': '客户意识(15)', 'v2': '成本意识(10)', 'v3': '责任心(10)', 'v4': '日清日毕(10)', 'v5': '坚持力(10)',
              'v6': '领导力(10)', 'v7': '学习创新(10)', 'v8': '团队协作(10)', 'v9': '公平公正(5)', 'v10': '廉洁诚信(5)', 'v11': '微笑服务(5)',
@@ -36,11 +35,15 @@ SHOW_COLS = {'lastname': '姓名', 'score_ori': '测评分', 'score': '测评排
              'txrName': '测评人', 'total': '总分'
              }
 
+
+
 SHOW_COLS_EMP = {'lastname': '姓名', 'score_ori': '测评分', 'score': '测评排名', 'score_class': '测评等级',
-                 'v1': '责任心(满分30)', 'v2': '执行力(满分20)', 'v3': '团队协作(满分20)', 'v4': '工作不推诿(满分20)', 'v5': '日清日毕(满分10)',
-                 'point_ori': '积分', 'point': '积分排名', 'point_class': '积分等级',
-                 'txrName': '测评人', 'total': '总分'
-                 }
+             'v1': '责任心(满分30)', 'v2': '执行力(满分20)', 'v3': '团队协作(满分20)', 'v4': '工作不推诿(满分20)', 'v5': '日清日毕(满分10)',
+             'point_ori': '积分', 'point': '积分排名', 'point_class': '积分等级',
+             'txrName': '测评人', 'total': '总分'
+             }
+
+
 
 PERM_COLS = ['txrName', 'total', 'v1', 'v2', 'v3', 'v4', 'v5', 'v6', 'v7', 'v8', 'v9', 'v10', 'v11']
 PERM_COLS_EMP = ['txrName', 'total', 'v1', 'v2', 'v3', 'v4', 'v5']
@@ -151,7 +154,7 @@ def get_area(df):
 #                v1 ,v2 ,v3 ,v4 ,v5 ,v6 ,v7 ,v8 ,v9 ,v10,v11,
 #                departmentid,
 #                row_number() over (order by total desc) num
-#         from cp_result where years={year} and months={month}
+#         from result_all where years={year} and months={month}
 #         and category={category}
 #             '''
 #     df = pd.read_sql(sql, engine)
@@ -167,14 +170,14 @@ def get_data(date, category, depart=None):
     #         lastname,
     #         total score_ori,
     #         point point_ori,
-    #         cp_result.*,
+    #         result_all.*,
     #         loginid,
     #         HrmDepartment.departmentname, HrmResource.departmentid,
     #         rank() over (partition by years,months order by total desc) score,
     #         rank() over (partition by years,months order by total) score1,
     #         rank() over (partition by years,months order by point desc) point,
     #         rank() over (partition by years,months order by point) point1
-    #     from cp_result
+    #     from result_all
     #     INNER JOIN HrmResource  ON HrmResource.id = btprid
     #     INNER JOIN a_CpYgDepBind  ON a_CpYgDepBind.childId  = HrmResource.departmentid
     #     INNER JOIN HrmDepartment ON HrmDepartment.id = a_CpYgDepBind.supdepId
@@ -198,7 +201,7 @@ def get_data(date, category, depart=None):
 
     sql += " order by score_ori desc"
 
-    print(sql)
+    # print(sql)
     # df_ap = pd.read_sql(sql, engine)
     # df_point = get_point(date)  # todo 使用字典保存每个月的数据
     # df = pd.merge(df_ap, df_point, left_on='loginid', right_on='userAccount')
@@ -257,7 +260,7 @@ def get_loginid_id():
 
 
 def get_html(df):
-    # html = df.to_html(index=False, classes='table-striped', border=0).replace(
+   # html = df.to_html(index=False, classes='table-striped', border=0).replace(
     #    'dataframe', 'table').replace('<tr>', '<tr style=" white-space:nowrap" class="text-center">'). \
     #    replace('<tr style="text-align: right;">', '<tr style=" white-space:nowrap" class="text-center">')
 
@@ -328,7 +331,7 @@ class ChartsGallery():
     def get_chart(self, name, month, department=None, group=None, sup_depart=None):
         if group == 6:
             graph, df = self.get_chart_gb(name, month, department, group)
-
+   
             table = df[TABLE_COLS]
             table = get_html(table.rename(columns=SHOW_COLS))
             return graph, table
@@ -340,26 +343,29 @@ class ChartsGallery():
 
         raise ValueError
 
-    def get_chart_and_dtl(self, name, month, group=7, sup_depart=None, is_sup_perm=False, isDetails=False):
+    def get_chart_and_dtl(self, name, month, group=7, sup_depart=None, is_sup_perm=False,isDetails = False):
         graph, table = self.get_chart(name, month, group=group, sup_depart=sup_depart)
         if is_sup_perm:
-            cp_dtl = self.get_dtl_table(name, month, group, isDetails)
+            cp_dtl = self.get_dtl_table(name, month, group,isDetails)
         else:
             cp_dtl = None
 
         return graph, table, cp_dtl
 
-    def get_dtl_table(self, name, month, group, isDetails=False):
+    def get_dtl_table(self, name, month, group,isDetails = False):
         id = self.loginid_id[name]
         cur_date = datetime.date(int(month[:4]), int(month[5:]), 1)
 
         start_date = cur_date + relativedelta(day=31) + datetime.timedelta(days=1)
         end_date = start_date + relativedelta(day=31) + datetime.timedelta(days=1)
 
-        if isDetails:
+
+        if isDetails :
             dtails = "t5.lastname as txrName"
         else:
             dtails = "'******' as txrName"
+
+
 
         if group == 7:
             sql = f'''
@@ -488,14 +494,14 @@ class ChartsGallery():
         # table = table.rename(columns=SHOW_COLS).to_html(index=False, classes='table-striped', border=0).replace(
         #     'dataframe', 'table')
         if group == 7:
-            table = get_html(df.rename(columns=SHOW_COLS_EMP))
+            table = get_html(df.rename(columns= SHOW_COLS_EMP))
         else:
             table = get_html(df.rename(columns=SHOW_COLS))
         return table
 
 
 def get_date_list():
-    df = pd.read_sql("select distinct years, months from cp_result", engine)
+    df = pd.read_sql("select distinct years, months from result_all", engine)
     df['dt'] = df.years.astype(str) + df.months.astype(str).str.pad(2, 'left', '0')
     return list(df.dt.values)
 
