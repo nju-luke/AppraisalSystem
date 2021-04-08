@@ -1,5 +1,5 @@
 pyodbc
-Django==3.0.4
+Django==3.0.14
 django-mssql-backend
 plotly==4.5.4
 SQLAlchemy==1.3.10
